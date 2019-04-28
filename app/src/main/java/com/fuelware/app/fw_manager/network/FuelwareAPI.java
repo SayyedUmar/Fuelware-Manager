@@ -10,6 +10,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Zest Developer on 3/27/2018.
@@ -37,8 +38,12 @@ public interface FuelwareAPI {
     Call<ResponseBody> getMindentList(@Header("Authorization") String value);
 
     @POST("outlet/common/save-counter-bill")
-    Call<ResponseBody> createConuterBill(@Header("Authorization") String value,@Header("Content-Type") String type,
+    Call<ResponseBody> createConuterBill(@Header("Authorization") String value, @Header("Content-Type") String type,
                                          @Body CounterBillPojo item);
+
+    @POST("outlet/cashier/batch?")
+    Call<ResponseBody> getCashierDetail(@Header("Authorization") String value,
+                                        @Query("cashier_id") String cashierID);
 
 
 }

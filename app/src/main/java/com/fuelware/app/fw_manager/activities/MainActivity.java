@@ -111,14 +111,15 @@ public class MainActivity extends SuperActivity
 
         tvActiveBatches.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(this, tvActiveBatches);
-            int i = 1;
+            int i = 0;
             for (Cashier m: cashierList) {
                 int count = m.getManual_indent() != null ? m.getManual_indent().size() : 0;
-                String text = "Batch "+(i++)+ "  >  <font color=#008577>"+m.getBatch_number()+"</font> -<font color=#D81B60> "+count+"</font>";
-                popupMenu.getMenu().add(Html.fromHtml(text));
+                String text = "Batch "+(i+1)+ "  >  <font color=#008577>"+m.getBatch_number()+"</font> -<font color=#D81B60> "+count+"</font>";
+                popupMenu.getMenu().add(Menu.NONE, Menu.NONE, i,Html.fromHtml(text));
             }
             popupMenu.show();
             popupMenu.setOnMenuItemClickListener(item -> {
+                getCashierDetail(cashierList.get(item.getItemId()).getCashier_id());
                 return true;
             });
         });
@@ -135,6 +136,34 @@ public class MainActivity extends SuperActivity
             }
         });
 
+    }
+
+    private void getCashierDetail(long cashierID) {
+        Call<ResponseBody> req = APIClient.getApiService().getCashierDetail(authkey, cashierID+"");
+        req.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressDialog.dismiss();
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                    } else {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getApplicationContext(),jObjError.getString("message"),Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
     }
 
     private void init() {
