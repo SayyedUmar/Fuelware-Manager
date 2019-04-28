@@ -1,7 +1,10 @@
 package com.fuelware.app.fw_manager.network;
 
+import com.fuelware.app.fw_manager.models.CounterBillPojo;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -23,5 +26,19 @@ public interface FuelwareAPI {
 
     @GET("common/user")
     Call<ResponseBody> getUserDetails(@Header("Authorization") String value);
+
+    @GET("common/outlet-products")
+    Call<ResponseBody> getOutletProducts(@Header("Authorization") String value);
+
+    @GET("outlet/manager/cashier")
+    Call<ResponseBody> getCashiers(@Header("Authorization") String value);
+
+    @GET("outlet/cashier/indent")
+    Call<ResponseBody> getMindentList(@Header("Authorization") String value);
+
+    @POST("outlet/common/save-counter-bill")
+    Call<ResponseBody> createConuterBill(@Header("Authorization") String value,@Header("Content-Type") String type,
+                                         @Body CounterBillPojo item);
+
 
 }

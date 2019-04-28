@@ -12,5 +12,13 @@
     <color name="gray_light">#d9d9d9</color>
     <color name="text_black">#212121</color>
     <color name="gray_dark">#757575</color>
+    <color name="red_light_color1">#e47164</color>
+    <color name="violet">#660E7A</color>
+    <color name="error_color">#f5695e</color>
+    <color name="green_light_color1">#64bc88</color>
+    <color name="darker_gray">#aaa</color>
+    <color name="red_dark">#E16058</color>
+    <color name="semiTransparentWhite">#40FFFFFF</color>
+    <color name="semiTransparentdark">#40bababa</color>
 
 </resources>

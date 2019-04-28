@@ -11,6 +11,7 @@ public class RxBus {
     public static final String ADD_ACTION = "ADD";
     public static final String EDIT_ACTION = "EDIT";
     public static final String DELETE_ACTION = "DELETE";
+    public static final String POSITION = "POSITION";
 
     private RxBus() {}
 

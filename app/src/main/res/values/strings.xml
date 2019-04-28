@@ -13,4 +13,17 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <!--for validations-->
+    <string name="S_SET">abcdefghijklmnopqrstuvwxyz</string>
+    <string name="C_SET">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="I_SET">0123456789</string>
+    <string name="D_SET">0123456789.</string>
+
+    <string name="SC_SET">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="SCWS_SET">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="SCI_SET">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="SCIWS_SET">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="CI_SET">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="ADDRESS_SET">abcdefghijklmnopqrstuvwxyz ,-:._@ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
 </resources>

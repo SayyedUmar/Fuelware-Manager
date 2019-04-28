@@ -5,16 +5,334 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <RelativeLayout
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Shift ID"
+                android:textColor="@color/gray_dark"
+                android:textSize="10sp"
+                />
+
+            <TextView
+                android:id="@+id/tvShiftID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:textColor="@color/text_black"
+                tools:text="SHIFT ID"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvShiftID"
+                android:layout_marginTop="4dp"
+                android:text="Login Time"
+                android:textColor="@color/gray_dark"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tvLoginTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv3"
+                tools:text="26 Apr 2019 04:56 PM"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tvFuelPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+
+                android:layout_alignParentRight="true"
+                android:text="Fuel Prices        "
+                android:textColor="@color/colorAccent"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:background="@drawable/bg_rect_round_outline"
+                />
+
+            <TextView
+                android:id="@+id/tvActiveBatches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvFuelPrice"
+                android:text="Active Batches "
+                android:textColor="@color/colorAccent"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:background="@drawable/bg_rect_round_outline"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/center_layout"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp"
+                android:background="@drawable/bg_circle_green">
+                <TextView
+                    android:id="@+id/mainpage_balancehint"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="45dp"
+                    android:textColor="#ffffff"
+                    />
+                <TextView
+                    android:id="@+id/mainpage_balance"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="10sp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#ffffff"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_toLeftOf="@+id/center_layout"
+                android:layout_marginRight="-50dp"
+                android:layout_marginTop="150dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/eindent_img"
+                    android:layout_width="64dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_morning_params"
+                    android:padding="18dp"
+                    android:background="@drawable/bg_white_circle"
+                    android:tint="@color/colorPrimaryDark"
+                    />
+
+                <TextView
+                    android:id="@+id/eindent_text"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand"
+                    android:text="Morning Parameters"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_toRightOf="@+id/center_layout"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginTop="150dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/mindent_img"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_receipts"
+                        android:padding="22dp"
+                        android:background="@drawable/bg_white_circle"
+                        android:tint="@color/colorPrimaryDark"
+                        />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/tvMindentCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="5dp"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_rounded_rect_solid_gray"
+                        />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/mindent_text"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand"
+                    android:gravity="center"
+                    android:text="Receipts"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlayReports"
+                android:layout_below="@+id/center_layout"
+                android:layout_toRightOf="@+id/center_layout"
+                android:layout_marginTop="-50dp"
+                android:layout_marginLeft="-80dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgReports"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_reports"
+                    android:padding="22dp"
+                    android:background="@drawable/bg_white_circle"
+                    android:tint="@color/colorPrimaryDark"
+                    />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand"
+                    android:gravity="center"
+                    android:text="Reports"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgCrown"
+                android:layout_below="@+id/center_layout"
+                android:layout_toRightOf="@+id/linlayCounterBilling"
+                android:layout_marginTop="-80dp"
+                android:layout_marginLeft="-66dp"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_crown"
+                />
+
+            <LinearLayout
+                android:id="@+id/linlayCounterBilling"
+                android:layout_below="@+id/center_layout"
+                android:layout_toRightOf="@+id/center_layout"
+                android:layout_marginTop="-50dp"
+                android:layout_marginLeft="-220dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgCounterBilling"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_cash_receipt"
+                    android:padding="22dp"
+                    android:background="@drawable/bg_white_circle"
+                    android:tint="@color/colorPrimaryDark"
+                    />
+
+                <TextView
+                    android:id="@+id/counter_bill_text"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand"
+                    android:gravity="center"
+                    android:text="Counter Billing"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/blacklist_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linlayCounterBilling"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+
+                    android:background="@color/colorPrimaryLight"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Shift Logout"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textStyle="normal|bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

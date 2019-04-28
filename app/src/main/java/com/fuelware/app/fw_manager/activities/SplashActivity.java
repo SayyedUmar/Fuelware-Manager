@@ -17,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.fuelware.app.fw_manager.Const.AppConst;
-import com.fuelware.app.fw_manager.MainActivity;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 

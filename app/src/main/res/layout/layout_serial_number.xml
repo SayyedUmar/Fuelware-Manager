@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvSerailNumber"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="1"
+    android:textColor="@color/green_light_color1"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="@drawable/sharp_rect_green_bg"
+    />
+
+    <!--<TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tvSerailNumber"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:text="1"
+        />-->
