@@ -20,6 +20,8 @@ android {
         release {
             buildConfigField ("String", "BASE_URL", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/api/v1/"')
             buildConfigField ("Boolean", "IS_LOG_ENABLED", "false")
+
+            shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
