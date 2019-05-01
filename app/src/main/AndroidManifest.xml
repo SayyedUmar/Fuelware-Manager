@@ -41,6 +41,12 @@
             />
 
         <activity
+            android:name=".activities.CashierDashboardActivity"
+            android:label="@string/app_name"
+            android:theme="@style/ActionBarCustomTheme"
+            />
+
+        <activity
             android:name=".activities.CounterBillActivity"
             android:label="@string/app_name"
             android:theme="@style/ActionBarCustomTheme"
@@ -49,6 +55,22 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".activities.MindentListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.MiDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.EditMIndentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
     </application>
 
 </manifest>

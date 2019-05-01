@@ -4,17 +4,17 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Html;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -113,13 +113,18 @@ public class MainActivity extends SuperActivity
             PopupMenu popupMenu = new PopupMenu(this, tvActiveBatches);
             int i = 0;
             for (Cashier m: cashierList) {
-                int count = m.getManual_indent() != null ? m.getManual_indent().size() : 0;
+                long count = 0;
+                if (m.getManual_indent() != null && m.getManual_indent().size() > 0) {
+                    count = m.getManual_indent().get(0).getTotal();
+                }
                 String text = "Batch "+(i+1)+ "  >  <font color=#008577>"+m.getBatch_number()+"</font> -<font color=#D81B60> "+count+"</font>";
                 popupMenu.getMenu().add(Menu.NONE, Menu.NONE, i,Html.fromHtml(text));
             }
             popupMenu.show();
             popupMenu.setOnMenuItemClickListener(item -> {
-                getCashierDetail(cashierList.get(item.getItemId()).getCashier_id());
+                MyPreferences.setStringValue(getApplicationContext(), AppConst.CASHIER_DETAILS, gson.toJson(cashierList.get(item.getItemId())));
+                startActivity(new Intent(MainActivity.this, CashierDashboardActivity.class)
+                        .putExtra("CASHIER", cashierList.get(item.getItemId())));
                 return true;
             });
         });
@@ -136,33 +141,10 @@ public class MainActivity extends SuperActivity
             }
         });
 
-    }
-
-    private void getCashierDetail(long cashierID) {
-        Call<ResponseBody> req = APIClient.getApiService().getCashierDetail(authkey, cashierID+"");
-        req.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                progressDialog.dismiss();
-                try {
-                    if (response.isSuccessful()) {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        JSONObject data = jsonObject.getJSONObject("data");
-
-                    } else {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getApplicationContext(),jObjError.getString("message"),Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                progressDialog.dismiss();
-                MLog.showLongToast(getApplicationContext(), t.getMessage());
-            }
+        btnLogin.setOnClickListener(v -> {
+            MyPreferences.setStringValue(getApplicationContext(), "authkey", "");
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         });
     }
 
@@ -198,7 +180,8 @@ public class MainActivity extends SuperActivity
                         if (data.has("last_shift")) {
                             JSONObject last_shift = data.getJSONObject("last_shift");
                             tvShiftID.setText(last_shift.getString("shift_number"));
-                            tvLoginTime.setText(last_shift.getString("login_time"));
+                            String start_time = last_shift.getString("login_time");
+                            tvLoginTime.setText(MyUtils.dateToString(AppConst.SERVER_DATE_TIME_FORMAT, AppConst.APP_DATE_TIME_FORMAT, start_time));
                         }
 
                     } else {
@@ -235,28 +218,6 @@ public class MainActivity extends SuperActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -306,6 +267,7 @@ public class MainActivity extends SuperActivity
                         List<ProductPriceModel> tempList = gson.fromJson(dataArray.toString(), token);
                         prodPriceList.clear();
                         prodPriceList.addAll(tempList);
+                        MyPreferences.setStringValue(MainActivity.this, AppConst.PRODUCTS_LIST, dataArray.toString());
                         //recyclerView.getAdapter().notifyDataSetChanged();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -368,4 +330,26 @@ public class MainActivity extends SuperActivity
         });
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        menu.findItem(R.id.action_search).setVisible(false);
+        menu.findItem(R.id.action_refresh).setVisible(true);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (item.getItemId() == R.id.action_refresh) {
+            fetchProducts();
+            fetchCashiers();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

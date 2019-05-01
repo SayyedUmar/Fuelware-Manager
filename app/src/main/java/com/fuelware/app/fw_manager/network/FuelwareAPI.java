@@ -1,15 +1,20 @@
 package com.fuelware.app.fw_manager.network;
 
+import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
+import com.fuelware.app.fw_manager.models.IndentModel;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -34,16 +39,52 @@ public interface FuelwareAPI {
     @GET("outlet/manager/cashier")
     Call<ResponseBody> getCashiers(@Header("Authorization") String value);
 
-    @GET("outlet/cashier/indent")
-    Call<ResponseBody> getMindentList(@Header("Authorization") String value);
+    @GET("outlet/manager/cashier/{cashierID}/m-indent")
+    Call<ResponseBody> getMindentList(@Header("Authorization") String value,
+                                      @Path("cashierID") String cashierID);
 
     @POST("outlet/common/save-counter-bill")
     Call<ResponseBody> createConuterBill(@Header("Authorization") String value, @Header("Content-Type") String type,
                                          @Body CounterBillPojo item);
 
-    @POST("outlet/cashier/batch?")
+    @GET("outlet/cashier/batch?")
     Call<ResponseBody> getCashierDetail(@Header("Authorization") String value,
                                         @Query("cashier_id") String cashierID);
 
+    @GET("outlet/manager/cashier/{cashierID}/m-indent")
+    Call<ResponseBody> getMIndents(@Header("Authorization") String value,
+                                   @Path("cashierID") String cashierID);
 
+    @GET("outlet/manager/cashier/{cashierID}")
+    Call<ResponseBody> getMIndentCount(@Header("Authorization") String value,
+                                   @Path("cashierID") String cashierID);
+
+    @GET("outlet/manager/cashier/indent/{id}")
+    Call<ResponseBody> getMindentDetails(@Header("Authorization") String value,@Path("id") String id);
+
+    @POST("outlet/manager/cashier/{cashierID}/m-indent/{indentID}")
+    Call<ResponseBody> approveMIndent(@Header("Authorization") String value,
+                                      @Path("cashierID") String cashierID,
+                                      @Path("indentID") String indentID
+                                      );
+
+    @DELETE("outlet/manager/cashier/{cashierID}/m-indent/{indentID}?")
+    Call<ResponseBody> deleteMIndent(@Header("Authorization") String value,
+                                      @Path("cashierID") String cashierID,
+                                      @Path("indentID") String indentID,
+                                     @Query("otp") String otp
+    );
+
+    @PUT("outlet/manager/cashier/{cashierID}/m-indent/{indentID}")
+    Call<ResponseBody> updateMIndent(@Header("Authorization") String value,
+                                     @Path("cashierID") String cashierID,
+                                     @Path("indentID") String indentID,
+                                     @Body EditMIndentActivity.IndentNew model
+                                     );
+
+
+    @POST("common/otp?")
+    Call<ResponseBody> requestOTP(@Header("Authorization") String value,
+                                  @Query("user_id") String cashierID
+    );
 }

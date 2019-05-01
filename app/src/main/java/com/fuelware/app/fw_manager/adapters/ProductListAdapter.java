@@ -110,7 +110,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String product_price = item.getPrice();
 
         Dialog dialog = new Dialog(mContext);
-        dialog.setContentView(layout.dilog_counter_bill);
+        dialog.setContentView(layout.dialog_counter_bill);
         TextView btnCancel = dialog.findViewById(id.btnCancel);
         TextView btnSave = dialog.findViewById(id.btnSave);
         TextView tvQuantity = dialog.findViewById(id.tvQuantity);

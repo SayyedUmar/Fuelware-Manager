@@ -1,5 +1,7 @@
 package com.fuelware.app.fw_manager.Const;
 
+import android.content.Context;
+
 import com.fuelware.app.fw_manager.BuildConfig;
 
 /**
@@ -37,4 +39,10 @@ public class AppConst {
     public static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String APP_DATE_FORMAT = "dd MMM, yy";
     public static final String APP_DATE_TIME_FORMAT = "dd MMM, yy hh:mm a";
+    public static final String PRODUCTS_LIST = "PRODUCTS_LIST";
+    public static final String CASHIER_DETAILS = "CASHIER_DETAILS";
+
+    public static final String full_tank = "full_tank";
+    public static final String litre = "litre";
+    public static final String amount = "amount";
 }

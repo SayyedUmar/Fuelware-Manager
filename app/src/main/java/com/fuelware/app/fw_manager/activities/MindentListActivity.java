@@ -1,6 +1,7 @@
 package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import com.fuelware.app.fw_manager.Const.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.MindentListAdapter;
+import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
@@ -56,6 +58,7 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
     private TextView tvNoRecordsFound;
     private Gson gson;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Cashier cashier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,9 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
         setContentView(R.layout.activity_mindent_list);
         setTitle("M-Indent");
         setupBackNavigation(null);
+
         gson = new Gson();
+        cashier = gson.fromJson(MyPreferences.getStringValue(this, AppConst.CASHIER_DETAILS), Cashier.class);
         progressDialog = new SpotsDialog(MindentListActivity.this, R.style.Custom);
         authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
 
@@ -90,30 +95,26 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
             @Override
             public void accept(Map<Object, Object> map) throws Exception {
                 try {
-                    if (map.containsKey(RxBus.ADD_ACTION)) {
-                        Object object = map.get(RxBus.ADD_ACTION);
-                        if (object instanceof IndentModel){
-                            list.add(0, (IndentModel) object);
-                        }
-                    } else if (map.containsKey(RxBus.EDIT_ACTION)) {
+                    if (map.containsKey(RxBus.EDIT_ACTION)) {
                         Object object = map.get(RxBus.EDIT_ACTION);
                         if (object instanceof IndentModel) {
                             int positon = (int) map.get(RxBus.POSITION);
                             if (list.size() > positon)
                                 list.set(positon, (IndentModel) object);
                         }
-                    } else if (map.containsKey(RxBus.DELETE_ACTION)) {
+                    } /*else if (map.containsKey(RxBus.DELETE_ACTION)) {
                         int positon = (int) map.get(RxBus.DELETE_ACTION);
                         try {
                             list.remove(positon);
                         }catch (Exception e) {e.printStackTrace();}
-                    }
+                    }*/
                     adapter.refresh();
                     showNoRecordsFound();
                 } catch (Exception e) { e.printStackTrace(); }
             }
         }));
     }
+
 
     private void showNoRecordsFound() {
         if (list.size() == 0) {
@@ -135,39 +136,7 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
 
         progressDialog.show();
 
-        /*MyService.CallAPI2(APIClient.getApiService().getMindentList(authkey), new MyServiceListerner<ResponseClass<List<IndentModel>>>() {
-            @Override
-            public void onNext(ResponseClass<List<IndentModel>> response) {
-                if (response.success) {
-                    list.clear();
-                    list.addAll(response.getData());
-                }
-            }
-
-            @Override
-            public void onComplete() {
-                adapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-                if (list.size() > 0) {
-                    tvNoRecordsFound.setVisibility(View.GONE);
-                } else {
-                    tvNoRecordsFound.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
-                disposable = d;
-            }
-        });*/
-
-        APIClient.getApiService().getMindentList(authkey).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().getMindentList(authkey, cashier.getCashier_id()+"").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -251,5 +220,133 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
     public boolean onQueryTextChange(String newText) {
         adapter.filter(newText);
         return true;
+    }
+
+    public void approveMIndent(Dialog dialog, IndentModel indentModel, int index) {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        progressDialog.show();
+
+        Call<ResponseBody> responce = APIClient.getApiService().approveMIndent(authkey, cashier.getCashier_id()+"", indentModel.getId()+"");
+        responce.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressDialog.dismiss();
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        IndentModel item = new Gson().fromJson(data.toString(), IndentModel.class);
+                        list.set(index, item);
+                        adapter.refresh();
+                        dialog.dismiss();
+                    } else {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        MLog.showToast(getApplicationContext(),jObjError.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }
+
+    public void requestOTP(IndentModel indentModel, int index) {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+        progressDialog.show();
+
+        Call<ResponseBody> callback = APIClient.getApiService().requestOTP(authkey, cashier.getCashier_id()+"");
+        callback.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        MLog.showToast(MindentListActivity.this, jsonObject.getString("message"));
+                        String name = jsonObject.getJSONObject("data").getString("name");
+                        String mobile = jsonObject.getJSONObject("data").getString("mobile");
+                        showConfirmOTPDialog(indentModel, index, name, mobile);
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }
+
+    private void showConfirmOTPDialog(IndentModel indentModel, int index, String name, String mobile) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_verify_action_otp);
+        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        EditText etOTP = dialog.findViewById(R.id.etOTP);
+        tvTitle.setText("OTP has been sent to "+name+" "+mobile);
+        TextView btnNo = dialog.findViewById(R.id.btnNo);
+        TextView btnYes = dialog.findViewById(R.id.btnYes);
+        dialog.setCancelable(true);
+        btnNo.setOnClickListener(w -> dialog.dismiss());
+        btnYes.setOnClickListener(w -> {
+            dialog.dismiss();
+            deleteMIndent(indentModel, index, etOTP.getText().toString().trim());
+        });
+        dialog.show();
+    }
+
+    public void deleteMIndent(IndentModel indentModel, int index, String otp) {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        progressDialog.show();
+
+        Call<ResponseBody> responce = APIClient.getApiService().deleteMIndent(authkey, cashier.getCashier_id()+"", indentModel.getId()+"", otp);
+        responce.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressDialog.dismiss();
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        MLog.showToast(MindentListActivity.this, jsonObject.getString("message"));
+                        list.remove(index);
+                        adapter.refresh();
+                    } else {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        MLog.showToast(getApplicationContext(),jObjError.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
     }
 }

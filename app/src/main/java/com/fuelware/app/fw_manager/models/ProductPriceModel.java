@@ -1,6 +1,8 @@
 package com.fuelware.app.fw_manager.models;
 
-public class ProductPriceModel {
+import java.io.Serializable;
+
+public class ProductPriceModel implements Serializable {
 
     private String id;
     private String product;

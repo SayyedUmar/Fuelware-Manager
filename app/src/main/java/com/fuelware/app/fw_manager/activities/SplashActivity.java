@@ -134,7 +134,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void forNext() {
-        if (MyPreferences.getBoolValue(this, AppConst.LOGIN_STATUS)) {
+        if (!MyPreferences.getStringValue(getApplicationContext(), "authkey").isEmpty()) {
             Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(mainIntent);
             finish();

@@ -35,6 +35,8 @@ public class IndentModel implements Serializable {
 
     private boolean verify_credit_limit;
 
+    public ProductPriceModel product_detail;
+
     public boolean isVerify_credit_limit() {
         return verify_credit_limit;
     }
@@ -128,6 +130,7 @@ public class IndentModel implements Serializable {
     }
 
     public String getDriver() {
+        if (driver == null) return "";
         return driver;
     }
 
@@ -136,8 +139,7 @@ public class IndentModel implements Serializable {
     }
 
     public String getDriver_mobile() {
-        if (driver_mobile == null)
-            return "NA";
+        if (driver_mobile == null) return "";
         return driver_mobile;
     }
 
