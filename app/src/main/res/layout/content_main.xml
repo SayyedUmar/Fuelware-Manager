@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/mindent_img"
+                        android:id="@+id/imgReceipts"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_gravity="center_horizontal"

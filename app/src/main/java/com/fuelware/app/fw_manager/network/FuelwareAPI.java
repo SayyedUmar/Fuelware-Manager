@@ -70,8 +70,8 @@ public interface FuelwareAPI {
 
     @DELETE("outlet/manager/cashier/{cashierID}/m-indent/{indentID}?")
     Call<ResponseBody> deleteMIndent(@Header("Authorization") String value,
-                                      @Path("cashierID") String cashierID,
-                                      @Path("indentID") String indentID,
+                                     @Path("cashierID") String cashierID,
+                                     @Path("indentID") String indentID,
                                      @Query("otp") String otp
     );
 
@@ -87,4 +87,25 @@ public interface FuelwareAPI {
     Call<ResponseBody> requestOTP(@Header("Authorization") String value,
                                   @Query("user_id") String cashierID
     );
+
+
+    @GET("outlet/manager/receipt?payment-mode=cash")
+    Call<ResponseBody> getCashReceiptsList(@Header("Authorization") String value);
+
+
+    @DELETE("outlet/manager/receipt/{receipt_id}")
+    Call<ResponseBody> deleteCashReceipt(@Header("Authorization") String value,
+                                         @Path("receipt_id") String receiptID);
+    //{"success":true,"message":"Receipt deleted successfully","data":null}
+
+
+//    @GET("print/manager-receipt/{receipt_token}")
+//    Call<ResponseBody> downloadCashReceipt(@Header("Authorization") String value,
+//                                           @Path("receipt_token") String receiptToken);
+
+
+
+    @GET("outlet/manager/search")
+    Call<ResponseBody> getCreditCustomerList(@Header("Authorization") String value);
+
 }

@@ -59,7 +59,7 @@ public class MainActivity extends SuperActivity
     private User user;
     private List<ProductPriceModel> prodPriceList = new ArrayList<>();
     private List<Cashier> cashierList = new ArrayList<>();
-    private ImageView imgCounterBilling;
+    private ImageView imgReceipts, imgCounterBilling;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +141,14 @@ public class MainActivity extends SuperActivity
             }
         });
 
+        imgReceipts.setOnClickListener(v -> {
+            if (MyPreferences.getBoolValue(this, AppConst.LOGIN_STATUS)) {
+                startActivity(new Intent(MainActivity.this, ReceiptsActivity.class));
+            } else {
+                MLog.showToast(getApplicationContext(), "Please login to the batch first.");
+            }
+        });
+
         btnLogin.setOnClickListener(v -> {
             MyPreferences.setStringValue(getApplicationContext(), "authkey", "");
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -208,6 +216,7 @@ public class MainActivity extends SuperActivity
         tvActiveBatches = findViewById(R.id.tvActiveBatches);
         btnLogin = findViewById(R.id.btnLogin);
         imgCounterBilling = findViewById(R.id.imgCounterBilling);
+        imgReceipts = findViewById(R.id.imgReceipts);
     }
 
     @Override

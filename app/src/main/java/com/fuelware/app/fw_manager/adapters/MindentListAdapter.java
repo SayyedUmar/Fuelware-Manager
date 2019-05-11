@@ -141,9 +141,9 @@ public class MindentListAdapter extends RecyclerView.Adapter<MindentListAdapter.
             super(itemView);
             this.tvBusinessName = itemView.findViewById(R.id.etBusinessName);
             this.tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
-            this.tvIndentNumber = itemView.findViewById(R.id.tvIndentNumber);
+            this.tvIndentNumber = itemView.findViewById(R.id.tvReceiptNo);
             this.tvVehicleNumber = itemView.findViewById(R.id.tvVehicleNumber);
-            this.tvProduct = itemView.findViewById(R.id.tvProduct);
+            this.tvProduct = itemView.findViewById(R.id.tvAmount);
             this.tvApprove = itemView.findViewById(R.id.tvApprove);
             this.tvSerailNumber = itemView.findViewById(R.id.tvSerailNumber);
             this.tvBlacklistMsg = itemView.findViewById(R.id.tvBlacklistMsg);

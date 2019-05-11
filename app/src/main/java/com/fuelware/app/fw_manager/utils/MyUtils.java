@@ -2,11 +2,14 @@ package com.fuelware.app.fw_manager.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -23,6 +26,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class MyUtils {
 
@@ -336,4 +341,17 @@ public class MyUtils {
 
     }
 
+
+    public static void downloadPDF(Context context, String pdfURL) {
+        try {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(pdfURL.trim()));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "cash_receipts.pdf");
+            DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

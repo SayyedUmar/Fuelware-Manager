@@ -14,11 +14,13 @@ android {
 
         debug {
             buildConfigField ("String", "BASE_URL", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/api/v1/"')
+            buildConfigField ("String", "BASE_URL_2", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/"')
             buildConfigField ("Boolean", "IS_LOG_ENABLED", "true")
         }
 
         release {
             buildConfigField ("String", "BASE_URL", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/api/v1/"')
+            buildConfigField ("String", "BASE_URL_2", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/"')
             buildConfigField ("Boolean", "IS_LOG_ENABLED", "false")
 
             shrinkResources false
@@ -52,6 +54,12 @@ dependencies {
 
     //dmax loader
     implementation 'com.github.d-max:spots-dialog:0.4@aar'
+
+    //butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.yanzhenjie.permission:support:2.0.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

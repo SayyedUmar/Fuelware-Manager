@@ -53,7 +53,7 @@
 
 
                         <TextView
-                            android:id="@+id/tvIndentNumber"
+                            android:id="@+id/tvReceiptNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
@@ -318,7 +318,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tvProduct"
+                        android:id="@+id/tvAmount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

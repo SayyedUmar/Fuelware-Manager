@@ -55,12 +55,12 @@ public class MiDetailsActivity extends SuperActivity {
         tvCustomerName = findViewById(R.id.tvCustomerName);
         tvMobileNumber = findViewById(R.id.tvMobileNumber);
         tvIndentDate = findViewById(R.id.etIndentDate);
-        tvIndentNumber = findViewById(R.id.tvIndentNumber);
+        tvIndentNumber = findViewById(R.id.tvReceiptNo);
         tvVehicleNo = findViewById(R.id.tvVehicleNo);
         tvDriverName = findViewById(R.id.tvDriverName);
         tvDriverMobile = findViewById(R.id.tvDriverMobile);
         tvFillType = findViewById(R.id.tvFillType);
-        tvProduct = findViewById(R.id.tvProduct);
+        tvProduct = findViewById(R.id.tvAmount);
         tvPrice = findViewById(R.id.tvPrice);
         tvLitres = findViewById(R.id.tvLitres);
         tvAmount = findViewById(R.id.tvAmount);
