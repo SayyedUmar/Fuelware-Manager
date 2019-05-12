@@ -347,7 +347,7 @@ public class MyUtils {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(pdfURL.trim()));
             request.allowScanningByMediaScanner();
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "cash_receipts.pdf");
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "receipts_pdf.pdf");
             DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
             dm.enqueue(request);
         } catch (Exception e) {

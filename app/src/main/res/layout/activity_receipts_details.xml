@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:background="#e3e3e3"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/general_et_background"
+            >
+
+            <TableLayout
+
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Receipt Number"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvReceiptNo"
+                        android:text="Receipt Number"
+                        android:layout_marginLeft="30dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Business Name"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/quicksand"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvBusinessName"
+                        tools:text="Business Number Business Number Business Number Business Number"
+                        android:layout_marginLeft="30dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+
+                        android:text="Customer Name"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvCustomerName"
+                        tools:text="Customer Name"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Mobile Number "
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvMobile"
+                        tools:text="Mobile"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Email"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvEmail"
+                        tools:text="Email"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trBankName"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Bank Name"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvBankName"
+                        tools:text="Email"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trBranch"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Bank Branch"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvBranch"
+                        tools:text="Email"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trChequeDate"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Cheque Date"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvChequeDate"
+                        android:layout_weight="1"
+                        tools:text="Email"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trChequeNumber"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Cheque Number"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/chequeNumber"
+                        android:layout_weight="1"
+                        tools:text="Email"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <TextView
+                        android:text="Remark"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvRemark"
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="20dp"
+
+                        tools:text="Remarsdfasfsa asfasf asdf asf dfas  fasfadsfsadf sk   "
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        android:maxLines="4"
+                        android:gravity="left"
+                        />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="Amount"
+                        android:textColor="@color/gray_dark"
+                        android:fontFamily="@font/quicksand"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvAmount"
+                        android:layout_weight="1"
+                        tools:text="Amont"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="16sp"
+                        />
+
+                </TableRow>
+
+            </TableLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </ScrollView>
+
+</LinearLayout>

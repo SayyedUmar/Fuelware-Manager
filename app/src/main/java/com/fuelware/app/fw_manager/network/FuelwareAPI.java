@@ -1,11 +1,13 @@
 package com.fuelware.app.fw_manager.network;
 
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
+import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
-import com.fuelware.app.fw_manager.models.IndentModel;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -90,7 +92,9 @@ public interface FuelwareAPI {
 
 
     @GET("outlet/manager/receipt?payment-mode=cash")
-    Call<ResponseBody> getCashReceiptsList(@Header("Authorization") String value);
+    Call<ResponseBody> getReceiptsList(@Header("Authorization") String value,
+                                       @Query("payment-mode") String paymentMode);
+
 
 
     @DELETE("outlet/manager/receipt/{receipt_id}")
@@ -106,6 +110,21 @@ public interface FuelwareAPI {
 
 
     @GET("outlet/manager/search")
-    Call<ResponseBody> getCreditCustomerList(@Header("Authorization") String value);
+    Observable<Response<ResponseBody>> getCreditCustomerList(@Header("Authorization") String value);
 
+
+    @POST("outlet/manager/receipt?")
+    Call<ResponseBody> addCashReceipt(@Header("Authorization")String authkey,
+                                      @Body ReceiptModel model,
+                                      @Query("payment-mode") String paymentMode);
+
+
+    @GET("outlet/e-wallet")
+    Observable<Response<ResponseBody>> getAllEwallets(@Header("Authorization")String authkey);
+
+    @PUT("outlet/manager/receipt/{receiptID}?")
+    Call<ResponseBody> updateCashReceipt(@Header("Authorization")String authkey,
+                                         @Path("receiptID") String receiptID,
+                                         @Body ReceiptModel model,
+                                         @Query("payment-mode") String mode);
 }

@@ -10,161 +10,296 @@
     tools:context=".activities.ReceiptsActivity"
     >
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1,2"
-        android:padding="20dp"
+        android:layout_height="wrap_content">
 
-        >
-
-        <TableRow
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:stretchColumns="1,2"
+            android:padding="20dp"
             >
 
-            <android.support.v7.widget.CardView
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_column="1"
+                android:layout_height="wrap_content"
+
                 >
 
-                <LinearLayout
-                    android:id="@+id/linlayCashReceipt"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/gray_light"
-                    android:gravity="center">
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/linlayCashReceipt"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
 
-                        />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_margin="10dp"
-                        android:text="Cash Receipts"
-                        />
+                            />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Cash Receipts"
+                            />
 
-            </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
-            <android.support.v7.widget.CardView
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linlayChequeReceipt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Cheque Receipts"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_column="1"
-                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 >
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/gray_light"
-                    android:gravity="center">
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/linlayEwallet"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
 
-                        />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_margin="10dp"
-                        android:text="Cheque Receipts"
-                        />
+                            />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="E-Wallets"
+                            />
 
-            </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
-        </TableRow>
+                </android.support.v7.widget.CardView>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            >
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
 
-            <android.support.v7.widget.CardView
+                    <LinearLayout
+                        android:id="@+id/linlayloyalty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Loyalty Card"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_column="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 >
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/gray_light"
-                    android:gravity="center">
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/linlayCredit"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
 
-                        />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_margin="10dp"
-                        android:text="E-Wallets"
-                        />
+                            />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Credit Card"
+                            />
 
-            </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
-            <android.support.v7.widget.CardView
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linlayDebit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Debit Card"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_column="1"
-                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 >
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/gray_light"
-                    android:gravity="center">
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/linlayOnlinePayment"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".6"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/gray_light"
+                        android:gravity="center">
 
-                        />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_margin="10dp"
-                        android:text="Loyalty Cards"
-                        />
+                            />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="10dp"
+                            android:text="Online Payment"
+                            />
 
-            </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
-        </TableRow>
+                </android.support.v7.widget.CardView>
 
-    </TableLayout>
+                <android.support.v7.widget.CardView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_column="1"
+                    >
+
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

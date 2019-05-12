@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f1e080"
+    >
+
+    <TextView
+        android:id="@+id/itemName"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="#009900"
+        android:textSize="15dp"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:ellipsize="marquee"
+        />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/itemDel"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="10dp"
+
+        />
+
+</FrameLayout>

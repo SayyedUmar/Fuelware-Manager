@@ -7,8 +7,10 @@ public class CreditCustomer {
     private String first_name;
     private String last_name;
     private String mobile;
+    private String email;
     private boolean has_blacklisted;
     private boolean verify_credit_limit;
+    public String formatted_role;
 
     public boolean isVerify_credit_limit() {
         return verify_credit_limit;
@@ -16,6 +18,14 @@ public class CreditCustomer {
 
     public void setVerify_credit_limit(boolean verify_credit_limit) {
         this.verify_credit_limit = verify_credit_limit;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public CreditCustomer() {}

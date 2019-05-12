@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     >
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnAdd"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|right"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_add_white"
-        tools:ignore="VectorDrawableCompat" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
@@ -37,6 +28,18 @@
         android:text="No records found"
         android:layout_gravity="center"
         android:gravity="center"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|right"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_add_white"
+        tools:ignore="VectorDrawableCompat"
+        app:fabCustomSize="60dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

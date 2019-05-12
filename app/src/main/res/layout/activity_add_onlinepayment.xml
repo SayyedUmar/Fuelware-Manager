@@ -42,7 +42,10 @@
                     android:hint="Select Business*"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:imeActionId="111"
+                    />
 
 
                 <TextView
@@ -70,7 +73,9 @@
                     android:enabled="false"
                     android:focusable="false"
                     android:textColor="@color/gray_dark"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+
+                    />
 
 
                 <TextView
@@ -129,6 +134,65 @@
                     />
 
                 <TextView
+                    android:text="RTGS/NEFT Date *"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etTransDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/general_et_background"
+                    android:hint="RTGS/NEFT Date *"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_dark"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:imeActionId="112"
+                    android:imeOptions="actionNext"
+                    android:focusable="false"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RTGS/NEFT Number *"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etTransNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/general_et_background"
+                    android:hint="RTGS/NEFT Number *"
+                    android:maxLength="16"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_dark"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:imeActionId="113"
+                    android:imeOptions="actionNext"
+                    />
+
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Remarks *"
@@ -139,21 +203,23 @@
                     />
 
                 <EditText
-                    android:id="@+id/etRemark"
-                    android:digits="@string/SCWS_SET"
+                    android:id="@+id/etRemarks"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/general_et_background"
-                    android:hint="Remarks"
-                    android:maxLength="15"
+                    android:hint="Remarks *"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
                     android:singleLine="false"
                     android:textColor="@color/gray_dark"
-                    android:inputType="textPostalAddress"
+                    android:inputType="textMultiLine"
                     android:lines="4"
+                    android:gravity="left|top"
+                    android:maxLength="200"
+                    android:imeActionId="116"
+                    android:imeOptions="actionNext"
                     />
 
                 <TextView
@@ -168,13 +234,13 @@
 
                 <EditText
                     android:id="@+id/etAmount"
-                    android:digits="@string/SCWS_SET"
+                    android:digits="@string/D_SET"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/general_et_background"
-                    android:hint="Remarks"
+                    android:hint="Amount *"
                     android:maxLength="15"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
@@ -182,6 +248,8 @@
                     android:textColor="@color/gray_dark"
                     android:inputType="numberDecimal"
                     android:lines="1"
+                    android:imeActionId="117"
+                    android:imeOptions="actionNext"
                     />
 
                 <CheckBox
@@ -190,13 +258,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textColor="@color/text_black"
-                    android:text="Receipt Number (Manual) ?"
+                    android:text="Receipt Number (Manual)"
                     android:checked="false"
                     />
 
                 <LinearLayout
-                    android:id="@+id/linlayReceiptNumber"
                     android:visibility="gone"
+                    android:id="@+id/linlayReceiptNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -213,20 +281,22 @@
 
                     <EditText
                         android:id="@+id/etReceiptNumber"
-                        android:digits="@string/SCWS_SET"
+                        android:digits="@string/SCI_SET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/general_et_background"
-                        android:hint="Receipt Numbeer"
-                        android:maxLength="15"
+                        android:hint="Receipt Number *"
+                        android:maxLength="16"
                         android:padding="10dp"
                         android:fontFamily="@font/quicksand_medium"
                         android:singleLine="true"
                         android:textColor="@color/gray_dark"
                         android:inputType="text"
                         android:lines="1"
+                        android:imeActionId="118"
+                        android:imeOptions="actionNext"
                         />
 
                 </LinearLayout>
@@ -245,7 +315,10 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:fontFamily="@font/quicksand_medium"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal|bold"
+                    android:imeActionId="119"
+                    android:imeOptions="actionDone"
+                    />
 
             </LinearLayout>
 

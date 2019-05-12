@@ -16,10 +16,11 @@ import android.widget.TextView;
 import com.fuelware.app.fw_manager.Const.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.adapters.CashReceiptAdapter;
-import com.fuelware.app.fw_manager.models.CashReceiptModel;
+import com.fuelware.app.fw_manager.adapters.EwalletAdapter;
+import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
+import com.fuelware.app.fw_manager.network.RxBus;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
@@ -29,21 +30,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CashReceiptActivity extends SuperActivity {
+public class EwalletListActivity extends SuperActivity {
 
-
+    private AlertDialog progress;
     private Gson gson;
-    private CashReceiptAdapter adapter;
     private String authkey;
+    private EwalletAdapter adapter;
 
     @BindView(R.id.tvNoRecordsFound)
     TextView tvNoRecordsFound;
@@ -52,24 +56,42 @@ public class CashReceiptActivity extends SuperActivity {
     @BindView(R.id.btnAdd)
     FloatingActionButton btnAdd;
 
-    private List<CashReceiptModel> list = new ArrayList<>();
-    private AlertDialog progress;
+    private List<ReceiptModel> list = new ArrayList<>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_cash_receipts);
+        setContentView(R.layout.activity_receipts_list);
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
-        setTitle("Cash Receipts Activity");
+        setTitle("E-Wallet Receipts");
 
         initialize();
         setupRecycler();
         setEventListeners();
         getCashReceipts();
+        setObservers();
+    }
 
+    private void setObservers() {
+        compositeDisposable.add(RxBus.getInstance().toObservable().subscribe(new Consumer<Map<Object, Object>>() {
+            @Override
+            public void accept(Map<Object, Object> map) throws Exception {
+                try {
+                    if (map.containsKey(RxBus.ADD_ACTION)) {
+                        Object object = map.get(RxBus.ADD_ACTION);
+                        if (object instanceof ReceiptModel){
+                            list.add(0, (ReceiptModel) object);
+                        }
+                    }
+                    adapter.refresh();
+                    showNoRecordsFound();
+                } catch (Exception e) { e.printStackTrace(); }
+            }
+        }));
     }
 
     private void setupRecycler() {
@@ -79,7 +101,7 @@ public class CashReceiptActivity extends SuperActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-        adapter = new CashReceiptAdapter(list, this);
+        adapter = new EwalletAdapter(list, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -90,7 +112,8 @@ public class CashReceiptActivity extends SuperActivity {
     }
 
     private void setEventListeners() {
-        btnAdd.setOnClickListener(v -> startActivity(new Intent(this, AddCashReceiptActivity.class)));
+        btnAdd.setOnClickListener(v -> startActivity(new Intent(this, AddEwalletActivity.class)
+                .putExtra("IS_CHEQUE", false)));
     }
 
     private void getCashReceipts() {
@@ -101,7 +124,7 @@ public class CashReceiptActivity extends SuperActivity {
 
         progress.show();
 
-        APIClient.getApiService().getCashReceiptsList(authkey).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().getReceiptsList(authkey, "e-wallet").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -112,12 +135,12 @@ public class CashReceiptActivity extends SuperActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             JSONObject customer = object.getJSONObject("customer");
-                            CashReceiptModel model = gson.fromJson(object.toString(), CashReceiptModel.class);
-                            model.setCustomer_id(customer.getString("customer_id"));
-                            model.setcName(customer.getString("name"));
-                            model.setcMobile(customer.getString("mobile"));
-                            model.setcEmail(customer.getString("email"));
-                            model.setcBusiness(customer.getString("business"));
+                            ReceiptModel model = gson.fromJson(object.toString(), ReceiptModel.class);
+//                            model.setCustomer_id(customer.getString("customer_id"));
+//                            model.setName(customer.getString("name"));
+//                            model.setMobile(customer.getString("mobile"));
+//                            model.setEmail(customer.getString("email"));
+//                            model.setBusiness(customer.getString("business"));
                             list.add(model);
                         }
                         adapter.refresh();
@@ -155,7 +178,7 @@ public class CashReceiptActivity extends SuperActivity {
         }
     }
 
-    public void deleteReceipt(CashReceiptModel model, int index, Dialog dialog) {
+    public void deleteReceipt(ReceiptModel model, int index, Dialog dialog) {
         if (!MyUtils.hasInternetConnection(getApplicationContext())) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;
@@ -163,13 +186,13 @@ public class CashReceiptActivity extends SuperActivity {
 
         progress.show();
 
-        APIClient.getApiService().deleteCashReceipt(authkey, model.getReceipt_number()).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().deleteCashReceipt(authkey, model.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        MLog.showToast(CashReceiptActivity.this, jsonObject.getString("message"));
+                        MLog.showToast(EwalletListActivity.this, jsonObject.getString("message"));
                         list.remove(index);
                         adapter.refresh();
                         dialog.dismiss();

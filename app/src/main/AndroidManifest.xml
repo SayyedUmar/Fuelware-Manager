@@ -80,7 +80,57 @@
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.CashReceiptActivity"
+            android:name=".activities.ReceiptListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.AddReceiptActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.ReceiptDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.ChequeReceiptListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.EwalletListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.EwalletDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.AddEwalletActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.OnlinePaymentListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.OnlinePaymentDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.AddOnlinePaymentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.EditReceiptActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 

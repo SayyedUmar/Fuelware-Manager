@@ -1,42 +1,35 @@
 package com.fuelware.app.fw_manager.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.Const.Const;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.models.IndentModel;
-import com.fuelware.app.fw_manager.network.APIClient;
-import com.fuelware.app.fw_manager.network.MLog;
-import com.fuelware.app.fw_manager.utils.MyUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dmax.dialog.SpotsDialog;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ReceiptsActivity extends SuperActivity {
 
 
     @BindView(R.id.linlayCashReceipt)
     LinearLayout linlayCashReceipt;
+    @BindView(R.id.linlayChequeReceipt)
+    LinearLayout linlayChequeReceipt;
+    @BindView(R.id.linlayEwallet)
+    LinearLayout linlayEwallet;
+    @BindView(R.id.linlayOnlinePayment)
+    LinearLayout linlayOnlinePayment;
+    @BindView(R.id.linlayDebit)
+    LinearLayout linlayDebit;
+    @BindView(R.id.linlayCredit)
+    LinearLayout linlayCredit;
+    @BindView(R.id.linlayloyalty)
+    LinearLayout linlayloyalty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +39,7 @@ public class ReceiptsActivity extends SuperActivity {
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
-        setTitle("Receipts Activity");
+        setTitle("Receipts");
 
         initialise();
         setEventListeners();
@@ -61,7 +54,30 @@ public class ReceiptsActivity extends SuperActivity {
 
     private void setEventListeners() {
         linlayCashReceipt.setOnClickListener(v -> {
-            startActivity(new Intent(this, CashReceiptActivity.class));
+            startActivity(new Intent(this, ReceiptListActivity.class)
+                    .putExtra(Const.RECEIPT_TYPE,  Const.RECEIPT_CASH));
+        });
+        linlayChequeReceipt.setOnClickListener(v -> {
+            startActivity(new Intent(this, ChequeReceiptListActivity.class)
+                    .putExtra(Const.RECEIPT_TYPE,  Const.RECEIPT_CHEQUE));
+        });
+        linlayEwallet.setOnClickListener(v -> {
+            startActivity(new Intent(this, EwalletListActivity.class));
+        });
+        linlayOnlinePayment.setOnClickListener(v -> {
+            startActivity(new Intent(this, OnlinePaymentListActivity.class));
+        });
+        linlayCredit.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReceiptListActivity.class)
+                    .putExtra(Const.RECEIPT_TYPE,  Const.RECEIPT_CREDIT));
+        });
+        linlayDebit.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReceiptListActivity.class)
+                    .putExtra(Const.RECEIPT_TYPE,  Const.RECEIPT_DEBIT));
+        });
+        linlayloyalty.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReceiptListActivity.class)
+                    .putExtra(Const.RECEIPT_TYPE,  Const.RECEIPT_LOYALTY));
         });
     }
 
