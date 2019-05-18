@@ -117,8 +117,8 @@ public class CashierDashboardActivity extends SuperActivity {
                         String start_time = batch.getString("start_time");
                         tvLoginTime.setText(MyUtils.dateToString(AppConst.SERVER_DATE_TIME_FORMAT, AppConst.APP_DATE_TIME_FORMAT, start_time));
 
-                        if (data.has("counts")) {
-                            tvMindentCount.setText(data.getJSONObject("counts").getString("manual_indent"));
+                        if (data.has("pending")) {
+                            tvMindentCount.setText(data.getJSONObject("pending").getString("manual_indent"));
                         }
                     } else {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());

@@ -134,6 +134,25 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
+        <activity
+            android:name=".activities.MorningParamsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.ReportsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.AccountStatementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+        <activity
+            android:name=".activities.AccountDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
     </application>
 
 </manifest>

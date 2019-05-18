@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linLayoutvehicleadd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="0dp"
+    android:paddingLeft="0dp"
+    android:paddingBottom="0dp"
+    android:paddingRight="0dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/card_background"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    >
+
+    <include layout="@layout/layout_serial_number" />
+
+    <LinearLayout
+        android:id="@+id/transactions_cardreferance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSerailNumber"
+        android:orientation="horizontal"
+        >
+
+
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvIndentNumberLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indent Number"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="8sp"
+                />
+
+            <TextView
+                android:id="@+id/txn_indentno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A 87878"
+                android:layout_marginBottom="10dp"
+                android:textSize="14sp"
+                android:textColor="@color/light_black2"
+                />
+
+            <TextView
+                android:id="@+id/tvVehicleNumberLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Number"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="8sp"
+                />
+
+            <TextView
+                android:id="@+id/txn_vehicleno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MH 787878"
+                android:layout_marginBottom="10dp"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                />
+
+            <TextView
+                android:id="@+id/tvFuelingDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fueling Date"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="8sp"
+                />
+
+            <TextView
+                android:id="@+id/txn_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="19 NOV 2018"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txn_debit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Debit"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txn_credit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Credit"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txn_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

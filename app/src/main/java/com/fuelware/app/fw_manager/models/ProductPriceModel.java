@@ -6,7 +6,10 @@ public class ProductPriceModel implements Serializable {
 
     private String id;
     private String product;
+    private String product_id;
     private double price;
+
+
 
     public String getId() {
         return id;

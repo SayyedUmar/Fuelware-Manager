@@ -47,9 +47,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     Context mContext;
     private Dialog progressDialog;
 
-    public ProductListAdapter(ArrayList<ProductsPojo> data, CounterBillActivity counterBillActivity) {
+    public ProductListAdapter(ArrayList<ProductsPojo> data, Context context) {
         this.dataSet = data;
-        this.mContext = counterBillActivity;
+        this.mContext = context;
         progressDialog = new SpotsDialog(mContext, style.Custom);
     }
 

@@ -201,6 +201,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/linlayCounterBilling"
                 android:layout_below="@+id/center_layout"
                 android:layout_marginTop="-40dp"
@@ -233,6 +234,7 @@
             </LinearLayout>
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imgCrown"
                 android:layout_below="@+id/center_layout"
                 android:layout_toRightOf="@+id/linlayCounterBilling"

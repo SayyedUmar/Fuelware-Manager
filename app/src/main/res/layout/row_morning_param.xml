@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green_lightest"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tvProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Petrol"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/text_black"
+                android:textSize="18sp"
+
+                />
+
+            <LinearLayout
+                android:id="@+id/linlayEdit"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="100dp"
+                >
+
+                <EditText
+                    android:id="@+id/etRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:hint="Enter Rate"
+                    android:digits="@string/D_SET"
+                    android:inputType="numberDecimal"
+
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="14sp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/etConfirmRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etRate"
+                    android:layout_marginTop="4dp"
+                    android:hint="Confirm Rate"
+                    android:digits="@string/D_SET"
+                    android:inputType="numberDecimal"
+
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="14sp"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlayView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="100dp"
+                >
+
+                <TextView
+                    android:id="@+id/tvRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/general_et_background"
+                    android:padding="10dp"
+                    tools:text="Enter Rate"
+
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="14sp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvConfirmRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/general_et_background"
+                    android:padding="10dp"
+                    android:layout_below="@+id/etRate"
+                    android:layout_marginTop="4dp"
+                    tools:text="Confirm Rate"
+
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="14sp"
+
+                    />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

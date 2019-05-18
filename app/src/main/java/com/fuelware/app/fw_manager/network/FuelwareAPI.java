@@ -1,6 +1,7 @@
 package com.fuelware.app.fw_manager.network;
 
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
+import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 
@@ -127,4 +128,40 @@ public interface FuelwareAPI {
                                          @Path("receiptID") String receiptID,
                                          @Body ReceiptModel model,
                                          @Query("payment-mode") String mode);
+
+    @POST("outlet/manager/price")
+    Call<ResponseBody> updateMorningParams(@Header("Authorization")String authkey,
+                                           @Body MorningParamsActivity.Products products);
+    //res ; {"success":true,"message":"","data":[{"id":4233,"product_id":14,"price":"40"},{"id":4234,"product_id":15,"price":"20"}]}
+
+
+    @GET("outlet/manager/report/credit-customer")
+    Call<ResponseBody> getAccountStatementNew(@Header("Authorization") String value,
+                                              @Query("date_from") String date_from,
+                                              @Query("date_to") String date_to,
+                                              @Query("credit") boolean credit,
+                                              @Query("debit") boolean debit
+
+    );
+
+    @GET("outlet/manager/report/credit-customer")
+    Call<ResponseBody> getAccountStatementNew1(@Header("Authorization") String value,
+                                              @Query("date_from") String date_from,
+                                              @Query("date_to") String date_to,
+                                              @Query("credit") boolean credit,
+                                              @Query("debit") boolean debit,
+                                              @Query("customer_id") String customer_id,
+                                              @Query("file-header") boolean header,
+                                              @Query("paginate") boolean paginate
+
+    );
+
+    @GET("outlet/manager/report/credit-customer?file=pdf")
+    Call<ResponseBody> generateAccountStatementPDF(@Header("Authorization") String value,
+                                                   @Query("date_from") String date_from,
+                                                   @Query("date_to") String date_to,
+                                                   @Query("credit") boolean credit,
+                                                   @Query("debit") boolean debit,
+                                                   @Query("file-header") boolean header
+    );
 }

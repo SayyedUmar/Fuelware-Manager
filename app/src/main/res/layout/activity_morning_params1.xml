@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:text="Petrol"
+        android:textColor="@color/red1"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:drawableRight="@drawable/ic_dropdown_circle"
+
+        android:layout_marginTop="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate *"
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etProduct"
+        />
+
+    <EditText
+        android:id="@+id/etRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Rate *"
+        android:fontFamily="@font/quicksand"
+
+        app:layout_constraintTop_toBottomOf="@+id/tv11"
+
+        />
+
+    <TextView
+        android:id="@+id/tv12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate *"
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRate"
+        />
+
+    <EditText
+        android:id="@+id/etConfirmRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Todays Rate"
+        android:fontFamily="@font/quicksand"
+
+        app:layout_constraintTop_toBottomOf="@+id/tv12"
+
+        />
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center|bottom"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_medium"
+        android:textStyle="normal|bold"
+        android:imeActionId="119"
+        android:imeOptions="actionDone"
+
+        app:layout_constraintTop_toBottomOf="@+id/etConfirmRate"
+        />
+
+</android.support.constraint.ConstraintLayout>

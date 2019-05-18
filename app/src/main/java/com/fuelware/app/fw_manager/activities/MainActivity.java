@@ -41,6 +41,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -61,10 +63,16 @@ public class MainActivity extends SuperActivity
     private List<Cashier> cashierList = new ArrayList<>();
     private ImageView imgReceipts, imgCounterBilling;
 
+    @BindView(R.id.imgMorningParams)
+    ImageView imgMorningParams;
+    @BindView(R.id.imgReports)
+    ImageView imgReports;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setupBackNavigation(toolbar);
 
@@ -99,6 +107,14 @@ public class MainActivity extends SuperActivity
     }
 
     private void setEventListeners() {
+
+        imgMorningParams.setOnClickListener(v -> {
+            startActivity(new Intent(this, MorningParamsActivity.class));
+        });
+
+        imgReports.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReportsActivity.class));
+        });
 
         tvFuelPrice.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(this, tvFuelPrice);

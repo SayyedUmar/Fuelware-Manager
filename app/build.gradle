@@ -69,6 +69,9 @@ dependencies {
 //    implementation 'com.orhanobut:dialogplus:1.11@aar'
 //    implementation 'com.tapadoo.android:alerter:4.0.2'
 
+    //calendar library
+    implementation 'com.github.psinetron:slycalendarview:0.0.9'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

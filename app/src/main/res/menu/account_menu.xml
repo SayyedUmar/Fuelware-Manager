@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.rivchat.MainActivity">
+    <item
+        android:id="@+id/menu_download_pdf"
+        android:orderInCategory="200"
+        android:title="Searchalert"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_pdf"
+        android:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/search_trnx"
+        android:orderInCategory="100"
+        android:title="Searchalert"
+        app:showAsAction="always|collapseActionView"
+        android:icon="@drawable/ic_search"
+        />
+
+    <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="202"
+        android:title="filter"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        >
+
+        <menu xmlns:android="http://schemas.android.com/apk/res/android"
+            >
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_all"
+                    android:orderInCategory="100"
+                    android:title="All"
+                    android:checked="true"
+                    />
+
+                <item
+                    android:id="@+id/action_credit"
+                    android:orderInCategory="100"
+                    android:title="Credit"
+                    />
+
+                <item
+                    android:id="@+id/action_debit"
+                    android:orderInCategory="100"
+                    android:title="Debit"
+                    />
+            </group>
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/action_calendar"
+        android:orderInCategory="201"
+        android:title="filter"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_calendar"
+        />
+
+</menu>
