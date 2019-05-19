@@ -3,6 +3,7 @@ package com.fuelware.app.fw_manager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.fuelware.app.fw_manager.R;
@@ -41,5 +42,16 @@ public class ReportsActivity extends SuperActivity {
 
     private void setEventListeners() {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

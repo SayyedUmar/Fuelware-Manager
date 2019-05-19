@@ -28,7 +28,7 @@ public class AccountDetailActivity extends SuperActivity {
         setContentView(R.layout.activity_account_detail);
         setupBackNavigation(null);
         findViewById();
-        model = (AccountModel) getIntent().getSerializableExtra("account_model");
+        model = getIntent().getParcelableExtra("account_model");
         setValues();
     }
 

@@ -37,7 +37,24 @@ public class AccountModel implements Parcelable {
     public String litre;
     public String remark;
     public String invoice_number;
+    public String business;
+    public String customer_id;
 
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
 
     public String getUpdatedAt() {
         return updatedAt;
@@ -155,6 +172,9 @@ public class AccountModel implements Parcelable {
         return MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, fillingDate);
     }
 
+    public AccountModel() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -176,9 +196,8 @@ public class AccountModel implements Parcelable {
         dest.writeString(this.litre);
         dest.writeString(this.remark);
         dest.writeString(this.invoice_number);
-    }
-
-    public AccountModel() {
+        dest.writeString(this.business);
+        dest.writeString(this.customer_id);
     }
 
     protected AccountModel(Parcel in) {
@@ -196,9 +215,11 @@ public class AccountModel implements Parcelable {
         this.litre = in.readString();
         this.remark = in.readString();
         this.invoice_number = in.readString();
+        this.business = in.readString();
+        this.customer_id = in.readString();
     }
 
-    public static final Parcelable.Creator<AccountModel> CREATOR = new Parcelable.Creator<AccountModel>() {
+    public static final Creator<AccountModel> CREATOR = new Creator<AccountModel>() {
         @Override
         public AccountModel createFromParcel(Parcel source) {
             return new AccountModel(source);

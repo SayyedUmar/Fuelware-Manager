@@ -76,46 +76,24 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linlayView"
+
+            <TextView
+                android:id="@+id/tvRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:background="@drawable/general_et_background"
+                android:padding="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="100dp"
-                >
+                tools:text="Enter Rate"
 
-                <TextView
-                    android:id="@+id/tvRate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:padding="10dp"
-                    tools:text="Enter Rate"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/gray_dark"
+                android:textSize="14sp"
 
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="14sp"
+                />
 
-                    />
 
-                <TextView
-                    android:id="@+id/tvConfirmRate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:padding="10dp"
-                    android:layout_below="@+id/etRate"
-                    android:layout_marginTop="4dp"
-                    tools:text="Confirm Rate"
-
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="14sp"
-
-                    />
-
-            </LinearLayout>
 
 
         </RelativeLayout>

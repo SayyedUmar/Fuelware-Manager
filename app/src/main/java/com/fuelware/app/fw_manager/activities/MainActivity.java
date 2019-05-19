@@ -97,8 +97,51 @@ public class MainActivity extends SuperActivity
 
         setEventListeners();
         getuserProfile();
-        fetchProducts();
         fetchCashiers();
+        fetchProducts();
+        fetchMorningPrice();
+    }
+
+    private void fetchMorningPrice() {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(this, AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        Call<ResponseBody> call_getProducts;
+        call_getProducts = APIClient.getApiService().getManagerOutletProducts(authkey);
+        call_getProducts.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray dataArray = jsonObject.getJSONArray("data");
+                        Type token = new TypeToken<List<ProductPriceModel>>(){}.getType();
+                        List<ProductPriceModel> tempList = gson.fromJson(dataArray.toString(), token);
+                        if (tempList.get(0).getPrice() == 0) {
+                            showMorningPriceUpdatePopup();
+                        }
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }
+
+    private void showMorningPriceUpdatePopup() {
+
     }
 
     @Override
@@ -148,9 +191,9 @@ public class MainActivity extends SuperActivity
         imgCounterBilling.setOnClickListener(v -> {
             if (MyPreferences.getBoolValue(this, AppConst.LOGIN_STATUS)) {
 //                if (MyPreferences.getBoolValue(MainActivity.this, AppConst.MORNING_PARAMETERS_STATUS)) {
-                    startActivity(new Intent(MainActivity.this, CounterBillActivity.class));
+                startActivity(new Intent(MainActivity.this, CounterBillActivity.class));
 //                } else {
-                    //showMorningParamsUdpateDialog(null);
+                //showMorningParamsUdpateDialog(null);
 //                }
             } else {
                 MLog.showToast(getApplicationContext(), "Please login to the batch first.");
@@ -254,11 +297,11 @@ public class MainActivity extends SuperActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            startActivity(new Intent(this, ChangePasswordActivity.class));
         } else if (id == R.id.nav_slideshow) {
-
+            startActivity(new Intent(this, ProfileActivity.class));
         } else if (id == R.id.nav_tools) {
-
+            startActivity(new Intent(this, PlansActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -334,6 +377,11 @@ public class MainActivity extends SuperActivity
                         List<Cashier> tempList = gson.fromJson(dataArray.toString(), token);
                         cashierList.clear();
                         cashierList.addAll(tempList);
+                        if (dataArray.length() == 0) {
+                            tvActiveBatches.setVisibility(View.GONE);
+                        } else{
+                            tvActiveBatches.setVisibility(View.VISIBLE);
+                        }
                         //recyclerView.getAdapter().notifyDataSetChanged();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());

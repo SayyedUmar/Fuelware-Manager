@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:id="@+id/etVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:text="Credit Customer Management"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/gray_dark"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Plant Type"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:text="Indent Type"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/gray_dark"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Plans"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:id="@+id/tvViewPlans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/green_light_color1"
+                android:text="View Plans"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Apply Coupon"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/quicksand_medium"
+                android:backgroundTint="@color/colorAccent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Price"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Price"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Coupon Discount"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Coupon Discount"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Subtotal"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Coupon Discount"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="GST"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Coupon Discount"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Total"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Coupon Discount"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="100dp"
+                android:paddingRight="100dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="PAY"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/colorPrimary"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,7 +107,7 @@ public  class MorningParamsActivity extends SuperActivity {
         progress.show();
 
         Call<ResponseBody> call_getProducts;
-        call_getProducts = APIClient.getApiService().getOutletProducts(authkey);
+        call_getProducts = APIClient.getApiService().getManagerOutletProducts(authkey);
         call_getProducts.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -119,6 +120,9 @@ public  class MorningParamsActivity extends SuperActivity {
                         list.clear();
                         list.addAll(tempList);
                         MyPreferences.setStringValue(MorningParamsActivity.this, AppConst.PRODUCTS_LIST, dataArray.toString());
+                        boolean isUpdated = list.get(0).getPrice() < 1;
+                        adapter.setEditable(isUpdated);
+                        btnSubmit.setVisibility(isUpdated ? View.VISIBLE : View.GONE);
                         adapter.refresh();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -173,7 +177,7 @@ public  class MorningParamsActivity extends SuperActivity {
         Products p = new Products();
         int count = 0;
         for (ProductPriceModel m : list) {
-            if (m.getPrice() < 1) {
+            if (m.getPrice() == 0) {
                 MLog.showToast(getApplicationContext(), "All fields are mandatory..");
                 break;
             }
@@ -193,7 +197,7 @@ public  class MorningParamsActivity extends SuperActivity {
 
         progress.show();
 
-        APIClient.getApiService().updateMorningParams(authkey, p).enqueue(new Callback<ResponseBody>() {
+        /*APIClient.getApiService().updateMorningParams(authkey, p).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -220,7 +224,7 @@ public  class MorningParamsActivity extends SuperActivity {
                 progress.dismiss();
                 MLog.showToast(getApplicationContext(), t.getMessage());
             }
-        });
+        });*/
     }
 
     @Override
@@ -235,6 +239,7 @@ public  class MorningParamsActivity extends SuperActivity {
     public static class Products {
         public List<ProductPriceModel> products = new ArrayList<>();
     }
+
 
 //    confirm_price	30
 //    errorPrice	false

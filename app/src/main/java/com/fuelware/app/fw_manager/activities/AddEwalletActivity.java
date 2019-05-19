@@ -297,16 +297,18 @@ public class AddEwalletActivity extends SuperActivity {
         etWalletName.setOnClickListener(v -> {
             hideSoftKeyboard();
             DialogPlus dialog = DialogPlus.newDialog(this)
-                    .setAdapter((BaseAdapter) adapter)
+                    .setAdapter(adapter)
+                    .setContentHeight(MyUtils.dpToPx(200))
                     .setOnItemClickListener((dialog1, item, view, position) -> {
                         dialog1.dismiss();
                         etWalletName.setText(((EWallet)item).getName());
                     })
                     .setCancelable(true)
-                    .setExpanded(false)  // This will enable the expand feature, (similar to android L share dialog)
+                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                     .setFooter(R.layout.dialog_footer)
                     .create();
             dialog.show();
+            dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialog.dismiss());
         });
 
         chkReceiptManual.setOnCheckedChangeListener((buttonView, isChecked) -> {

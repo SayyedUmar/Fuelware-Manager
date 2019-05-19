@@ -1,5 +1,6 @@
 package com.fuelware.app.fw_manager.network;
 
+import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
@@ -38,6 +39,9 @@ public interface FuelwareAPI {
 
     @GET("common/outlet-products")
     Call<ResponseBody> getOutletProducts(@Header("Authorization") String value);
+
+    @GET("outlet/manager/morning-detail?type=product")
+    Call<ResponseBody> getManagerOutletProducts(@Header("Authorization") String value);
 
     @GET("outlet/manager/cashier")
     Call<ResponseBody> getCashiers(@Header("Authorization") String value);
@@ -140,7 +144,8 @@ public interface FuelwareAPI {
                                               @Query("date_from") String date_from,
                                               @Query("date_to") String date_to,
                                               @Query("credit") boolean credit,
-                                              @Query("debit") boolean debit
+                                              @Query("debit") boolean debit,
+                                              @Query("customer_id") String customer_id
 
     );
 
@@ -162,6 +167,28 @@ public interface FuelwareAPI {
                                                    @Query("date_to") String date_to,
                                                    @Query("credit") boolean credit,
                                                    @Query("debit") boolean debit,
-                                                   @Query("file-header") boolean header
+                                                   @Query("file-header") boolean header,
+                                                   @Query("customer_id") String customer_id,
+                                                   @Query("paginate") boolean paginate
     );
+
+    @POST("common/update-password")
+    Observable<Response<ResponseBody>> changePassword(@Header("Authorization") String value,
+                                                      @Body ChangePasswordActivity.ChangePasswordModel item);
+
+    @GET("outlet/common/payment-plans")
+    Call<ResponseBody> getPlans(@Header("Authorization") String value,
+                                @Query("duration") String duration,
+                                @Query("has_sms") boolean hasSms
+
+    );
+
+    @GET("outlet/common/payment-plans")
+    Call<ResponseBody> getPlans(@Header("Authorization") String value,
+                                @Query("duration") String duration
+
+    );
+
+    @GET("outlet/common/payment-plans")
+    Call<ResponseBody> getPlans(@Header("Authorization") String value);
 }

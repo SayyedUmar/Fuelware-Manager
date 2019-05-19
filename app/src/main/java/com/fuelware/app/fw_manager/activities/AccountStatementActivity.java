@@ -12,20 +12,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.Const.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.AccounStatementAdapter;
+import com.fuelware.app.fw_manager.adapters.SpinnerAdapter;
 import com.fuelware.app.fw_manager.models.AccountModel;
+import com.fuelware.app.fw_manager.models.CreditCustomer;
 import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
+import com.fuelware.app.fw_manager.services.MyService;
+import com.fuelware.app.fw_manager.services.MyServiceListerner;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.dialogplus.DialogPlus;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,11 +39,15 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +61,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     RecyclerView recyclerView;
     @BindView(R.id.tvNoRecordsFound)
     TextView tvNoRecordsFound;
+    @BindView(R.id.tvCreditCustomer)
+    TextView tvCreditCustomer;
 
     private AlertDialog progress;
     private Gson gson;
@@ -63,6 +75,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     private TransactionTypeEnum typeEnum = TransactionTypeEnum.All;
     private Calendar firstDate, secondDate;
     private List<AccountModel> records = new ArrayList<>();
+    private List<CreditCustomer> creditCustomerList = new ArrayList<>();
+    private CreditCustomer selectedCustomer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +91,56 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         setupRecyclerView();
         setEventListeners();
         fetchTransactions();
+        fetchCreditCustomers();
+    }
+
+    private void fetchCreditCustomers() {
+        if (!MyUtils.hasInternetConnection(getApplicationContext())) {
+            return;
+        }
+
+        progress.show();
+
+        MyService.CallAPI(APIClient.getApiService().getCreditCustomerList(authkey), new MyServiceListerner<Response<ResponseBody>>() {
+            @Override
+            public void onNext(Response<ResponseBody> response) {
+
+                try {
+                    JSONObject jsonObject;
+                    if (response.isSuccessful()) {
+                        jsonObject = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        Type type = new TypeToken<List<CreditCustomer>>() {}.getType();
+                        creditCustomerList.clear();
+                        creditCustomerList.addAll(gson.fromJson(jsonArray.toString(), type));
+                    } else {
+                        jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                progress.hide();
+                MLog.showLongToast(getApplicationContext(), e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                progress.hide();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                //compositeDisposable.add(d);
+            }
+        });
+
     }
 
     private void fetchTransactions() {
@@ -101,7 +165,9 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 break;
         }
 
-        Call<ResponseBody> responce_outlets = APIClient.getApiService().getAccountStatementNew(authkey, firstDateString, secondDateString, credit, debit);
+        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        Call<ResponseBody> responce_outlets = APIClient.getApiService().getAccountStatementNew(authkey, firstDateString, secondDateString,
+                credit, debit, customerID);
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -115,6 +181,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         records.addAll(gson.fromJson(jsonArray.toString(), type));
                         adapter.refresh();
                         showTitle();
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -167,6 +235,30 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private void setEventListeners () {
 
+        SpinnerAdapter adapter = new SpinnerAdapter<CreditCustomer>(creditCustomerList) {
+            @Override
+            public void getView(int pos, SpinnerAdapter.MyHolder holder) {
+                holder.textView.setText(creditCustomerList.get(pos).getId()+" - "+creditCustomerList.get(pos).getBusiness());
+            }
+        };
+
+        tvCreditCustomer.setOnClickListener(v -> {
+            DialogPlus dialog = DialogPlus.newDialog(this)
+                    .setAdapter(adapter)
+                    .setContentHeight(MyUtils.dpToPx(200))
+                    .setOnItemClickListener((dialog1, item, view, position) -> {
+                        dialog1.dismiss();
+                        selectedCustomer = (CreditCustomer) item;
+                        tvCreditCustomer.setText(selectedCustomer.getId()+" - "+selectedCustomer.getBusiness());
+                        fetchTransactions();
+                    })
+                    .setCancelable(true)
+                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                    .setFooter(R.layout.dialog_footer)
+                    .create();
+            dialog.show();
+            dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialog.dismiss());
+        });
     }
 
     private void getAccountStatementPDFUrl(boolean withHeader) {
@@ -192,7 +284,9 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 break;
         }
 
-        Call<ResponseBody> responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, firstDateString, secondDateString, credit, debit, withHeader);
+        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        Call<ResponseBody> responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, firstDateString, secondDateString,
+                credit, debit, withHeader, customerID, false);
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
