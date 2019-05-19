@@ -19,23 +19,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green_lightest"
+            android:background="@color/orange2"
             android:padding="10dp"
             >
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageView"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="15dp"
                 android:layout_centerHorizontal="true"
 
-                android:src="@drawable/ic_plan"
-                android:tint="@color/orange2"
+                android:src="@drawable/ic_offer"
+                android:tint="@color/white"
                 />
 
             <TextView
-                android:id="@+id/tvPlanName"
+                android:id="@+id/tvCouponName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -44,23 +44,11 @@
                 android:singleLine="true"
                 android:maxLines="1"
                 android:ellipsize="end"
-
-                android:textSize="14sp"
-                android:textColor="@color/text_black"
+                android:textSize="16sp"
+                android:textColor="@color/white"
                 android:text="Uber Ride"
                 />
 
-            <TextView
-                android:id="@+id/tvText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/tvPlanName"
-                android:layout_marginTop="4dp"
-
-                android:textSize="12sp"
-                android:textColor="@color/gray_dark"
-                android:text="10 Indents for 90 Rs"
                 />
 
             <TextView
@@ -68,16 +56,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/tvText2"
+                android:layout_below="@+id/tvCouponName"
                 android:layout_marginTop="8dp"
 
-                android:textSize="18sp"
-                android:textColor="@color/text_black"
-                android:text="45 Days"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/white"
+                tools:text="20% off"
                 />
 
             <TextView
-                android:id="@+id/tvAmount"
+                android:id="@+id/tvApply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvText3"
@@ -87,21 +76,13 @@
                 android:paddingBottom="6dp"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:text="450"
-                android:textSize="14sp"
+                android:layout_marginBottom="8dp"
+                android:text="Apply"
                 android:textColor="@color/orange2"
+                android:fontFamily="@font/quicksand_medium"
                 android:background="@drawable/bg_rect_corner_orange"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/tvAmount"
 
-                android:textSize="6sp"
-                android:textColor="@color/orange"
-                android:text="*including gst"
-                />
 
         </RelativeLayout>
 

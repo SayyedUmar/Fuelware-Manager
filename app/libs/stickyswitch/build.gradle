@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "0.0.15"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+repositories {
+    mavenCentral()
+}
+
+publish {
+    userOrg = 'ghyeok'
+    groupId = 'io.ghyeok.lib'
+    artifactId = 'sticky-switch'
+    publishVersion = '0.0.15'
+    desc = 'Sticky Switch'
+    website = 'https://github.com/GwonHyeok/StickySwitch'
+    issueTracker = 'https://github.com/GwonHyeok/StickySwitch/issues'
+    repository = 'https://github.com/GwonHyeok/StickySwitch.git'
+}
+
+group = 'com.github.GwonHyeok'

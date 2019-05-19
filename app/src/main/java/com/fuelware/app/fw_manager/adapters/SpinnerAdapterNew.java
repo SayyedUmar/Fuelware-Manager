@@ -36,12 +36,12 @@ public abstract class SpinnerAdapterNew<T> extends BaseAdapter {
         if (convertView == null) { //custom_spinner_adapter
             convertView = onCreateView(position, convertView, parent);
         }
-        onBindView(position, list.get(position));
+        onBindView(position, list.get(position), convertView);
 
         return convertView;
     }
 
     public abstract View onCreateView(int pos, View view, ViewGroup parent);
-    public abstract void onBindView(int pos, T t);
+    public abstract void onBindView(int pos, T t, View v);
 
 }

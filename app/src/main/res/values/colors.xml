@@ -45,5 +45,6 @@
     <color name="gray_light2">#90B0BF</color>
     <color name="green_lightest">#DDf4e6</color>
     <color name="red_lightest">#FAE7E2</color>
+    <color name="blue_light">#6B83FF</color>
 
 </resources>

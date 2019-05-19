@@ -1,2 +1,3 @@
-include ':app', ':dialogplus1'//, ':libs:dialogplus'
+include ':app', ':dialogplus1', ':stickyswitch'//, ':libs:dialogplus'
 project(':dialogplus1').projectDir = new File('app/libs/dialogplus')
+project(':stickyswitch').projectDir = new File('app/libs/stickyswitch')

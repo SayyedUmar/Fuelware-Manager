@@ -3,6 +3,7 @@ package com.fuelware.app.fw_manager.network;
 import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
+import com.fuelware.app.fw_manager.activities.PlansActivity;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 
@@ -191,4 +192,8 @@ public interface FuelwareAPI {
 
     @GET("outlet/common/payment-plans")
     Call<ResponseBody> getPlans(@Header("Authorization") String value);
+
+    @POST("outlet/common/apply-coupon")
+    Call<ResponseBody> applyCouponCode(@Header("Authorization") String value,
+                                       @Body PlansActivity.ApplyCouponParam param);
 }
