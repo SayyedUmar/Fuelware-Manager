@@ -47,7 +47,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
-import info.hoang8f.android.segmented.SegmentedGroup;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,8 +77,8 @@ public class PlansActivity extends SuperActivity {
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
 
-    @BindView(R.id.tvViewPlans)
-    TextView tvViewPlans;
+    @BindView(R.id.btnViewPlans)
+    Button btnViewPlans;
     @BindView(R.id.btnAddCoupon)
     Button btnAddCoupon;
     private AlertDialog progress;
@@ -108,7 +107,8 @@ public class PlansActivity extends SuperActivity {
         setEventListener();
         setupRecycler();
         fetchAllPlans("");
-
+        linlayContainer.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     private void setupRecycler() {
@@ -189,14 +189,14 @@ public class PlansActivity extends SuperActivity {
     private void setEventListener() {
 
         radioHistory.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            linlayContainer.setVisibility(View.GONE);
-//            recyclerView.setVisibility(View.VISIBLE);
+            linlayContainer.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
             fetchAllHistory();
         });
 
         radioMyPlans.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            linlayContainer.setVisibility(View.VISIBLE);
-//            recyclerView.setVisibility(View.GONE);
+            linlayContainer.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         });
 
         plansAdapter = new GridAdapter(planList);
@@ -224,7 +224,7 @@ public class PlansActivity extends SuperActivity {
         };
 
         GridHolder holder = new GridHolder(2);
-        tvViewPlans.setOnClickListener(v -> {
+        btnViewPlans.setOnClickListener(v -> {
             hideSoftKeyboard();
             DialogPlus dialog = DialogPlus.newDialog(this)
                     .setContentHolder(holder)

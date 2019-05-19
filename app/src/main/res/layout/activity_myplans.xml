@@ -73,7 +73,6 @@
             </info.hoang8f.android.segmented.SegmentedGroup>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/linlayContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,10 +135,10 @@
                     android:fontFamily="@font/quicksand"
                     />
 
-                <TextView
-                    android:id="@+id/tvViewPlans"
+                <Button
+                    android:id="@+id/btnViewPlans"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@color/green_light_color1"
                     android:text="View Plans"
                     android:padding="10dp"
@@ -300,6 +299,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
