@@ -60,7 +60,7 @@ public class MiDetailsActivity extends SuperActivity {
         tvDriverName = findViewById(R.id.tvDriverName);
         tvDriverMobile = findViewById(R.id.tvDriverMobile);
         tvFillType = findViewById(R.id.tvFillType);
-        tvProduct = findViewById(R.id.tvAmount);
+        tvProduct = findViewById(R.id.tvProduct);
         tvPrice = findViewById(R.id.tvPrice);
         tvLitres = findViewById(R.id.tvLitres);
         tvAmount = findViewById(R.id.tvAmount);
@@ -126,7 +126,7 @@ public class MiDetailsActivity extends SuperActivity {
         tvIndentNumber.setText(indentModel.getIndent_number());
         tvIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, indentModel.getFill_date()));
         tvBusinessName.setText(MyUtils.toTitleCase(indentModel.getBusiness()));
-        tvCustomerID.setText(indentModel.getFormatted_user_id().toUpperCase());
+        tvCustomerID.setText(indentModel.getUser_id().toUpperCase());
         tvCustomerName.setText(MyUtils.toTitleCase(indentModel.getCustomer_name()));
         tvMobileNumber.setText(indentModel.getMobile());
         tvVehicleNo.setText(indentModel.getVehicle_number());

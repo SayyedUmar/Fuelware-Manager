@@ -7,6 +7,7 @@
     >
 
     <android.support.design.widget.FloatingActionButton
+        android:visibility="gone"
         android:id="@+id/activity_mindent"
         android:layout_width="60dp"
         android:layout_height="60dp"

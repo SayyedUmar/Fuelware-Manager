@@ -46,5 +46,7 @@
     <color name="green_lightest">#DDf4e6</color>
     <color name="red_lightest">#FAE7E2</color>
     <color name="blue_light">#6B83FF</color>
+    <color name="red2">#FB0168</color>
+    <color name="gray_lightest">#E7EFFF</color>
 
 </resources>

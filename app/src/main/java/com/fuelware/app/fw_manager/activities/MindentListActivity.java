@@ -178,6 +178,7 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(false);
 
         SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
 

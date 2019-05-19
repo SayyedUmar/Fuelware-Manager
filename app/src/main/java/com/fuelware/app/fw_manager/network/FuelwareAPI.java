@@ -196,4 +196,7 @@ public interface FuelwareAPI {
     @POST("outlet/common/apply-coupon")
     Call<ResponseBody> applyCouponCode(@Header("Authorization") String value,
                                        @Body PlansActivity.ApplyCouponParam param);
+
+    @GET("outlet/common/payment-history")
+    Call<ResponseBody> getPlanHistory(@Header("Authorization") String value);
 }

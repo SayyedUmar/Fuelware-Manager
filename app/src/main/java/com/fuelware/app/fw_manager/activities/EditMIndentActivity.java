@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -129,13 +130,17 @@ public class EditMIndentActivity extends SuperActivity {
                 if(adapterView.getSelectedItem() != null) {
                     if (adapterView.getSelectedItem().equals("Amount")) {
                         etAmount.setEnabled(true);
+                        etAmount.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.general_et_background));
                         etLiters.setEnabled(false);
+                        etLiters.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
                         etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(1, 500000)});
                         etLiters.setFilters(new InputFilter[] {});
                     } else  if (adapterView.getSelectedItem().toString().equalsIgnoreCase("Litres") ||
                             adapterView.getSelectedItem().toString().equals("Full Tank")) {
                         etLiters.setEnabled(true);
+                        etLiters.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.general_et_background));
                         etAmount.setEnabled(false);
+                        etAmount.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
                         etLiters.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(0.01, 5000)});
                         etAmount.setFilters(new InputFilter[] {});
                     }

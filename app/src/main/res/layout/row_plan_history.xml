@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    >
+
+
+    <TextView
+        android:id="@+id/tvStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from: "
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        />
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="from: 27 Jan 2019"
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        />
+
+    <TextView
+        android:id="@+id/tvInvoiceNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStartDate"
+        android:layout_marginTop="4dp"
+
+        android:text="from: 27 Jan 2019"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="16sp"
+        android:textColor="@color/light_black2"
+
+        />
+
+    <TextView
+        android:id="@+id/tvPlanType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvInvoiceNumber"
+        android:layout_marginTop="4dp"
+
+        android:text="Limited"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="14sp"
+        android:textColor="@color/green_light_color1"
+        />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvInvoiceNumber"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentRight="true"
+
+        android:text="Success"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="14sp"
+        android:textColor="@color/red_light_color1"
+        />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvEndDate"
+        android:layout_marginTop="4dp"
+
+        android:text="$100.00"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        android:textColor="@color/red2"
+        android:background="@drawable/bg_rect_corner_red"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/gray_lightest"
+        android:layout_below="@+id/tvStatus"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>

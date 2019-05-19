@@ -177,7 +177,7 @@ public class MainActivity extends SuperActivity
                     count = m.getManual_indent().get(0).getTotal();
                 }
                 String text = "Batch "+(i+1)+ "  >  <font color=#008577>"+m.getBatch_number()+"</font> -<font color=#D81B60> "+count+"</font>";
-                popupMenu.getMenu().add(Menu.NONE, Menu.NONE, i,Html.fromHtml(text));
+                popupMenu.getMenu().add(Menu.NONE, i++, Menu.NONE, Html.fromHtml(text));
             }
             popupMenu.show();
             popupMenu.setOnMenuItemClickListener(item -> {

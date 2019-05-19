@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +16,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.Const.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.adapters.PlanHistoryAdapter;
 import com.fuelware.app.fw_manager.adapters.SpinnerAdapterNew;
 import com.fuelware.app.fw_manager.models.Coupon;
+import com.fuelware.app.fw_manager.models.PlanHistory;
 import com.fuelware.app.fw_manager.models.PlanModel;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
@@ -30,6 +37,7 @@ import com.google.gson.reflect.TypeToken;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.GridHolder;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -39,7 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
-import io.ghyeok.stickyswitch.widget.StickySwitch;
+import info.hoang8f.android.segmented.SegmentedGroup;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,8 +69,14 @@ public class PlansActivity extends SuperActivity {
 
     @BindView(R.id.btnPay)
     Button btnPay;
-    @BindView(R.id.sticky_switch)
-    StickySwitch stickySwitch;
+    @BindView(R.id.linlayContainer)
+    LinearLayout linlayContainer;
+    @BindView(R.id.radioMyPlans)
+    RadioButton radioMyPlans;
+    @BindView(R.id.radioHistory)
+    RadioButton radioHistory;
+    @BindView(R.id.recycler)
+    RecyclerView recyclerView;
 
     @BindView(R.id.tvViewPlans)
     TextView tvViewPlans;
@@ -78,6 +92,8 @@ public class PlansActivity extends SuperActivity {
     Boolean isSmsSubscribed;
     private PlanModel selectedPlan;
     private String selectedCouponCode = "";
+    private PlanHistoryAdapter historyAdapter;
+    private List<PlanHistory> historyList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,9 +106,20 @@ public class PlansActivity extends SuperActivity {
 
         initialize();
         setEventListener();
+        setupRecycler();
         fetchAllPlans("");
 
-        //stickySwitch.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    private void setupRecycler() {
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+        historyAdapter = new PlanHistoryAdapter(historyList, this);
+        recyclerView.setAdapter(historyAdapter);
     }
 
     private void initialize() {
@@ -160,6 +187,17 @@ public class PlansActivity extends SuperActivity {
     }
 
     private void setEventListener() {
+
+        radioHistory.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            linlayContainer.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+            fetchAllHistory();
+        });
+
+        radioMyPlans.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            linlayContainer.setVisibility(View.VISIBLE);
+//            recyclerView.setVisibility(View.GONE);
+        });
 
         plansAdapter = new GridAdapter(planList);
         couponAdapter = new SpinnerAdapterNew<Coupon>(coupons) {
@@ -237,6 +275,46 @@ public class PlansActivity extends SuperActivity {
             dialog.show();
         });
 
+    }
+
+    private void fetchAllHistory() {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(this, AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        progress.show();
+
+        APIClient.getApiService().getPlanHistory(authkey).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray data = jsonObject.getJSONArray("data");
+
+                        Type token = new TypeToken<List<PlanHistory>>(){}.getType();
+                        List<PlanHistory> tempList = gson.fromJson(data.toString(), token);
+                        historyList.clear();
+                        historyList.addAll(tempList);
+                        historyAdapter.refresh();
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progress.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
 
     }
 

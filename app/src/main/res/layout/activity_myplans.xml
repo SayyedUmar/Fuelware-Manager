@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
 
     >
@@ -15,8 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             >
-            <io.ghyeok.stickyswitch.widget.StickySwitch
+           <!-- <io.ghyeok.stickyswitch.widget.StickySwitch
                 android:id="@+id/sticky_switch"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
@@ -28,19 +33,51 @@
                 app:ss_iconSize="22dp"
                 app:ss_leftText="Male"
                 app:ss_rightText="Female"
+                android:textAlignment="center"
                 app:ss_selectedTextSize="14sp"
                 app:ss_sliderBackgroundColor="@color/gray_light"
                 app:ss_switchColor="@color/green_light_color1"
                 app:ss_textColor="@color/text_black"
                 app:ss_textSize="12sp"
                 app:ss_animationType="line"
-                />
+                />-->
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/segment_group"
+                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                segmentedgroup:sc_border_width="2dp"
+                segmentedgroup:sc_corner_radius="20dp"
+                android:layout_marginBottom="10dp"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioMyPlans"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="My Plans"
+                    style="@style/RadioButton"
+                    android:checked="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioHistory"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    style="@style/RadioButton" />
+            </info.hoang8f.android.segmented.SegmentedGroup>
 
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linlayContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
                 >
 
                 <TextView
@@ -261,6 +298,15 @@
                     />
 
             </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/row_plan_history"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
     </ScrollView>

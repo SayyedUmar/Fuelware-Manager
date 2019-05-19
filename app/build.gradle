@@ -81,10 +81,11 @@ dependencies {
 
     //sticky switch
     //implementation 'com.github.GwonHyeok:StickySwitch:0.0.15'
+    implementation 'info.hoang8f:android-segmented:1.0.6'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(path: ':dialogplus1')
-    implementation project(path: ':stickyswitch')
+//    implementation project(path: ':stickyswitch')
 }
