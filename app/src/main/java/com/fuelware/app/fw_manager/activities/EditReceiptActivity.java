@@ -1,54 +1,35 @@
 package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
-import com.fuelware.app.fw_manager.Const.Const;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.adapters.CustomAutoCompleteAdapter;
-import com.fuelware.app.fw_manager.models.CreditCustomer;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.network.RxBus;
-import com.fuelware.app.fw_manager.services.MyService;
-import com.fuelware.app.fw_manager.services.MyServiceListerner;
-import com.fuelware.app.fw_manager.utils.DatePickerFragment;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

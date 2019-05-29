@@ -45,6 +45,7 @@
                     android:singleLine="true"
                     android:imeOptions="actionNext"
                     android:imeActionId="111"
+                    android:textSize="14sp"
                     />
 
 
@@ -74,7 +75,7 @@
                     android:focusable="false"
                     android:textColor="@color/gray_dark"
                     android:singleLine="true"
-
+                    android:textSize="14sp"
                     />
 
 
@@ -103,7 +104,9 @@
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
                     android:textColor="@color/gray_dark"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,7 +133,7 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
-
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -160,6 +163,7 @@
                     android:imeActionId="112"
                     android:imeOptions="actionNext"
                     android:focusable="false"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -189,6 +193,7 @@
                     android:lines="1"
                     android:imeActionId="113"
                     android:imeOptions="actionNext"
+                    android:textSize="14sp"
                     />
 
 
@@ -220,6 +225,7 @@
                     android:maxLength="200"
                     android:imeActionId="116"
                     android:imeOptions="actionNext"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -250,6 +256,7 @@
                     android:lines="1"
                     android:imeActionId="117"
                     android:imeOptions="actionNext"
+                    android:textSize="14sp"
                     />
 
                 <CheckBox
@@ -257,9 +264,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textColor="@color/text_black"
+                    android:textColor="@color/light_black"
                     android:text="Receipt Number (Manual)"
+                    android:fontFamily="@font/quicksand_medium"
                     android:checked="false"
+                    android:textSize="14sp"
                     />
 
                 <LinearLayout
@@ -313,9 +322,9 @@
                     android:gravity="center|bottom"
                     android:text="Add"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/quicksand_medium"
-                    android:textStyle="normal|bold"
+                    android:textStyle="bold"
                     android:imeActionId="119"
                     android:imeOptions="actionDone"
                     />

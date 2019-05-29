@@ -3,11 +3,9 @@ package com.fuelware.app.fw_manager.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class AccountModel implements Parcelable {
 

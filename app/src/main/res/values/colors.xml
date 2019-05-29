@@ -10,7 +10,6 @@
     <color name="loginbacground">#5ae5cf</color>
     <color name="white">#fff</color>
     <color name="gray_light">#d9d9d9</color>
-    <color name="text_black">#212121</color>
     <color name="gray_dark">#757575</color>
     <color name="red_light_color1">#e47164</color>
     <color name="violet">#660E7A</color>
@@ -22,8 +21,10 @@
     <color name="semiTransparentdark">#40bababa</color>
     <color name="yellow">#FFC600</color>
     <color name="yellow1">#FFC800</color>
+    <color name="text_black">#212121</color>
     <color name="light_black">#6D6165</color>
     <color name="light_black2">#3D4950</color>
+    <color name="light_black3">#404140</color>
     <color name="blue1">#00A4D5</color>
     <color name="blue2">#00B0E5</color>
     <color name="blue3">#32ACE2</color>

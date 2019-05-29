@@ -15,8 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
-import com.fuelware.app.fw_manager.activities.CounterBillActivity;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 import com.fuelware.app.fw_manager.models.ProductsPojo;
 import com.fuelware.app.fw_manager.network.APIClient;

@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.FuelwareAPI;

@@ -8,25 +8,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.adapters.EwalletAdapter;
-import com.fuelware.app.fw_manager.adapters.SpinnerAdapter;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
-import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.orhanobut.dialogplus.DialogPlus;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

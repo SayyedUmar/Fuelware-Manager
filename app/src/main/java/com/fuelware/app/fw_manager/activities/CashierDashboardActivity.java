@@ -11,7 +11,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.models.Cashier;

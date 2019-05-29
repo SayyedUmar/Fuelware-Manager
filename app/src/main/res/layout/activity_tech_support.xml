@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Issue *"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:id="@+id/etVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Select Issue *"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/gray_dark"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Module *"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Select Module *"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/gray_dark"
+                android:singleLine="true"
+                />
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Submodule"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <EditText
+                android:id="@+id/tvBasePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Submodule"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:singleLine="true"
+                android:textSize="14sp"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/general_et_background"
+                />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_height="40dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="@color/green_light_color1"
+                android:text="Upload Image"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Description *"
+                android:textSize="12sp"
+                android:textColor="@color/text_black"
+                android:fontFamily="@font/quicksand"
+                />
+
+            <EditText
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                android:hint="Enter Description *"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:focusable="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                android:maxLines="10"
+                android:lines="4"
+                android:gravity="left|top"
+
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btnPay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="PAY"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

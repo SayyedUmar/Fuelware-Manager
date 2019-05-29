@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.BuildConfig;
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.OnlinePaymentDetailActivity;
 import com.fuelware.app.fw_manager.activities.OnlinePaymentListActivity;

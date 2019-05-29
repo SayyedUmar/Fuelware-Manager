@@ -164,6 +164,10 @@
             android:name=".activities.PlansActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
+        <activity
+            android:name=".activities.TechSupportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
 
     </application>
 

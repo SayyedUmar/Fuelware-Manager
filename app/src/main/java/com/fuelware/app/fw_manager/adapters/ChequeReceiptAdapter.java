@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.BuildConfig;
-import com.fuelware.app.fw_manager.Const.Const;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.ReceiptDetailActivity;
 import com.fuelware.app.fw_manager.activities.ChequeReceiptListActivity;

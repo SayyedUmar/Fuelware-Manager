@@ -1,4 +1,4 @@
-package com.fuelware.app.fw_manager.Const;
+package com.fuelware.app.fw_manager.appconst;
 
 import com.fuelware.app.fw_manager.BuildConfig;
 

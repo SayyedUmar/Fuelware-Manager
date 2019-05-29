@@ -16,8 +16,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
-import com.fuelware.app.fw_manager.Const.Const;
+import com.fuelware.app.fw_manager.appconst.AppConst;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.CustomAutoCompleteAdapter;

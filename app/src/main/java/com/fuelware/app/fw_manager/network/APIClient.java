@@ -1,7 +1,7 @@
 package com.fuelware.app.fw_manager.network;
 
 import com.fuelware.app.fw_manager.BuildConfig;
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;

@@ -21,7 +21,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fuelware.app.fw_manager.Const.AppConst;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.models.Cashier;
@@ -303,7 +303,7 @@ public class MainActivity extends SuperActivity
         } else if (id == R.id.nav_tools) {
             startActivity(new Intent(this, PlansActivity.class));
         } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(this, TechSupportActivity.class));
         } else if (id == R.id.nav_send) {
 
         }

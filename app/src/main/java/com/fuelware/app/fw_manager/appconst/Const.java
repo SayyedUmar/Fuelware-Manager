@@ -1,4 +1,4 @@
-package com.fuelware.app.fw_manager.Const;
+package com.fuelware.app.fw_manager.appconst;
 
 public class Const {
 

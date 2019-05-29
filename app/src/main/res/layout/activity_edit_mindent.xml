@@ -47,7 +47,9 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:textColor="@color/gray_dark"
                     android:focusable="false"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +76,7 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
-
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -102,7 +104,9 @@
                     android:enabled="false"
                     android:focusable="false"
                     android:textColor="@color/gray_dark"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
 
 
                 <TextView
@@ -130,7 +134,9 @@
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
                     android:textColor="@color/gray_dark"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,7 +160,9 @@
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
                     android:focusable="false"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,6 +187,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -205,6 +214,7 @@
                     android:singleLine="true"
                     android:fontFamily="@font/quicksand_medium"
                     android:padding="10dp"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -231,6 +241,7 @@
                     android:singleLine="true"
                     android:fontFamily="@font/quicksand_medium"
                     android:padding="10dp"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -334,6 +345,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -360,6 +372,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -386,6 +399,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
 
@@ -412,6 +426,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -437,6 +452,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -463,6 +479,7 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
                     />
 
                 <Button
@@ -477,7 +494,7 @@
                     android:gravity="center|bottom"
                     android:text="Add M-Indent"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/quicksand_medium"
                     android:textStyle="normal|bold" />
 
