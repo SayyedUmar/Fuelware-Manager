@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.network.APIClient;
@@ -59,8 +60,10 @@ public class LoginActivity extends AppCompatActivity {
 
         setActionListeners();
 
-        etUsername.setText("9920010395");
-        etPassword.setText("secret@123");
+        if (BuildConfig.DEBUG) {
+            etUsername.setText("9920010395");
+            etPassword.setText("test@123");
+        }
     }
 
     private void initialiseViews() {

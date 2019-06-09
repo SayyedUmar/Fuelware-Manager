@@ -4,10 +4,13 @@ import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.activities.PlansActivity;
+import com.fuelware.app.fw_manager.models.PlanModel;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -17,8 +20,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -190,8 +195,8 @@ public interface FuelwareAPI {
 
     );
 
-    @GET("outlet/common/payment-plans")
-    Call<ResponseBody> getPlans(@Header("Authorization") String value);
+    @GET("outlet/common/active-plan")
+    Call<ResponseBody> getPurchasedPlans(@Header("Authorization") String value);
 
     @POST("outlet/common/apply-coupon")
     Call<ResponseBody> applyCouponCode(@Header("Authorization") String value,
@@ -199,4 +204,36 @@ public interface FuelwareAPI {
 
     @GET("outlet/common/payment-history")
     Call<ResponseBody> getPlanHistory(@Header("Authorization") String value);
+
+    @POST("outlet/common/verify-payment-detail")
+    Call<ResponseBody> purchasePlan(@Header("Authorization") String value,
+                                    @Body PlansActivity.ApplyCouponParam param
+    );
+
+    @POST("outlet/manager/close-shift")
+    Call<ResponseBody> closeShift(@Header("Authorization") String value);
+
+    @GET("outlet/common/payment-plan-types")
+    Call<ResponseBody> fetchPlanTypes(@Header("Authorization") String value);
+
+    @PUT("outlet/common/payment-plans/{plan_id}")
+    Call<ResponseBody> activatePlan(@Header("Authorization") String value,
+                                @Path("plan_id") String planId
+    );
+
+    @Multipart
+    @POST("mailtest.php")
+    Call<ResponseBody> uploadImage(@Header("Authorization") String value,
+                                   @Part MultipartBody.Part file,
+                                   @Part("fw_id") RequestBody fw_id,
+                                   @Part("name") RequestBody name,
+                                   @Part("mobile") RequestBody mobile,
+                                   @Part("mail_to") RequestBody email,
+                                   @Part("issue") RequestBody issue,
+                                   @Part("module") RequestBody module,
+                                   @Part("sub_module") RequestBody sub_module,
+                                   @Part("description") RequestBody description
+    );
+
+
 }

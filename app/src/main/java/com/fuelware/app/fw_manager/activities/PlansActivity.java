@@ -1,6 +1,7 @@
 package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -16,18 +17,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.adapters.MyPlansAdapter;
 import com.fuelware.app.fw_manager.adapters.PlanHistoryAdapter;
 import com.fuelware.app.fw_manager.adapters.SpinnerAdapterNew;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.models.Coupon;
 import com.fuelware.app.fw_manager.models.PlanHistory;
 import com.fuelware.app.fw_manager.models.PlanModel;
+import com.fuelware.app.fw_manager.models.PurchasedPlan;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
@@ -70,6 +74,8 @@ public class PlansActivity extends SuperActivity {
     Button btnPay;
     @BindView(R.id.linlayContainer)
     LinearLayout linlayContainer;
+    @BindView(R.id.radioPlans)
+    RadioButton radioPlans;
     @BindView(R.id.radioMyPlans)
     RadioButton radioMyPlans;
     @BindView(R.id.radioHistory)
@@ -81,6 +87,8 @@ public class PlansActivity extends SuperActivity {
     Button btnViewPlans;
     @BindView(R.id.btnAddCoupon)
     Button btnAddCoupon;
+    @BindView(R.id.btnClearCoupon)
+    ImageButton btnClearCoupon;
     private AlertDialog progress;
     private String authkey;
     private Gson gson;
@@ -92,7 +100,10 @@ public class PlansActivity extends SuperActivity {
     private PlanModel selectedPlan;
     private String selectedCouponCode = "";
     private PlanHistoryAdapter historyAdapter;
+    private MyPlansAdapter purchasedPlansAdapter;
     private List<PlanHistory> historyList = new ArrayList<>();
+    private List<PlanType> planTypes = new ArrayList<>();
+    private List<PurchasedPlan> purchasedPlans = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,9 +117,13 @@ public class PlansActivity extends SuperActivity {
         initialize();
         setEventListener();
         setupRecycler();
-        fetchAllPlans("");
+        fetchAllPlansAndCoupons("Half Yearly");
+        //fetchPlanTerms();
         linlayContainer.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        btnClearCoupon.setVisibility(View.GONE);
+
+        //if ()
     }
 
     private void setupRecycler() {
@@ -119,7 +134,7 @@ public class PlansActivity extends SuperActivity {
 
 
         historyAdapter = new PlanHistoryAdapter(historyList, this);
-        recyclerView.setAdapter(historyAdapter);
+        purchasedPlansAdapter = new MyPlansAdapter(purchasedPlans, this);
     }
 
     private void initialize() {
@@ -128,7 +143,7 @@ public class PlansActivity extends SuperActivity {
         gson = new Gson();
     }
 
-    private void fetchAllPlans(String duration) {
+    private void fetchAllPlansAndCoupons(String duration) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(this, AppConst.NO_INTERNET_MSG);
             return;
@@ -187,17 +202,37 @@ public class PlansActivity extends SuperActivity {
     }
 
     private void setEventListener() {
+        btnClearCoupon.setOnClickListener(v -> {
+            btnAddCoupon.setText("apply coupon");
+            btnClearCoupon.setVisibility(View.GONE);
+            showPlanData(selectedPlan, "");
+        });
 
         radioHistory.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            linlayContainer.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            fetchAllHistory();
+            if (isChecked) {
+                linlayContainer.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                fetchAllHistory();
+                recyclerView.setAdapter(historyAdapter);
+            }
         });
 
         radioMyPlans.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            linlayContainer.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            if (isChecked) {
+                linlayContainer.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                fetchPurchasedPlans();
+                recyclerView.setAdapter(purchasedPlansAdapter);
+            }
         });
+
+        radioPlans.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                linlayContainer.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+        });
+
 
         plansAdapter = new GridAdapter(planList);
         couponAdapter = new SpinnerAdapterNew<Coupon>(coupons) {
@@ -237,6 +272,7 @@ public class PlansActivity extends SuperActivity {
                         dialog1.dismiss();
                         selectedPlan = (PlanModel) item;
                         btnAddCoupon.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                        showPlanData(selectedPlan, "");
                         if (!selectedCouponCode.trim().isEmpty()) {
                             applyCoupon(selectedCouponCode);
                         }
@@ -275,6 +311,69 @@ public class PlansActivity extends SuperActivity {
             dialog.show();
         });
 
+        btnPay.setOnClickListener(v -> {
+            if (selectedPlan == null) {
+                MLog.showLongToast(getApplicationContext(), "Kinldy select a plan first.");
+            } else {
+                purchasePlan();
+            }
+        });
+
+    }
+
+    private void purchasePlan() {
+        ApplyCouponParam param = new ApplyCouponParam();
+        param.coupon_code = selectedCouponCode;
+        param.plan_id = selectedPlan.getId();
+
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(this, AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        progress.show();
+
+        APIClient.getApiService().purchasePlan(authkey, param).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String redirect_url = data.getString("redirect_url");
+                        String frontend_url = data.getString("frontend_url");
+                        if (!redirect_url.isEmpty()) {
+                            startActivity(new Intent(getBaseContext(), WebViewActivity.class)
+                                    .putExtra("URL", redirect_url)
+                                    .putExtra("frontend_url", frontend_url));
+                        }
+                     } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progress.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }
+
+    private void showPlanData(PlanModel model, String discount) {
+        btnViewPlans.setText("Change Plan");
+        tvBasePrice.setText(model.getPrice());
+        tvSubtotal.setText(model.getPrice());
+        tvDiscount.setText(discount); // no discount
+        tvGst.setText(model.getGst());
+        tvTotal.setText(model.getTotal());
+        btnPay.setText("PAY "+MyUtils.formatCurrency(model.getFinal_price()));
+        btnPay.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
     }
 
     private void fetchAllHistory() {
@@ -336,6 +435,8 @@ public class PlansActivity extends SuperActivity {
                 try {
                     if (response.isSuccessful()) {
                         MLog.showToast(getApplicationContext(), "Coupon has been applied successfully.");
+                        btnAddCoupon.setText("Change Coupon");
+                        btnClearCoupon.setVisibility(View.VISIBLE);
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         JSONObject data = jsonObject.getJSONObject("data");
                         String base_price = data.getString("base_price");
@@ -351,6 +452,7 @@ public class PlansActivity extends SuperActivity {
                         tvGst.setText(MyUtils.formatCurrency(gst));
                         tvTotal.setText(MyUtils.formatCurrency(total_price));
                         btnPay.setText("PAY "+MyUtils.formatCurrency(final_price));
+                        btnPay.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
 
@@ -401,7 +503,7 @@ public class PlansActivity extends SuperActivity {
         CheckBox chkSms = v.findViewById(R.id.chkSms);
         chkSms.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isSmsSubscribed = isChecked;
-            fetchAllPlans(tvAutoDuration.getHint().toString());
+            fetchAllPlansAndCoupons(tvAutoDuration.getHint().toString());
         });
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -413,7 +515,7 @@ public class PlansActivity extends SuperActivity {
         });
         tvAutoDuration.setOnItemClickListener((parent, view, position, id) -> {
             tvAutoDuration.setHint(parent.getItemAtPosition(position).toString());
-            fetchAllPlans(tvAutoDuration.getHint().toString());
+            fetchAllPlansAndCoupons(tvAutoDuration.getHint().toString());
         });
         return v;
     }
@@ -485,5 +587,130 @@ public class PlansActivity extends SuperActivity {
     public static class ApplyCouponParam {
         String coupon_code;
         String plan_id;
+    }
+
+    static class PlanType {
+        String name;
+        String value;
+    }
+
+    /*private void fetchPlanTerms() {
+        if (!MyUtils.hasInternetConnection(this)) {
+            return;
+        }
+
+        APIClient.getApiService().fetchPlanTypes(authkey).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        Type token = new TypeToken<List<PlanType>>(){}.getType();
+                        List<PlanType> tempList = gson.fromJson(jsonObject.getJSONArray("data").toString(), token);
+                        planTypes.clear();
+                        planTypes.addAll(tempList);
+
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progress.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }*/
+
+    private void fetchPurchasedPlans() {
+        if (!MyUtils.hasInternetConnection(this)) {
+            return;
+        }
+
+        progress.show();
+
+        APIClient.getApiService().getPurchasedPlans(authkey).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        purchasedPlans.clear();
+                        for (int i = 0; i < array.length(); i++) {
+                            PurchasedPlan m = gson.fromJson(array.getJSONObject(i).toString(), PurchasedPlan.class);
+                            m.subscriptionDetail = gson.fromJson(m.subscription_detail, PurchasedPlan.SubscriptionDetail.class);
+                            purchasedPlans.add(m);
+                        }
+                        purchasedPlansAdapter.refresh();
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progress.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
+    }
+
+    public void activatePlan(int finalPosition, PurchasedPlan model) {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+        progress.show();
+
+        APIClient.getApiService().activatePlan(authkey, model.id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        MLog.showLongToast(getApplicationContext(), "Plan activated successfully.");
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        purchasedPlans.clear();
+                        for (int i = 0; i < array.length(); i++) {
+                            PurchasedPlan m = gson.fromJson(array.getJSONObject(i).toString(), PurchasedPlan.class);
+                            m.subscriptionDetail = gson.fromJson(m.subscription_detail, PurchasedPlan.SubscriptionDetail.class);
+                            purchasedPlans.add(m);
+                        }
+                        purchasedPlansAdapter.refresh();
+                    } else {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        if (jsonObject.has("message"))
+                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progress.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
+        });
     }
 }

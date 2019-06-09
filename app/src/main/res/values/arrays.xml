@@ -2,8 +2,8 @@
 <resources>
     <string-array name="array_duration">
         <item>All</item>
-        <item>Anually</item>
         <item>Half Yearly</item>
+        <item>Anually</item>
         <item>Quarterly</item>
         <item>Monthly</item>
         <item>Basic Plan</item>

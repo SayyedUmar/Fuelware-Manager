@@ -6,10 +6,12 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -17,6 +19,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.activities.TechSupportActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -32,6 +35,18 @@ import static android.content.Context.DOWNLOAD_SERVICE;
 public class MyUtils {
 
     private MyUtils() {}
+
+
+    public static String getRealPathFromURIPath(Activity activity, Uri contentURI) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
 
     private static class SingletonHelper{
         private static final MyUtils INSTANCE = new MyUtils();

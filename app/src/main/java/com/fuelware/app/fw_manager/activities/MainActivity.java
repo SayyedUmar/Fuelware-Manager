@@ -1,6 +1,10 @@
 package com.fuelware.app.fw_manager.activities;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,11 +28,13 @@ import android.widget.Toast;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
 import com.fuelware.app.fw_manager.models.User;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
+import com.fuelware.app.fw_manager.receiver.AlarmReceiver;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
@@ -39,6 +45,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +61,7 @@ public class MainActivity extends SuperActivity
 
     private TextView tvShiftID, tvLoginTime;
     private TextView tvFuelPrice, tvActiveBatches;
-    private Button btnLogin;
+    private Button btnShiftClose;
     private String authkey;
     private AlertDialog progressDialog;
     private Gson gson;
@@ -120,7 +127,11 @@ public class MainActivity extends SuperActivity
                         Type token = new TypeToken<List<ProductPriceModel>>(){}.getType();
                         List<ProductPriceModel> tempList = gson.fromJson(dataArray.toString(), token);
                         if (tempList.get(0).getPrice() == 0) {
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,false);
                             showMorningPriceUpdatePopup();
+                            setMorningParamAlarm();
+                        } else {
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
                         }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -138,6 +149,24 @@ public class MainActivity extends SuperActivity
                 MLog.showLongToast(getApplicationContext(), t.getMessage());
             }
         });
+    }
+
+    private void setMorningParamAlarm() {
+        Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getBaseContext(), Const.ALARM_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.MINUTE, 0);
+        calendar.add(Calendar.SECOND, 0);
+        calendar.add(Calendar.HOUR_OF_DAY, 6);
+
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                calendar.getTimeInMillis(), //+ AlarmManager.INTERVAL_HALF_HOUR,
+                Const.ALARM_HOUR*24, pendingIntent);
+
     }
 
     private void showMorningPriceUpdatePopup() {
@@ -208,15 +237,53 @@ public class MainActivity extends SuperActivity
             }
         });
 
-        btnLogin.setOnClickListener(v -> {
-            MyPreferences.setStringValue(getApplicationContext(), "authkey", "");
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
+        btnShiftClose.setOnClickListener(v -> callShiftCloseAPI());
+
+    }
+
+    private void callShiftCloseAPI() {
+        if (!MyUtils.hasInternetConnection(MainActivity.this)) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+        progressDialog.show();
+        APIClient.getApiService().closeShift(authkey).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progressDialog.dismiss();
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        logoutUser();
+                    } else {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getApplicationContext(),jObjError.getString("message"),Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                progressDialog.dismiss();
+                MLog.showLongToast(getApplicationContext(), t.getMessage());
+            }
         });
     }
 
+
+    private void logoutUser() {
+        MyPreferences.setStringValue(getApplicationContext(), "authkey", "");
+        startActivity(new Intent(MainActivity.this,LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        );
+        finish();
+    }
+
+
     private void init() {
-        String userString = MyPreferences.getStringValue(this, AppConst.USER_PROFILE_DATA);
+        //String userString = MyPreferences.getStringValue(this, AppConst.USER_PROFILE_DATA);
         gson = new Gson();
         /*if (userString.length() > 50) {
             user = gson.fromJson(userString, User.class);
@@ -273,7 +340,7 @@ public class MainActivity extends SuperActivity
         tvLoginTime = findViewById(R.id.tvLoginTime);
         tvFuelPrice = findViewById(R.id.tvFuelPrice);
         tvActiveBatches = findViewById(R.id.tvActiveBatches);
-        btnLogin = findViewById(R.id.btnLogin);
+        btnShiftClose = findViewById(R.id.btnShiftClose);
         imgCounterBilling = findViewById(R.id.imgCounterBilling);
         imgReceipts = findViewById(R.id.imgReceipts);
     }
@@ -304,14 +371,29 @@ public class MainActivity extends SuperActivity
             startActivity(new Intent(this, PlansActivity.class));
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(this, TechSupportActivity.class));
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            showLogoutDialog();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void showLogoutDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_logout_confirmation);
+        dialog.show();
+        dialog.setCancelable(true);
+        TextView tvYes = dialog.findViewById(R.id.btnYes);
+        TextView tvNo = dialog.findViewById(R.id.btnNo);
+        tvNo.setOnClickListener(v -> dialog.dismiss());
+        tvYes.setOnClickListener(v -> {
+            dialog.dismiss();
+            logoutUser();
+        });
+    }
+
 
 
     private void fetchProducts() {

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    >
+
+
+    <TextView
+        android:id="@+id/tvStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from: "
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        />
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="from: 27 Jan 2019"
+        android:fontFamily="@font/quicksand"
+        android:textSize="10sp"
+
+        />
+
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStartDate"
+        android:layout_marginTop="4dp"
+
+        tools:text="Duration: 35 days"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        android:textColor="@color/light_black2"
+
+        />
+
+    <TextView
+        android:id="@+id/tvIndentTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDuration"
+        android:layout_marginTop="4dp"
+
+        tools:text="Indents Used: 10 of 30"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:id="@+id/tvIndentPending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvIndentTotal"
+        android:layout_marginTop="4dp"
+
+        tools:text="Indents Used: 10 of 30"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:id="@+id/tvSms"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tvDuration"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentRight="true"
+        android:drawableRight="@drawable/ic_check_circle"
+        android:drawablePadding="10dp"
+        android:text="SMS"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        android:textColor="@color/gray_dark"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tvActivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSms"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/rec_round_blue_signin_button"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="4dp"
+
+        android:text="Activate"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvEndDate"
+        android:layout_marginTop="4dp"
+
+        android:text="$100.00"
+        android:fontFamily="@font/quicksand_medium"
+        android:textSize="12sp"
+        android:textColor="@color/red2"
+        android:background="@drawable/bg_rect_corner_red"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/gray_lightest"
+        android:layout_below="@+id/tvActivate"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>

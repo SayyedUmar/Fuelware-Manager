@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-
+    android:background="@color/white"
     >
 
     <ScrollView
@@ -54,13 +54,22 @@
                 >
 
                 <RadioButton
+                    android:id="@+id/radioPlans"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Plans"
+                    style="@style/RadioButton"
+                    android:checked="true"
+                    />
+
+                <RadioButton
                     android:id="@+id/radioMyPlans"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="My Plans"
                     style="@style/RadioButton"
-                    android:checked="true"
                     />
 
                 <RadioButton
@@ -73,6 +82,7 @@
             </info.hoang8f.android.segmented.SegmentedGroup>
 
             <LinearLayout
+
                 android:id="@+id/linlayContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,19 +160,39 @@
                     android:gravity="center_horizontal"
                     />
 
-                <Button
-                    android:id="@+id/btnAddCoupon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                <LinearLayout
                     android:layout_marginTop="15dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Apply Coupon"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:background="@color/darker_gray"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnAddCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="Apply Coupon"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:background="@color/darker_gray"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btnClearCoupon"
+                        android:layout_gravity="center"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="6dp"
+                        android:src="@drawable/ic_close"
+                        android:background="@color/white"
+                        />
+
+                </LinearLayout>
+
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -299,8 +329,8 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/recycler"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/row_plan_history"

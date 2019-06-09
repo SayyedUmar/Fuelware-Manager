@@ -114,10 +114,15 @@ public  class MorningParamsActivity extends SuperActivity {
                         list.clear();
                         list.addAll(tempList);
                         MyPreferences.setStringValue(MorningParamsActivity.this, AppConst.PRODUCTS_LIST, dataArray.toString());
-                        boolean isUpdated = list.get(0).getPrice() < 1;
-                        adapter.setEditable(isUpdated);
-                        btnSubmit.setVisibility(isUpdated ? View.VISIBLE : View.GONE);
+                        boolean requiresUpdate = list.get(0).getPrice() < 1;
+                        adapter.setEditable(requiresUpdate);
+                        btnSubmit.setVisibility(requiresUpdate ? View.VISIBLE : View.GONE);
                         adapter.refresh();
+                        if (requiresUpdate) {
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,false);
+                        } else {
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
+                        }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))
@@ -191,12 +196,13 @@ public  class MorningParamsActivity extends SuperActivity {
 
         progress.show();
 
-        /*APIClient.getApiService().updateMorningParams(authkey, p).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().updateMorningParams(authkey, p).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         MLog.showToast(getApplicationContext(), "Morning Price has been updates successfully.");
+                        MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
                         finish();
                     } else {
                         try {
@@ -218,7 +224,7 @@ public  class MorningParamsActivity extends SuperActivity {
                 progress.dismiss();
                 MLog.showToast(getApplicationContext(), t.getMessage());
             }
-        });*/
+        });
     }
 
     @Override

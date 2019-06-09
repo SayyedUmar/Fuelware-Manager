@@ -10,9 +10,18 @@ public class PlanModel {
     private long duration;
     private String duration_description;
     private String type;
-    private String price;
+    private String price; // base price
     private String gst;
-    private String final_price;
+    private String total; // price after gst
+    private String final_price; // price after removing decimal
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
 
     public String getId() {
         return id;
