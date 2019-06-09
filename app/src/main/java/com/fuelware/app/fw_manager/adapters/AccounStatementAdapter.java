@@ -1,5 +1,6 @@
 package com.fuelware.app.fw_manager.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,14 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.AccountDetailActivity;
 import com.fuelware.app.fw_manager.models.AccountModel;
 import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
+import com.fuelware.app.fw_manager.utils.TouchImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +59,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
 
         TextView vehicleno_tx,indentno_tx,date_tx,debit_tx,credit_tx,balance_tx, tvSerailNumber;
         TextView tvVehicleNumberLabel, tvIndentNumberLabel, tvFuelingDateLabel;
-        //VIEW HOLDER CONSTRUCTOR
-
+        ImageView imgAttach;
         public MyViewHolder(View itemView) {
             super(itemView);
             this.vehicleno_tx = itemView.findViewById(R.id.txn_vehicleno);
@@ -67,6 +73,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
             this.tvIndentNumberLabel = itemView.findViewById(R.id.tvIndentNumberLabel);
             this.tvFuelingDateLabel = itemView.findViewById(R.id.tvFuelingDateLabel);
             this.tvVehicleNumberLabel = itemView.findViewById(R.id.tvVehicleNumberLabel);
+            this.imgAttach = itemView.findViewById(R.id.imgAttach);
         }
     }
 
@@ -135,6 +142,18 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
             v.getContext().startActivity(intent);
         });
 
+
+        if (model.snap_bill_url != null && !model.snap_bill_url.isEmpty()) {
+            holder.imgAttach.setVisibility(View.VISIBLE);
+        } else {
+            holder.imgAttach.setVisibility(View.GONE);
+        }
+
+        int finalListPosition = listPosition;
+        holder.imgAttach.setOnClickListener(v -> {
+            showFullPreviewPopup(v, model, finalListPosition);
+        });
+
     }
 
     @Override
@@ -178,5 +197,25 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
     public Filter getFilter() {
         return mFilter;
     }
+
+    private void showFullPreviewPopup(View v, AccountModel model, int finalListPosition) {
+        Dialog dialog = new Dialog(v.getContext());
+        dialog.setContentView(R.layout.dialog_full_preview);
+        dialog.setCancelable(true);
+        dialog.show();
+        TouchImageView imageView = dialog.findViewById(R.id.imageView);
+        TextView tvClose = dialog.findViewById(R.id.tvClose);
+        tvClose.setOnClickListener(v1 -> dialog.dismiss());
+        Window window = dialog.getWindow();
+        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        imageView.setImageResource(R.drawable.ic_placeholder);
+        imageView.setMaxZoom(10);
+        Glide.with(v.getContext()).load(model.snap_bill_url)
+                .thumbnail(0.5f)
+                .placeholder(R.drawable.ic_placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageView );
+    }
+
 
 }

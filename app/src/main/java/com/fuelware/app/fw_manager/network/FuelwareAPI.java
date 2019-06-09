@@ -4,9 +4,8 @@ import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.activities.PlansActivity;
-import com.fuelware.app.fw_manager.models.PlanModel;
-import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
+import com.fuelware.app.fw_manager.models.ReceiptModel;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -236,4 +235,7 @@ public interface FuelwareAPI {
     );
 
 
+    @GET("outlet/batch-report")
+    Call<ResponseBody> getBatchReport(@Header("Authorization") String authkey
+                                      );
 }

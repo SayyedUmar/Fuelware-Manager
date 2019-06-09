@@ -12,7 +12,7 @@
         android:iconTint="@color/white"
         />
     <item
-        android:id="@+id/search_trnx"
+        android:id="@+id/action_search"
         android:orderInCategory="100"
         android:title="Searchalert"
         app:showAsAction="always|collapseActionView"

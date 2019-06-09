@@ -37,6 +37,9 @@ public class AccountModel implements Parcelable {
     public String invoice_number;
     public String business;
     public String customer_id;
+    public String batch_number;
+    public String snap_bill_url;
+    public String indent_type;
 
     public String getCustomer_id() {
         return customer_id;
@@ -196,6 +199,9 @@ public class AccountModel implements Parcelable {
         dest.writeString(this.invoice_number);
         dest.writeString(this.business);
         dest.writeString(this.customer_id);
+        dest.writeString(this.batch_number);
+        dest.writeString(this.snap_bill_url);
+        dest.writeString(this.indent_type);
     }
 
     protected AccountModel(Parcel in) {
@@ -215,6 +221,9 @@ public class AccountModel implements Parcelable {
         this.invoice_number = in.readString();
         this.business = in.readString();
         this.customer_id = in.readString();
+        this.batch_number = in.readString();
+        this.snap_bill_url = in.readString();
+        this.indent_type = in.readString();
     }
 
     public static final Creator<AccountModel> CREATOR = new Creator<AccountModel>() {

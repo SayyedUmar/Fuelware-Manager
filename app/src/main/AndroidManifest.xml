@@ -164,6 +164,7 @@
             android:name=".activities.PlansActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
+
         <activity
             android:name=".activities.TechSupportActivity"
             android:screenOrientation="portrait"
@@ -174,6 +175,16 @@
             android:name=".activities.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.BatchOutputReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.SearchTransactionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme" />
 
         <receiver android:name=".receiver.AlarmReceiver"
             android:enabled="true"

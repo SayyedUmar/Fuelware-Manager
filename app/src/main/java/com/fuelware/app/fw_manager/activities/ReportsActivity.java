@@ -32,16 +32,15 @@ public class ReportsActivity extends SuperActivity {
 
         initialise();
         setEventListeners();
-
-
     }
 
     private void initialise() {
-        linlayAccount.setOnClickListener(v -> startActivity(new Intent(this, AccountStatementActivity.class)));
+
     }
 
     private void setEventListeners() {
-
+        linlayAccount.setOnClickListener(v -> startActivity(new Intent(this, AccountStatementActivity.class)));
+        linlayBatchOutput.setOnClickListener(v -> startActivity(new Intent(this, BatchOutputReportActivity.class)));
     }
 
     @Override

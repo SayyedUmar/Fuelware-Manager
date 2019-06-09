@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.fuelware.app.fw_manager.utils.TouchImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_placeholder"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/rellay123"
+        android:paddingBottom="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/tvClose"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rec_round_blue_signin_button"
+            android:text="Close"
+            android:textColor="@color/white"
+            android:fontFamily="@font/quicksand_medium"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_centerHorizontal="true"
+            />
+
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

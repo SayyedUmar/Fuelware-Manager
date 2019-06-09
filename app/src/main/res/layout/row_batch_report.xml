@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linLayoutvehicleadd"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,8 +14,7 @@
     android:layout_marginRight="5dp"
     android:background="@drawable/card_background"
     android:foreground="?attr/selectableItemBackground"
-    android:clickable="true"
-    >
+    android:clickable="true">
 
     <include layout="@layout/layout_serial_number" />
 
@@ -31,7 +30,7 @@
         <LinearLayout
             android:paddingTop="8dp"
             android:paddingBottom="15dp"
-            android:layout_weight="2"
+            android:layout_weight="2.7"
             android:paddingLeft="5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,56 +41,65 @@
                 android:id="@+id/tvIndentNumberLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Indent Number"
+                android:text="Batch ID"
                 android:fontFamily="@font/quicksand_medium"
-                android:textSize="8sp"
+                android:textSize="7sp"
                 />
 
             <TextView
-                android:id="@+id/txn_indentno"
+                android:id="@+id/tvBatchID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="A 87878"
+                tools:text="JUN-A15-ROHIT-0017"
+                android:textSize="12sp"
+                android:textColor="@color/blue_light"
+                />
+
+            <TextView
+                android:id="@+id/tvCashierName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Umar Sayyed"
                 android:layout_marginBottom="10dp"
-                android:textSize="14sp"
-                android:textColor="@color/light_black2"
+                android:textSize="12sp"
+                android:textColor="@color/violet"
                 />
 
             <TextView
                 android:id="@+id/tvVehicleNumberLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vehicle/Machine"
+                android:text="Login Time"
                 android:fontFamily="@font/quicksand_medium"
                 android:textSize="8sp"
                 />
 
             <TextView
-                android:id="@+id/txn_vehicleno"
+                android:id="@+id/tvInTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="MH 787878"
                 android:layout_marginBottom="10dp"
                 android:textSize="14sp"
-                android:textColor="#757575"
+                android:textColor="@color/violet"
                 />
 
             <TextView
                 android:id="@+id/tvFuelingDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fueling Date"
+                android:text="Logout Time"
                 android:fontFamily="@font/quicksand_medium"
                 android:textSize="8sp"
                 />
 
             <TextView
-                android:id="@+id/txn_date"
+                android:id="@+id/tvOutTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="19 NOV 2018"
                 android:textSize="14sp"
-                android:textColor="#757575"
+                android:textColor="@color/violet"
                 />
         </LinearLayout>
         <LinearLayout
@@ -101,11 +109,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/txn_debit"
+                android:id="@+id/tvEindent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Debit"
+                tools:text="Debit"
                 android:textSize="14sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/light_black2"
+                android:paddingRight="6dp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -115,11 +126,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/txn_credit"
+                android:id="@+id/tvMindent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Credit"
+                tools:text="Credit"
                 android:textSize="14sp"
+                android:textColor="@color/light_black2"
+                android:fontFamily="@font/quicksand_medium"
+                android:paddingRight="6dp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -129,29 +143,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/txn_balance"
+                android:id="@+id/tvTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Balance"
+                tools:text="Balance"
                 android:textSize="14sp"
+                android:textColor="@color/light_black2"
+                android:fontFamily="@font/quicksand_medium"
+                android:paddingRight="6dp"
                 />
         </LinearLayout>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imgAttach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_attach"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:tint="@color/red_dark"
-        />
 
 </RelativeLayout>

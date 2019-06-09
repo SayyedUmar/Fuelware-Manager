@@ -2,6 +2,7 @@ package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -341,6 +342,10 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         switch (item.getItemId()) {
             case android.R.id.home :
                 onBackPressed();
+                break;
+
+            case R.id.action_search:
+                startActivity(new Intent(this, SearchTransactionsActivity.class));
                 break;
 
             case R.id.menu_download_pdf:

@@ -17,8 +17,8 @@ public class AccountDetailActivity extends SuperActivity {
 
     private TextView tvIndentNumberLabel, tvIndentNumber, tvInvoiceNumber, tvIndentDateLabel, tvIndentDate,
             tvVehicleNo, tvVehicleKms, tvProduct, tvRate, tvLitres, tvAmount, tvBalance,
-            tvAmountLabel, tvRemark;
-    private LinearLayout linlay1, linlay2, linlayInvoiceNo;
+            tvAmountLabel, tvRemark, tvBatchID;
+    private LinearLayout linlay1, linlay2, linlayInvoiceNo, linlayBatchID, linlayVehicleKms;
     private AccountModel model;
 
     @Override
@@ -43,20 +43,31 @@ public class AccountDetailActivity extends SuperActivity {
             linlay1.setVisibility(View.VISIBLE);
             linlay2.setVisibility(View.GONE);
             linlayInvoiceNo.setVisibility(View.GONE);
+            linlayBatchID.setVisibility(View.GONE);
         } else {
+            String type = "(M) ";
+            if (model.indent_type.equalsIgnoreCase("e-indent")) {
+                type = "(E) ";
+            }
+            tvIndentNumber.setText(type+model.getIndentNum());
+
             linlayInvoiceNo.setVisibility(View.VISIBLE);
             linlay1.setVisibility(View.GONE);
             linlay2.setVisibility(View.VISIBLE);
             tvIndentNumberLabel.setText("Indent Number :");
-            tvIndentNumber.setText(model.getIndentNum());
             tvIndentDateLabel.setText("Indent Date : ");
             tvAmountLabel.setText("Debit Amount");
+            linlayBatchID.setVisibility(View.VISIBLE);
+            tvBatchID.setText(model.batch_number);
         }
 
         tvInvoiceNumber.setText(model.invoice_number);
 
         tvVehicleNo.setText(model.getVehicleNum());
         tvVehicleKms.setText(model.vehicle_km);
+        if (MyUtils.parseLong(model.vehicle_km) == 0) {
+            linlayVehicleKms.setVisibility(View.GONE);
+        }
         tvProduct.setText(model.product);
         tvRate.setText(MyUtils.formatCurrency(model.rate));
         tvLitres.setText(model.litre);
@@ -87,6 +98,9 @@ public class AccountDetailActivity extends SuperActivity {
         linlay2 = findViewById(R.id.linlay2);
         tvInvoiceNumber = findViewById(R.id.tvInvoiceNumber);
         linlayInvoiceNo = findViewById(R.id.linlayInvoiceNo);
+        linlayBatchID = findViewById(R.id.linlayBatchID);
+        tvBatchID = findViewById(R.id.tvBatchID);
+        linlayVehicleKms = findViewById(R.id.linlayVehicleKms);
     }
 
 

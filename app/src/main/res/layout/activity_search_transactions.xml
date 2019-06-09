@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:minHeight="?attr/actionBarSize">
+
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar_searchalert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+-->
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal"
+                    android:hint="@string/search_tranzaction_page_hint"
+                    android:textColorHint="#ffffff"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-light"
+                    android:maxLines="1"
+                    android:maxLength="14"
+                    android:imeOptions="actionDone"
+                    android:id="@+id/search_alert_et_toolbar"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    />
+                <ImageView
+                    android:layout_marginRight="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:id="@+id/conform_notifsearch_icon"
+                    android:layout_gravity="end"
+
+                    />
+
+            </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <TextView
+            android:id="@+id/trasactions_details"
+            android:paddingLeft="0dp"
+            android:layout_weight="2.3"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:text="Transaction Details"
+            android:textColor="@color/light_black2"
+            />
+
+        <TextView
+            android:id="@+id/debit_details"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textColor="@color/light_black2"
+            android:text="Debit" />
+
+        <TextView
+            android:id="@+id/credit_details"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="Credit"
+            android:textColor="@color/light_black2"
+            />
+        <TextView
+            android:id="@+id/balance_details"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingLeft="0dp"
+            android:text="Balance"
+            android:textColor="@color/light_black2"
+            />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_transactions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FAFAFA"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/row_transaction_list"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"
+        />
+</LinearLayout>
