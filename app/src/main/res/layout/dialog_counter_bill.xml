@@ -170,7 +170,7 @@
                         android:background="@drawable/general_et_background"
                         android:digits="@string/I_SET"
                         android:fontFamily="@font/quicksand_medium"
-                        android:hint="Enter Vehicle/Machine [Km or Hr]"
+                        android:hint="Enter [Km or Hr]"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="12"

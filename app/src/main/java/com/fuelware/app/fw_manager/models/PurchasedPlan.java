@@ -9,7 +9,7 @@ public class PurchasedPlan {
     public String start_date;
     public String end_date;
     public int is_plan_activated;
-    public long remaining_indents;
+    public float remaining_indents;
 
     public String subscription_detail;
 
@@ -28,8 +28,8 @@ public class PurchasedPlan {
         public String plan_type;
         public int has_sms;
         public int duration;
-        public int indents;
-        public int used_indents;
+        public float indents;
+        public float used_indents;
         public String price;
     }
 }

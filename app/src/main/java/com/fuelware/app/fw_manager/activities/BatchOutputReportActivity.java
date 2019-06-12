@@ -39,12 +39,19 @@ public class BatchOutputReportActivity extends SuperActivity {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.refresh_layout)
+    RecyclerView refreshLayout;
 
     BatchReportAdapter adapter;
     private List<BatchReport> list = new ArrayList<>();
     private AlertDialog progress;
     private String authkey;
     private Gson gson;
+
+
+//    private AutoLoadEventDetector mAutoLoadEventDetector;
+//    private boolean mIsLoading;
+//    private InteractionListener mInteractionListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class BatchOutputReportActivity extends SuperActivity {
 
         adapter = new BatchReportAdapter(list, this);
         recyclerView.setAdapter(adapter);
+        //recyclerView.addOnScrollListener(mAutoLoadEventDetector);
     }
 
     private void initialise() {
@@ -129,5 +137,57 @@ public class BatchOutputReportActivity extends SuperActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /*public class AutoLoadEventDetector extends RecyclerView.OnScrollListener {
+
+        @Override
+        public void onScrolled(RecyclerView view, int dx, int dy) {
+            RecyclerView.LayoutManager manager = view.getLayoutManager();
+            if (manager.getChildCount() > 0) {
+                int count = manager.getItemCount();
+                int last = ((RecyclerView.LayoutParams) manager
+                        .getChildAt(manager.getChildCount() - 1).getLayoutParams()).getViewAdapterPosition();
+
+                if (last == count - 1 && !mIsLoading && mInteractionListener != null) {
+                    requestMore();
+                }
+            }
+        }
+    }*/
+
+    /*public abstract class InteractionListener {
+        public void requestRefresh() {
+            requestComplete();
+
+            if (mOriginAdapter.isEmpty()) {
+                //mTipsHelper.showEmpty();
+            } else if (hasMore()) {
+                //mTipsHelper.showHasMore();
+            } else {
+                //mTipsHelper.hideHasMore();
+            }
+        }
+
+        public void requestMore() {
+            requestComplete();
+        }
+
+        public void requestFailure() {
+            requestComplete();
+            //mTipsHelper.showError(isFirstPage(), new Exception("net error"));
+        }
+
+        protected void requestComplete() {
+            mIsLoading = false;
+
+            if (refreshLayout != null) {
+                refreshLayout.setRefreshing(false);
+            }
+        }
+
+        protected boolean hasMore() {
+            return mOriginAdapter.getItem(mOriginAdapter.getItemCount() - 1).hasMore();
+        }
+    }*/
 
 }

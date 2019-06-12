@@ -55,6 +55,11 @@
 
     </LinearLayout>
 
+    <com.dinuscxj.refresh.RecyclerRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/linlay1"
         android:id="@+id/recyclerView"
@@ -64,5 +69,7 @@
         android:layout_weight="1"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </com.dinuscxj.refresh.RecyclerRefreshLayout>
 
 </RelativeLayout>
