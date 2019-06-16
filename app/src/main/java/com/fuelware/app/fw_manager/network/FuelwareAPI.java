@@ -236,6 +236,7 @@ public interface FuelwareAPI {
 
 
     @GET("outlet/batch-report")
-    Call<ResponseBody> getBatchReport(@Header("Authorization") String authkey
+    Call<ResponseBody> getBatchReport(@Header("Authorization") String authkey,
+                                      @Query("page") long page
                                       );
 }

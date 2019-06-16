@@ -55,21 +55,32 @@
 
     </LinearLayout>
 
-    <com.dinuscxj.refresh.RecyclerRefreshLayout
+    <!--<com.dinuscxj.refresh.RecyclerRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
+
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linlay1"
+        app:srl_direction="bottom"
+        android:layout_gravity="bottom"
+        >
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/linlay1"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:listitem="@layout/row_batch_report"
         android:layout_weight="1"
         android:scrollbars="vertical"
+        android:clipToPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+    <!--</com.dinuscxj.refresh.RecyclerRefreshLayout>-->
 
 </RelativeLayout>

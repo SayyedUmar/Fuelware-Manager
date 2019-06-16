@@ -16,6 +16,7 @@ import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.network.APIClient;
+import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.services.MyService;
 import com.fuelware.app.fw_manager.services.MyServiceListerner;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
@@ -126,9 +127,7 @@ public class ChangePasswordActivity extends SuperActivity {
                         try {
                             JSONObject result;
                             if (response.isSuccessful()) {
-                                result = new JSONObject(response.body().string());
-                                String msg = result.getString("message");
-                                Toast.makeText(ChangePasswordActivity.this, msg, Toast.LENGTH_LONG).show();
+                                MLog.showLongToast(getApplicationContext(), "Password changed successfully.");
                                 finish();
                             } else {
                                 result = new JSONObject(response.errorBody().string());

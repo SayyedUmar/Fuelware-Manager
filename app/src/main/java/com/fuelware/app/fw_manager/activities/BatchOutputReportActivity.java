@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.fuelware.app.fw_manager.R;
@@ -18,7 +19,10 @@ import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,13 +44,14 @@ public class BatchOutputReportActivity extends SuperActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
-    RecyclerView refreshLayout;
+    SwipyRefreshLayout refreshLayout;
 
     BatchReportAdapter adapter;
     private List<BatchReport> list = new ArrayList<>();
     private AlertDialog progress;
     private String authkey;
     private Gson gson;
+    private Pagination page = new Pagination();
 
 
 //    private AutoLoadEventDetector mAutoLoadEventDetector;
@@ -64,8 +69,8 @@ public class BatchOutputReportActivity extends SuperActivity {
         setTitle("Batch Report");
 
         initialise();
-        setEventListeners();
         setupRecycler();
+        setEventListeners();
         fetchAllBatchReports();
     }
 
@@ -87,7 +92,19 @@ public class BatchOutputReportActivity extends SuperActivity {
     }
 
     private void setEventListeners() {
+        refreshLayout.setOnRefreshListener(direction -> {
+            Log.d("MainActivity", "Refresh triggered at "
+                    + (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
 
+            if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+                if (page != null && page.currentPage < page.totalPages) {
+                    fetchAllBatchReports();
+                } else {
+                    refreshLayout.setRefreshing(false);
+                    MLog.showToast(getApplicationContext(), "No new data to display.");
+                }
+            }
+        });
     }
 
     private void fetchAllBatchReports() {
@@ -97,17 +114,18 @@ public class BatchOutputReportActivity extends SuperActivity {
         }
 
         progress.show();
-
-        APIClient.getApiService().getBatchReport(authkey).enqueue(new Callback<ResponseBody>() {
+        long pageNumber = page != null ? page.currentPage+1 : 0;
+        APIClient.getApiService().getBatchReport(authkey, pageNumber).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         JSONObject result = new JSONObject(response.body().string());
                         JSONArray array = result.getJSONArray("data");
+                        JSONObject pagination = result.getJSONObject("meta").getJSONObject("pagination");
+                        page = gson.fromJson(pagination.toString(), Pagination.class);
                         Type token2 = new TypeToken<List<BatchReport>>(){}.getType();
                         List<BatchReport> tempList = gson.fromJson(array.toString(), token2);
-                        list.clear();
                         list.addAll(tempList);
                         adapter.refresh();
                     } else {
@@ -115,6 +133,7 @@ public class BatchOutputReportActivity extends SuperActivity {
                         if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
                             MLog.showToast(getApplicationContext(),  errorObj.getString("message"));
                     }
+                    refreshLayout.setRefreshing(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -125,6 +144,7 @@ public class BatchOutputReportActivity extends SuperActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 progress.dismiss();
                 MLog.showToast(getApplicationContext(), t.getMessage());
+                refreshLayout.setRefreshing(false);
             }
         });
     }
@@ -138,56 +158,13 @@ public class BatchOutputReportActivity extends SuperActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*public class AutoLoadEventDetector extends RecyclerView.OnScrollListener {
-
-        @Override
-        public void onScrolled(RecyclerView view, int dx, int dy) {
-            RecyclerView.LayoutManager manager = view.getLayoutManager();
-            if (manager.getChildCount() > 0) {
-                int count = manager.getItemCount();
-                int last = ((RecyclerView.LayoutParams) manager
-                        .getChildAt(manager.getChildCount() - 1).getLayoutParams()).getViewAdapterPosition();
-
-                if (last == count - 1 && !mIsLoading && mInteractionListener != null) {
-                    requestMore();
-                }
-            }
-        }
-    }*/
-
-    /*public abstract class InteractionListener {
-        public void requestRefresh() {
-            requestComplete();
-
-            if (mOriginAdapter.isEmpty()) {
-                //mTipsHelper.showEmpty();
-            } else if (hasMore()) {
-                //mTipsHelper.showHasMore();
-            } else {
-                //mTipsHelper.hideHasMore();
-            }
-        }
-
-        public void requestMore() {
-            requestComplete();
-        }
-
-        public void requestFailure() {
-            requestComplete();
-            //mTipsHelper.showError(isFirstPage(), new Exception("net error"));
-        }
-
-        protected void requestComplete() {
-            mIsLoading = false;
-
-            if (refreshLayout != null) {
-                refreshLayout.setRefreshing(false);
-            }
-        }
-
-        protected boolean hasMore() {
-            return mOriginAdapter.getItem(mOriginAdapter.getItemCount() - 1).hasMore();
-        }
-    }*/
+    static class Pagination {
+        @SerializedName("count")
+        long offset = 30;
+        @SerializedName("current_page")
+        long currentPage = 0;
+        @SerializedName("total_pages")
+        long totalPages = 0;
+    }
 
 }

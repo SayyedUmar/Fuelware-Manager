@@ -206,8 +206,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
         TouchImageView imageView = dialog.findViewById(R.id.imageView);
         TextView tvClose = dialog.findViewById(R.id.tvClose);
         tvClose.setOnClickListener(v1 -> dialog.dismiss());
-        Window window = dialog.getWindow();
-        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         imageView.setImageResource(R.drawable.ic_placeholder);
         imageView.setMaxZoom(10);
         Glide.with(v.getContext()).load(model.snap_bill_url)
