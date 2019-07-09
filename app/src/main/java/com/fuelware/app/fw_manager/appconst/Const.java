@@ -16,4 +16,5 @@ public class Const {
     public static final int ALARM_MINUTE = 60*1000;
 
     public static final int ALARM_REQUEST_CODE = 2390;
+    public static final String NOTIFICATION_TOKEN = "NOTIFICATION_TOKEN";
 }

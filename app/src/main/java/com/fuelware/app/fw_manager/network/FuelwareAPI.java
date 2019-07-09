@@ -144,14 +144,26 @@ public interface FuelwareAPI {
     //res ; {"success":true,"message":"","data":[{"id":4233,"product_id":14,"price":"40"},{"id":4234,"product_id":15,"price":"20"}]}
 
 
+    @GET("outlet/manager/report/credit-customer?paginate=true")
+    Call<ResponseBody> fetchTransactions(@Header("Authorization") String value,
+                                              @Query("customer_id") String customer_id,
+                                              @Query("date_from") String date_from,
+                                              @Query("date_to") String date_to,
+                                              @Query("credit") boolean credit,
+                                              @Query("debit") boolean debit,
+                                              @Query("sort_order") String sortOder,
+                                              @Query("page") long page,
+                                              @Query("per_page") int count_per_page,
+                                              @Query("search") String searchText
+    );
+
     @GET("outlet/manager/report/credit-customer")
-    Call<ResponseBody> getAccountStatementNew(@Header("Authorization") String value,
+    Call<ResponseBody> fetchTransactions(@Header("Authorization") String value,
                                               @Query("date_from") String date_from,
                                               @Query("date_to") String date_to,
                                               @Query("credit") boolean credit,
                                               @Query("debit") boolean debit,
                                               @Query("customer_id") String customer_id
-
     );
 
     @GET("outlet/manager/report/credit-customer")
@@ -168,6 +180,16 @@ public interface FuelwareAPI {
 
     @GET("outlet/manager/report/credit-customer?file=pdf")
     Call<ResponseBody> generateAccountStatementPDF(@Header("Authorization") String value,
+                                                   @Query("customer_id") String customer_id,
+                                                   @Query("date_from") String date_from,
+                                                   @Query("date_to") String date_to,
+                                                   @Query("credit") boolean credit,
+                                                   @Query("debit") boolean debit,
+                                                   @Query("file-header") boolean header,
+                                                   @Query("sort_order") String sortOder,
+                                                   @Query("search") String searchText
+    );
+    /*Call<ResponseBody> generateAccountStatementPDF(@Header("Authorization") String value,
                                                    @Query("date_from") String date_from,
                                                    @Query("date_to") String date_to,
                                                    @Query("credit") boolean credit,
@@ -175,7 +197,7 @@ public interface FuelwareAPI {
                                                    @Query("file-header") boolean header,
                                                    @Query("customer_id") String customer_id,
                                                    @Query("paginate") boolean paginate
-    );
+    );*/
 
     @POST("common/update-password")
     Observable<Response<ResponseBody>> changePassword(@Header("Authorization") String value,

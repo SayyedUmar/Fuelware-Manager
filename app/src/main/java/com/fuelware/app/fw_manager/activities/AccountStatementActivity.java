@@ -1,8 +1,10 @@
 package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,18 +12,24 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fuelware.app.fw_manager.appconst.AppConst;
+import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.AccounStatementAdapter;
 import com.fuelware.app.fw_manager.adapters.SpinnerAdapter;
+import com.fuelware.app.fw_manager.appconst.AppConst;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.AccountModel;
 import com.fuelware.app.fw_manager.models.CreditCustomer;
+import com.fuelware.app.fw_manager.models.Pagination;
 import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
@@ -31,7 +39,16 @@ import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+import com.wangjie.rapidfloatingactionbutton.util.RFABShape;
+import com.wangjie.rapidfloatingactionbutton.util.RFABTextUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +68,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class AccountStatementActivity extends SuperActivity implements SlyCalendarDialog.Callback {
+public class AccountStatementActivity extends SuperActivity implements SlyCalendarDialog.Callback,
+        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
 
     @BindView(R.id.recyclerView)
@@ -60,6 +78,12 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     TextView tvNoRecordsFound;
     @BindView(R.id.tvCreditCustomer)
     TextView tvCreditCustomer;
+    @BindView(R.id.activity_main_rfal)
+    RapidFloatingActionLayout rfaLayout;
+    @BindView(R.id.activity_main_rfab)
+    RapidFloatingActionButton rfaBtn;
+    @BindView(R.id.refresh_layout)
+    SwipyRefreshLayout refresh_layout;
 
     private AlertDialog progress;
     private Gson gson;
@@ -74,6 +98,16 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     private List<AccountModel> records = new ArrayList<>();
     private List<CreditCustomer> creditCustomerList = new ArrayList<>();
     private CreditCustomer selectedCustomer;
+    private String file_type = "pdf";
+
+    private Pagination pagination = new Pagination();
+    private int per_page_count = 40;
+    private boolean sort_order_desc = true;
+    private String searchText = "";
+
+    private RapidFloatingActionHelper rfabHelper;
+    private List<RFACLabelItem> items = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +121,47 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         initialise();
         setupRecyclerView();
         setEventListeners();
+        setupFloatButton();
         fetchTransactions();
         fetchCreditCustomers();
+    }
+
+    private void setupFloatButton() {
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("PDF Download")
+                .setResId(R.drawable.ic_download_arrow)
+                .setIconNormalColor(0xffd84315)
+                .setIconPressedColor(0xffbf360c)
+                .setLabelColor(Color.WHITE)
+                .setLabelSizeSp(12)
+                .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(this, 4)))
+                .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Apply Date Filter")
+                .setResId(R.drawable.ic_calendar)
+                .setIconNormalColor(0xff4e342e)
+                .setIconPressedColor(0xff3e2723)
+                .setLabelColor(Color.WHITE)
+                .setLabelSizeSp(12)
+                .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(this, 4)))
+                .setWrapper(1)
+        );
+
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(this);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+
+        rfaContent.setItems(items)
+                .setIconShadowRadius(RFABTextUtil.dip2px(this, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(RFABTextUtil.dip2px(this, 5))
+        ;
+        rfabHelper = new RapidFloatingActionHelper(
+                this,
+                rfaLayout,
+                rfaBtn,
+                rfaContent
+        ).build();
     }
 
     private void fetchCreditCustomers() {
@@ -162,24 +235,36 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 break;
         }
 
+        String sortOder = "desc";
+        if (sort_order_desc) {
+            sortOder = "desc";
+        } else {
+            sortOder = "asc";
+        }
+
         String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
-        Call<ResponseBody> responce_outlets = APIClient.getApiService().getAccountStatementNew(authkey, firstDateString, secondDateString,
-                credit, debit, customerID);
+        long pageNumber = pagination != null ? pagination.currentPage+1 : 0;
+
+        Call<ResponseBody> responce_outlets = APIClient.getApiService().fetchTransactions(
+                authkey, customerID,
+                firstDateString, secondDateString,
+                credit, debit, sortOder, pageNumber, per_page_count, searchText);
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject res = new JSONObject(response.body().string());
+                        JSONObject page = res.getJSONObject("meta").getJSONObject("pagination");
+                        pagination = gson.fromJson(page.toString(), Pagination.class);
                         JSONObject dataObj = res.getJSONObject("data");
                         JSONArray jsonArray = dataObj.getJSONArray("credit_customer");
                         Type type = new TypeToken<List<AccountModel>>() {}.getType();
-                        records.clear();
+                        if (pageNumber == 1)
+                            records.clear();
                         records.addAll(gson.fromJson(jsonArray.toString(), type));
                         adapter.refresh();
                         showTitle();
-
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -192,13 +277,15 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         e.printStackTrace();
                     }
                 }
-                progress.dismiss();
+                refresh_layout.setRefreshing(false);
+                progress.hide();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                progress.dismiss();
                 MLog.showToast(getApplicationContext(), AppConst.ERROR_MSG);
+                refresh_layout.setRefreshing(false);
+                progress.hide();
             }
         });
     }
@@ -247,6 +334,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         dialog1.dismiss();
                         selectedCustomer = (CreditCustomer) item;
                         tvCreditCustomer.setText(selectedCustomer.getId()+" - "+selectedCustomer.getBusiness());
+                        pagination = new Pagination();
                         fetchTransactions();
                     })
                     .setCancelable(true)
@@ -256,15 +344,27 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             dialog.show();
             dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialog.dismiss());
         });
+
+        refresh_layout.setOnRefreshListener(direction -> {
+            Log.d("MainActivity", "Refresh triggered at "
+                    + (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
+
+            if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+                if (pagination != null && pagination.currentPage < pagination.totalPages) {
+                    fetchTransactions();
+                } else {
+                    refresh_layout.setRefreshing(false);
+                    MLog.showToast(this, "Your data is already updated.");
+                }
+            }
+        });
     }
 
-    private void getAccountStatementPDFUrl(boolean withHeader) {
+    private void getAccountStatementPDFUrl(boolean withHeader, boolean sort_order_desc) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;
         }
-
-        progress.show();
 
         boolean credit = true;
         boolean debit = true;
@@ -281,9 +381,28 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 break;
         }
 
+        String sortOder = "desc";
+        if (sort_order_desc) {
+            sortOder = "desc";
+        } else {
+            sortOder = "asc";
+        }
+
         String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
-        Call<ResponseBody> responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, firstDateString, secondDateString,
-                credit, debit, withHeader, customerID, false);
+
+        Call<ResponseBody> responce_outlets;
+        if (file_type.equals("pdf")) {
+            responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, customerID,
+                    firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText);
+        } else {
+            String notification_token = MyPreferences.getStringValue(this, Const.NOTIFICATION_TOKEN);
+            String url = getCSVurl(authkey, customerID, firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText, notification_token);
+            downloadCSV(url);
+            return;
+        }
+
+        progress.show();
+
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -325,10 +444,26 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "account_transaction.pdf");
             DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             dm.enqueue(request);
+            MLog.showToast(getApplicationContext(), "Account Statement downloaded successfully.");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void downloadCSV(String url) {
+        try {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "account_transaction.csv");
+            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(request);
+            MLog.showToast(getApplicationContext(), "Account Statement downloaded successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -349,7 +484,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 break;
 
             case R.id.menu_download_pdf:
-                showFileHeaderPopup();
+                showDownloadPDFDialog();
                 break;
 
             case R.id.action_filter:
@@ -392,28 +527,59 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private void filterTransaction(TransactionTypeEnum status) {
         typeEnum = status;
-        if (!firstDateString.isEmpty() || !secondDateString.isEmpty()) {
+        pagination = new Pagination();
+//        if (!firstDateString.isEmpty() || !secondDateString.isEmpty()) {
             fetchTransactions();
-        } else {
-            adapter.filter(status);
+//        } else {
+//            adapter.filter(status);
+//        }
+    }
+
+    private void showDownloadPDFDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_download_pdf);
+        final TextView tvYes = dialog.findViewById(R.id.tvYes);
+        final TextView tvNo = dialog.findViewById(R.id.tvNo);
+        final TextView tvTransCount = dialog.findViewById(R.id.tvTransCount);
+        final RadioButton radioDsc = dialog.findViewById(R.id.radioDsc);
+        final RadioButton radioPdf = dialog.findViewById(R.id.radioPdf);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        tvTransCount.setText("Result: "+pagination.total+" transactions");
+
+        tvNo.setOnClickListener(view -> {
+            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false);
+            dialog.dismiss();
+        });
+        tvYes.setOnClickListener(view -> {
+            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true);
+            dialog.dismiss();
+        });
+    }
+
+    private void fetchResult(boolean sortOrder, boolean pdfFile,  boolean withHeader) {
+        if (sort_order_desc != sortOrder) {
+            sort_order_desc = sortOrder;
+            pagination = new Pagination();
         }
+        if (pdfFile) {
+            file_type = "pdf";
+        } else {
+            file_type = "csv";
+        }
+
+        getAccountStatementPDFUrl(withHeader, sortOrder);
+        fetchTransactions();
     }
 
-    private void showFileHeaderPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want PDF with header?")
-                .setNegativeButton("No", (dialogInterface, i) -> {
-                    getAccountStatementPDFUrl(false);
-                })
-                .setPositiveButton("Yes", (dialogInterface, i) -> {
-                    getAccountStatementPDFUrl(true);
-                });
-
-
-
-        builder.setCancelable(true);
-        builder.show();
+    private String getCSVurl(String authkey, String customerID, String date_from, String date_to, boolean credit, boolean debit, boolean withHeader, String sortOder, String searchText,String notification_token) {
+        String url = BuildConfig.BASE_URL_2+"csv/?"+"file=csv&date_from="+date_from+"&customer_id="+customerID+"&date_to="+date_to+"&credit="+credit
+                +"&debit="+debit+"&file-header="+withHeader+"&sort_order="+sortOder+"&search="+searchText+"&token="+notification_token;
+        return url;
     }
+
 
     @Override
     public void onCancelled() {
@@ -426,7 +592,28 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             this.secondDateString = MyUtils.dateToString(secondDate.getTime(), AppConst.SERVER_DATE_FORMAT);
             this.firstDate = firstDate;
             this.secondDate = secondDate;
+            pagination = new Pagination();
             fetchTransactions();
         } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        if (position == 1) {
+            openDateFilterDialog();
+        } else {
+//            showDownloadPDFDialog();
+        }
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 1) {
+            openDateFilterDialog();
+        } else {
+//            showDownloadPDFDialog();
+        }
+        rfabHelper.toggleContent();
     }
 }

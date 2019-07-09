@@ -2,7 +2,6 @@ package com.fuelware.app.fw_manager.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -114,7 +113,7 @@ public class SearchTransactionsActivity extends SuperActivity {
         String outletid = prfs.getString("outletid", "");
         String authkey = prfs.getString("authkey", "");
 
-        Call<ResponseBody> responce_outlets = APIClient.getApiService().getAccountStatementNew(authkey, "", "",
+        Call<ResponseBody> responce_outlets = APIClient.getApiService().fetchTransactions(authkey, "", "",
                 true, true, "");
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
