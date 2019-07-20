@@ -69,6 +69,7 @@ public  class MorningParamsActivity extends SuperActivity {
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
+        setTitle("Fuel Price");
 
         initialise();
         setupRecycler();

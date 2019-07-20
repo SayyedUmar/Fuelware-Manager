@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,7 +70,8 @@ import retrofit2.Response;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 public class AccountStatementActivity extends SuperActivity implements SlyCalendarDialog.Callback,
-        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener,
+        SearchView.OnQueryTextListener {
 
 
     @BindView(R.id.recyclerView)
@@ -84,6 +86,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     RapidFloatingActionButton rfaBtn;
     @BindView(R.id.refresh_layout)
     SwipyRefreshLayout refresh_layout;
+    @BindView(R.id.tvClosingBalance)
+    TextView tvClosingBalance;
 
     private AlertDialog progress;
     private Gson gson;
@@ -107,6 +111,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private RapidFloatingActionHelper rfabHelper;
     private List<RFACLabelItem> items = new ArrayList<>();
+    private Menu menu;
 
 
     @Override
@@ -124,6 +129,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         setupFloatButton();
         fetchTransactions();
         fetchCreditCustomers();
+
+        tvClosingBalance.setVisibility(View.GONE);
     }
 
     private void setupFloatButton() {
@@ -137,6 +144,18 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(this, 4)))
                 .setWrapper(0)
         );
+
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Report Type")
+                .setResId(R.drawable.ic_calendar)
+                .setIconNormalColor(0xff4e342e)
+                .setIconPressedColor(0xff3e2723)
+                .setLabelColor(Color.WHITE)
+                .setLabelSizeSp(12)
+                .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(this, 4)))
+                .setWrapper(1)
+        );
+
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("Apply Date Filter")
                 .setResId(R.drawable.ic_calendar)
@@ -468,7 +487,45 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.account_menu, menu);
+        this.menu = menu;
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        if (searchItem != null) {
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            searchView.setQueryHint("Enter Indent No, Veh/Mc No");
+            searchView.setOnQueryTextListener(this);
+            searchView.setIconified(false);
+
+            searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    showAllMenu(false);
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    showAllMenu(true);
+                    searchText = "";
+
+                    return true;
+                }
+            });
+
+        }
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void showAllMenu (boolean toshow) {
+        if (toshow) {
+            menu.findItem(R.id.menu_download_pdf).setVisible(true);
+            menu.findItem(R.id.action_filter).setVisible(true);
+            menu.findItem(R.id.action_calendar).setVisible(true);
+        } else {
+            menu.findItem(R.id.menu_download_pdf).setVisible(false);
+            menu.findItem(R.id.action_filter).setVisible(false);
+            menu.findItem(R.id.action_calendar).setVisible(false);
+        }
     }
 
     @Override
@@ -602,7 +659,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         if (position == 1) {
             openDateFilterDialog();
         } else {
-//            showDownloadPDFDialog();
+            showDownloadPDFDialog();
         }
         rfabHelper.toggleContent();
     }
@@ -612,8 +669,20 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         if (position == 1) {
             openDateFilterDialog();
         } else {
-//            showDownloadPDFDialog();
+            showDownloadPDFDialog();
         }
         rfabHelper.toggleContent();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        searchText = newText;
+        adapter.getFilter().filter(newText);
+        return true;
     }
 }

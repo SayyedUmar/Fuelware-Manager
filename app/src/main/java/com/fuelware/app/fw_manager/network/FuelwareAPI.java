@@ -55,6 +55,10 @@ public interface FuelwareAPI {
     Call<ResponseBody> getMindentList(@Header("Authorization") String value,
                                       @Path("cashierID") String cashierID);
 
+    @GET("outlet/manager/cashier/{cashierID}/e-indent")
+    Call<ResponseBody> getEindentList(@Header("Authorization") String value,
+                                      @Path("cashierID") String cashierID);
+
     @POST("outlet/common/save-counter-bill")
     Call<ResponseBody> createConuterBill(@Header("Authorization") String value, @Header("Content-Type") String type,
                                          @Body CounterBillPojo item);

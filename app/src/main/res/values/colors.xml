@@ -11,6 +11,7 @@
     <color name="white">#fff</color>
     <color name="gray_light">#d9d9d9</color>
     <color name="gray_dark">#757575</color>
+    <color name="darker_gray1">#757575</color>
     <color name="red_light_color1">#e47164</color>
     <color name="violet">#660E7A</color>
     <color name="error_color">#f5695e</color>

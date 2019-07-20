@@ -31,7 +31,7 @@ public class IndentModel implements Serializable {
 
     private String user_id,product_id;
     private boolean has_blacklisted;
-    public boolean is_manual_invoice;
+    public int is_manual_invoice;
 
     private boolean verify_credit_limit;
 

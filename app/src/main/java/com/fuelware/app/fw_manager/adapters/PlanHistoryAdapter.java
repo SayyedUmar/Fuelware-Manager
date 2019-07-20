@@ -50,11 +50,16 @@ public class PlanHistoryAdapter extends RecyclerView.Adapter<PlanHistoryAdapter.
 
         position = holder.getAdapterPosition();
         PlanHistory model = records.get(position);
-        holder.tvStartDate.setText("Start: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.getStart_date()));
-        holder.tvEndDate.setText("End: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.getEnd_date()));
+        if (model.getStart_date() != null)
+            holder.tvStartDate.setText("Start: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.getStart_date()));
+
+        if (model.getEnd_date() != null)
+            holder.tvEndDate.setText("End: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.getEnd_date()));
+
         holder.tvInvoiceNumber.setText(model.getInvoice_num());
         holder.tvPrice.setText(MyUtils.formatCurrency(model.getFinal_price()));
-        holder.tvPlanType.setText(model.getPlan());
+        holder.tvPlanType.setText(model.getPlan_name());
+        holder.tvStatus.setText(model.getPayment_status());
     }
 
     @Override

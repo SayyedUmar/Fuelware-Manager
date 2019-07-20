@@ -261,7 +261,7 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
         });
     }
 
-    public void requestOTP(IndentModel indentModel, int index) {
+    public void requestOTP(Dialog dialog, IndentModel indentModel, int index) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;
@@ -274,11 +274,14 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         MLog.showToast(MindentListActivity.this, jsonObject.getString("message"));
                         String name = jsonObject.getJSONObject("data").getString("name");
                         String mobile = jsonObject.getJSONObject("data").getString("mobile");
-                        showConfirmOTPDialog(indentModel, index, name, mobile);
+                        if (dialog == null) {
+                            showConfirmOTPDialog(indentModel, index, name, mobile);
+                        }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))
@@ -303,6 +306,7 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
         dialog.setContentView(R.layout.dialog_verify_action_otp);
         TextView tvTitle = dialog.findViewById(R.id.tvTitle);
         EditText etOTP = dialog.findViewById(R.id.etOTP);
+        TextView tvReSend = dialog.findViewById(R.id.tvReSend);
         tvTitle.setText("OTP has been sent to "+name+" "+mobile);
         TextView btnNo = dialog.findViewById(R.id.btnNo);
         TextView btnYes = dialog.findViewById(R.id.btnYes);
@@ -311,6 +315,9 @@ public class MindentListActivity extends SuperActivity implements SearchView.OnQ
         btnYes.setOnClickListener(w -> {
             dialog.dismiss();
             deleteMIndent(indentModel, index, etOTP.getText().toString().trim());
+        });
+        tvReSend.setOnClickListener(v -> {
+            requestOTP(dialog, indentModel, index);
         });
         dialog.show();
     }

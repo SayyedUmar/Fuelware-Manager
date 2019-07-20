@@ -41,7 +41,7 @@
             android:layout_marginRight="15dp"
             android:fontFamily="@font/quicksand_medium"
             android:text="business name"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="@+id/tvLblBN"
             app:layout_constraintRight_toLeftOf="@+id/tvCustomerName"
             app:layout_constraintTop_toBottomOf="@+id/tvLblBN" />
@@ -66,7 +66,7 @@
             android:drawablePadding="0dp"
             android:text="IndentNumber"
             android:fontFamily="@font/quicksand_medium"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/tvIN"
             app:layout_constraintLeft_toLeftOf="@+id/tvIN"
             />
@@ -75,7 +75,7 @@
             android:id="@+id/tvP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product"
+            android:text="Amount"
             android:fontFamily="@font/quicksand_medium"
             android:textSize="10sp"
             android:layout_marginTop="8dp"
@@ -91,7 +91,7 @@
             android:drawablePadding="0dp"
             android:text="Product"
             android:fontFamily="@font/quicksand_medium"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/tvP"
             app:layout_constraintLeft_toLeftOf="@+id/tvP"
             />
@@ -127,7 +127,7 @@
             android:drawablePadding="0dp"
             android:fontFamily="@font/quicksand_medium"
             tools:text="Bank name"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLblCN" />
 
@@ -150,7 +150,7 @@
             android:drawablePadding="0dp"
             tools:text="Cheque Number"
             android:fontFamily="@font/quicksand_medium"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/tvVN"
             app:layout_constraintRight_toRightOf="@+id/tvVN"
             />

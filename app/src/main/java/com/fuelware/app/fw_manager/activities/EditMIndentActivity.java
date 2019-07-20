@@ -331,7 +331,7 @@ public class EditMIndentActivity extends SuperActivity {
                 return;
             }
 
-            requestOTP();
+            requestOTP(null);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -339,7 +339,7 @@ public class EditMIndentActivity extends SuperActivity {
 
     }
 
-    private void requestOTP() {
+    private void requestOTP(Dialog dialog) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;
@@ -356,7 +356,8 @@ public class EditMIndentActivity extends SuperActivity {
                         MLog.showToast(EditMIndentActivity.this, jsonObject.getString("message"));
                         String name = jsonObject.getJSONObject("data").getString("name");
                         String mobile = jsonObject.getJSONObject("data").getString("mobile");
-                        showConfirmOTPDialog(name, mobile);
+                        if (dialog == null)
+                            showConfirmOTPDialog(name, mobile);
                         //{"success":true,"message":"OTP successfully send","data":{"name":"Rohit Gaydhane","mobile":"9518950847"}}
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -382,6 +383,7 @@ public class EditMIndentActivity extends SuperActivity {
         dialog.setContentView(R.layout.dialog_verify_action_otp);
         TextView tvTitle = dialog.findViewById(R.id.tvTitle);
         EditText etOTP = dialog.findViewById(R.id.etOTP);
+        TextView tvReSend = dialog.findViewById(R.id.tvReSend);
         tvTitle.setText("OTP has been sent to "+name+" "+mobile);
         TextView btnNo = dialog.findViewById(R.id.btnNo);
         TextView btnYes = dialog.findViewById(R.id.btnYes);
@@ -390,6 +392,9 @@ public class EditMIndentActivity extends SuperActivity {
         btnYes.setOnClickListener(w -> {
             dialog.dismiss();
             updateMIndent(etOTP.getText().toString().trim());
+        });
+        tvReSend.setOnClickListener(v -> {
+            requestOTP(dialog);
         });
         dialog.show();
     }
@@ -664,7 +669,7 @@ public class EditMIndentActivity extends SuperActivity {
     private void showDataOnUI() {
         etBusinessName.setText(indent.getBusiness());
         etCustomerMobile.setText(indent.getMobile());
-        etCustomerID.setText(indent.getCustomer_id());
+        etCustomerID.setText(indent.getFormatted_user_id());
         String indentDate = indent.getFill_date();
         etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, indentDate));
         etIndentNo.setText(indent.getIndent_number());

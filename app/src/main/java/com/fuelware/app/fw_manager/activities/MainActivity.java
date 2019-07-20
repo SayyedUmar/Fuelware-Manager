@@ -104,9 +104,15 @@ public class MainActivity extends SuperActivity
 
         setEventListeners();
         getuserProfile();
-        fetchCashiers();
         fetchProducts();
+//        fetchCashiers();
         fetchMorningPrice();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchCashiers();
     }
 
     private void fetchMorningPrice() {
@@ -171,11 +177,6 @@ public class MainActivity extends SuperActivity
 
     private void showMorningPriceUpdatePopup() {
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     private void setEventListeners() {

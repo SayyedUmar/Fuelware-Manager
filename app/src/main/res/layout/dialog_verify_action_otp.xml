@@ -45,16 +45,18 @@
             android:layout_height="2dp"
             android:background="@color/gray_light"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <!--<LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:padding="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
 
             <EditText
                 android:id="@+id/etOTP"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:padding="5dp"
                 android:layout_margin="10dp"
@@ -83,7 +85,61 @@
                 android:digits="@string/I_SET"
                 />
 
-        </LinearLayout>
+        </LinearLayout>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+
+            <EditText
+                android:id="@+id/etOTP"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:paddingLeft="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:hint="Enter OTP"
+                android:maxLength="10"
+                android:inputType="text"
+                />
+
+            <TextView
+                android:id="@+id/tvReSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resend"
+                android:paddingTop="10dp"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:textSize="16sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:textColor="@color/green_light_color1"
+                />
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/etMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/text_actionOTP"
+                android:paddingLeft="10dp"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:fontFamily="@font/quicksand_medium"
+                android:hint="Enter Alternate Mobile Number"
+                android:maxLength="10"
+                android:inputType="number"
+                android:digits="@string/I_SET"
+                />
+
+        </RelativeLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -104,7 +160,7 @@
                 android:textColor="@color/error_color"
                 android:fontFamily="@font/quicksand_medium"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                />
 
             <View
                 android:layout_width="1dp"
@@ -122,7 +178,7 @@
                 android:textColor="@color/colorPrimary"
                 android:fontFamily="@font/quicksand_medium"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                />
 
         </LinearLayout>
     </LinearLayout>

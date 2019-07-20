@@ -3,7 +3,7 @@
     <string-array name="array_duration">
         <item>All</item>
         <item>Half Yearly</item>
-        <item>Anually</item>
+        <item>Annually</item>
         <item>Quarterly</item>
         <item>Monthly</item>
         <item>Basic Plan</item>

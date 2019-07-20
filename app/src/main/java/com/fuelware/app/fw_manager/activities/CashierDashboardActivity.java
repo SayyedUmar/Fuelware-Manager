@@ -29,6 +29,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -41,16 +43,28 @@ public class CashierDashboardActivity extends SuperActivity {
     private Cashier cashier;
     private String authkey;
     private AlertDialog progressDialog;
-    private TextView tvBatchID, tvLoginTime, tvMindentCount, tvFuelPrice;
+    @BindView(R.id.tvBatchID)
+    TextView tvBatchID;
+    @BindView(R.id.tvLoginTime)
+    TextView tvLoginTime;
+    @BindView(R.id.tvMindentCount)
+    TextView tvMindentCount;
+    @BindView(R.id.tvFuelPrice)
+    TextView tvFuelPrice;
     private List<ProductPriceModel> prodPriceList = new ArrayList<>();
     private Gson gson;
-    private ImageView mIndentImage;
+
+    @BindView(R.id.mindent_img)
+    ImageView mIndentImage;
+    @BindView(R.id.imgEindent)
+    ImageView eIndentImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_cashier_dashboard);
+        ButterKnife.bind(this);
         setupBackNavigation(null);
         cashier = (Cashier) getIntent().getSerializableExtra("CASHIER");
         setTitle(cashier.getFirst_name()+" "+cashier.getLast_name());
@@ -64,12 +78,11 @@ public class CashierDashboardActivity extends SuperActivity {
 
 
     private void findViewById() {
-        tvBatchID = findViewById(R.id.tvBatchID);
-        tvLoginTime = findViewById(R.id.tvLoginTime);
-        tvMindentCount = findViewById(R.id.tvMindentCount);
-        tvFuelPrice = findViewById(R.id.tvFuelPrice);
-        tvMindentCount = findViewById(R.id.tvMindentCount);
-        mIndentImage = findViewById(R.id.mindent_img);
+//        tvBatchID = findViewById(R.id.tvBatchID);
+//        tvLoginTime = findViewById(R.id.tvLoginTime);
+//        tvMindentCount = findViewById(R.id.tvMindentCount);
+//        tvFuelPrice = findViewById(R.id.tvFuelPrice);
+//        tvMindentCount = findViewById(R.id.tvMindentCount);
     }
 
     private void setEventListeners() {
@@ -84,6 +97,10 @@ public class CashierDashboardActivity extends SuperActivity {
 
         mIndentImage.setOnClickListener(v -> {
             startActivity(new Intent(this, MindentListActivity.class));
+        });
+
+        eIndentImage.setOnClickListener(v -> {
+            startActivity(new Intent(this, EindentListActivity.class));
         });
     }
 

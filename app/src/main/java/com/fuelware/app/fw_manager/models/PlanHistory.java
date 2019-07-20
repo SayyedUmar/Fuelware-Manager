@@ -12,7 +12,11 @@ public class PlanHistory {
     private String start_date;
     private String end_date;
     private String payment_status;
+    private String plan_name;
 
+    public String getPlan_name() {
+        return plan_name;
+    }
 
     public String getId() {
         return id;

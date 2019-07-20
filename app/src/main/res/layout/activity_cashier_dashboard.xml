@@ -127,7 +127,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/eindent_img"
+                    android:id="@+id/imgEindent"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"

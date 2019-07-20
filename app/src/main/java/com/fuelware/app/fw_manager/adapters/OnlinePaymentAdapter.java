@@ -84,7 +84,7 @@ public class OnlinePaymentAdapter extends RecyclerView.Adapter<OnlinePaymentAdap
             TextView tvTitle = dialog.findViewById(R.id.tvTitle);
             TextView tvMessage = dialog.findViewById(R.id.tvMessage);
             tvTitle.setText("Confirm Delete");
-            tvMessage.setText("Are you surely want to delete ?");
+            tvMessage.setText("You will not be able to recover once deleted?");
             TextView btnNo = dialog.findViewById(R.id.btnNo);
             TextView btnYes = dialog.findViewById(R.id.btnYes);
             dialog.setCancelable(true);

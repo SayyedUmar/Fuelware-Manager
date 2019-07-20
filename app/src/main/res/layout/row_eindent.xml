@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/card_background">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
+
+        <include layout="@layout/layout_serial_number"
+            />
+
+        <TextView
+            android:id="@+id/tvLblBN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Business Name"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvBusinessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:fontFamily="@font/quicksand_medium"
+            tools:text="business name"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="@+id/tvLblBN"
+            app:layout_constraintRight_toLeftOf="@+id/tvIndentDate"
+            app:layout_constraintTop_toBottomOf="@+id/tvLblBN" />
+
+
+        <TextView
+            android:id="@+id/tvIN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Indent Number"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvBusinessName"
+            app:layout_constraintLeft_toLeftOf="@+id/tvBusinessName"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvIndentNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text="IndentNumber"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvIN"
+            app:layout_constraintLeft_toLeftOf="@+id/tvIN"
+            />
+
+        <TextView
+            android:id="@+id/tvP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvIndentNumber"
+            app:layout_constraintLeft_toLeftOf="@+id/tvIndentNumber"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text="Product"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvP"
+            app:layout_constraintLeft_toLeftOf="@+id/tvP"
+            />
+
+
+        <TextView
+            android:id="@+id/tv232"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Quantity"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:textColor="@color/darker_gray1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvP"
+            app:layout_constraintLeft_toRightOf="@id/tvProduct"
+            />
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text=" | 100.00 L"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProduct"
+            app:layout_constraintLeft_toRightOf="@+id/tvProduct"
+            />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tvLblCN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Of Indent"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvIndentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text="Customer name"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvLblCN"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvVN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle/Machine No"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvIndentDate"
+            app:layout_constraintRight_toRightOf="@+id/tvIndentDate"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvVehicleNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text="Vehicle Number"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvVN"
+            app:layout_constraintRight_toRightOf="@+id/tvVN"
+            />
+
+        <TextView
+            android:id="@+id/labelStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="8sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvVehicleNumber"
+            app:layout_constraintRight_toRightOf="@+id/tvVehicleNumber"
+            android:textColor="@color/darker_gray1"
+            />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="0dp"
+            tools:text="Status"
+            android:fontFamily="@font/quicksand_medium"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/labelStatus"
+            app:layout_constraintRight_toRightOf="@+id/labelStatus"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <com.fuelware.app.fw_manager.utils.VerticalTextView
+            android:id="@+id/tvBlacklistMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Black listed User"
+            android:textColor="@color/error_color"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
