@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.activities.CounterBillActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 import com.fuelware.app.fw_manager.models.ProductsPojo;
 import com.fuelware.app.fw_manager.network.APIClient;
@@ -34,11 +37,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.fuelware.app.fw_manager.R.color;
-import static com.fuelware.app.fw_manager.R.drawable;
-import static com.fuelware.app.fw_manager.R.id;
-import static com.fuelware.app.fw_manager.R.layout;
-import static com.fuelware.app.fw_manager.R.style;
 
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.MyViewHolder> {
@@ -46,17 +44,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     Context mContext;
     private Dialog progressDialog;
 
-    public ProductListAdapter(ArrayList<ProductsPojo> data, Context context) {
+    public ProductListAdapter(ArrayList<ProductsPojo> data, CounterBillActivity counterBillActivity) {
         this.dataSet = data;
-        this.mContext = context;
-        progressDialog = new SpotsDialog(mContext, style.Custom);
+        this.mContext = counterBillActivity;
+        progressDialog = new SpotsDialog(mContext, R.style.Custom);
     }
 
     @NonNull
     @Override
     public ProductListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(layout.row_products, parent, false);
+                .inflate(R.layout.row_products, parent, false);
 
         return new ProductListAdapter.MyViewHolder(view);
     }
@@ -65,7 +63,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         position = holder.getAdapterPosition();
         final ProductsPojo productsPojo = dataSet.get(position);
-        holder.price.setText(productsPojo.getPrice()+" Rs");
+        holder.price.setText(MyUtils.formatCurrency(productsPojo.getPrice()));
         holder.product.setText(productsPojo.getProduct());
 
         holder.itemView.setOnClickListener(view -> {
@@ -98,9 +96,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         LinearLayout linlayContainer;
         MyViewHolder(View itemView) {
             super(itemView);
-            product = itemView.findViewById(id.product_name);
-            price = itemView.findViewById(id.product_price);
-            linlayContainer = itemView.findViewById(id.linlayContainer);
+            product = itemView.findViewById(R.id.product_name);
+            price = itemView.findViewById(R.id.product_price);
+            linlayContainer = itemView.findViewById(R.id.linlayContainer);
         }
     }
 
@@ -109,22 +107,22 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String product_price = item.getPrice();
 
         Dialog dialog = new Dialog(mContext);
-        dialog.setContentView(layout.dialog_counter_bill);
-        TextView btnCancel = dialog.findViewById(id.btnCancel);
-        TextView btnSave = dialog.findViewById(id.btnSave);
-        TextView tvQuantity = dialog.findViewById(id.tvQuantity);
-        LinearLayout linlayQuantity =   dialog.findViewById(id.linlayQuantity);
-        LinearLayout linlayAmount =   dialog.findViewById(id.linlayAmount);
-        TextView tvAmount = dialog.findViewById(id.tvAmount);
-        TextView tvHeading = dialog.findViewById(id.tvHeading);
+        dialog.setContentView(R.layout.dialog_counter_bill);
+        TextView btnCancel = dialog.findViewById(R.id.btnCancel);
+        TextView btnSave = dialog.findViewById(R.id.btnSave);
+        TextView tvQuantity = dialog.findViewById(R.id.tvQuantity);
+        LinearLayout linlayQuantity =   dialog.findViewById(R.id.linlayQuantity);
+        LinearLayout linlayAmount =   dialog.findViewById(R.id.linlayAmount);
+        TextView tvAmount = dialog.findViewById(R.id.tvAmount);
+        TextView tvHeading = dialog.findViewById(R.id.tvHeading);
 //                final TextView cb_price_text = dialog.findViewById(R.id.cb_price_text);
-        EditText etQuantity = dialog.findViewById(id.etQuantity);
-        EditText etAmount = dialog.findViewById(id.etAmount);
-        EditText etVehicleNumber = dialog.findViewById(id.etVehicleNumber);
-        EditText etVehicle_kms = dialog.findViewById(id.etVehicle_kms);
-        EditText etMobile = dialog.findViewById(id.etMobile);
-        EditText etEmail = dialog.findViewById(id.etEmail);
-        TextView tvDateTime = dialog.findViewById(id.tvDateTime);
+        EditText etQuantity = dialog.findViewById(R.id.etQuantity);
+        EditText etAmount = dialog.findViewById(R.id.etAmount);
+        EditText etVehicleNumber = dialog.findViewById(R.id.etVehicleNumber);
+        EditText etVehicle_kms = dialog.findViewById(R.id.etVehicle_kms);
+        EditText etMobile = dialog.findViewById(R.id.etMobile);
+        EditText etEmail = dialog.findViewById(R.id.etEmail);
+        TextView tvDateTime = dialog.findViewById(R.id.tvDateTime);
 
         Calendar cal = Calendar.getInstance();
         tvDateTime.setText(MyUtils.dateToString(cal.getTime(), AppConst.APP_DATE_TIME_FORMAT));
@@ -132,7 +130,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(false);
 
-        tvHeading.setText(product_name + " - Rs " + product_price);
+        tvHeading.setText(product_name + " - " + MyUtils.formatCurrency(product_price));
         //cb_price_text.setText(product_price+" Rs");
 
         dialog.show();
@@ -145,31 +143,31 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         final String[] selectedType = new String[] {""};
 
         tvQuantity.setOnClickListener(view -> {
-            setBackground(tvQuantity, color.red_dark, color.white);
-            setBackground(tvAmount, drawable.rec_border_red_counter_bill, color.red_dark);
+            setBackground(tvQuantity, R.color.red_dark, R.color.white);
+            setBackground(tvAmount, R.drawable.rec_border_red_counter_bill, R.color.red_dark);
             etQuantity.setEnabled(true);
-            etQuantity.setBackground(ContextCompat.getDrawable(mContext, drawable.general_et_background));
+            etQuantity.setBackground(ContextCompat.getDrawable(mContext, R.drawable.general_et_background));
             etQuantity.requestFocus();
             etAmount.setEnabled(false);
-            etAmount.setBackground(ContextCompat.getDrawable(mContext, drawable.bg_rect_border_disabled));
+            etAmount.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_rect_border_disabled));
             selectedType[0] = "quantity";
 
-            etQuantity.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(0.01, 5000)});
+            etQuantity.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(Const.LITRE_MIN, Const.LITRE_MAX)});
             etAmount.setFilters(new InputFilter[] {});
         });
 
         tvAmount.setOnClickListener(view -> {
-            setBackground(tvAmount, color.red_dark, color.white);
-            setBackground(tvQuantity, drawable.rec_border_red_counter_bill, color.red_dark);
+            setBackground(tvAmount, R.color.red_dark, R.color.white);
+            setBackground(tvQuantity, R.drawable.rec_border_red_counter_bill, R.color.red_dark);
             etAmount.setEnabled(true);
-            etAmount.setBackground(ContextCompat.getDrawable(mContext, drawable.general_et_background));
+            etAmount.setBackground(ContextCompat.getDrawable(mContext, R.drawable.general_et_background));
             etQuantity.setEnabled(false);
-            etQuantity.setBackground(ContextCompat.getDrawable(mContext, drawable.bg_rect_border_disabled));
+            etQuantity.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_rect_border_disabled));
             etAmount.requestFocus();
 
             selectedType[0] = "amount";
 
-            etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(1, 500000)});
+            etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(Const.AMOUNT_MIN, Const.AMOUNT_MAX)});
             etQuantity.setFilters(new InputFilter[] {});
         });
 
@@ -232,40 +230,51 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             String amount = etAmount.getText().toString().trim();
             String quantity = etQuantity.getText().toString().trim();
             String vehicleNo = etVehicleNumber.getText().toString().trim();
+            double dQunatity = MyUtils.parseDouble(quantity);
+            double dAmount = MyUtils.parseDouble(amount);
 
             etAmount.setError(null);
             etQuantity.setError(null);
 
             if (selectedType[0].isEmpty()) {
-                MLog.showToast(mContext, "Please enter either Quantity or Amount.");
+                MLog.showToast(mContext, "Enter either Quantity or Amount");
                 return;
-            } else if (selectedType[0].equalsIgnoreCase("amount")) {
-                if (amount.isEmpty()) {
-                    etAmount.setError("Enter valid Amount");
-                    etAmount.requestFocus();
-                    return;
-                } else if (MyUtils.parseDouble(amount) <= 0) {
-                    etAmount.setError("Amount must be equal or higher than 1.");
-                    etAmount.requestFocus();
-                    return;
-                }
-            } else if (selectedType[0].equalsIgnoreCase("quantity")) {
-                if (quantity.isEmpty()) {
-                    etQuantity.setError("Enter valid Quantity");
-                    etQuantity.requestFocus();
-                    return;
-                } else if (!(MyUtils.parseDouble(quantity) > 0.01)) {
-                    etQuantity.setError("Quantity must be equal or higher than 0.01.");
-                    etQuantity.requestFocus();
-                    return;
-                }
-
-            } else if (!vehicleNo.isEmpty() && vehicleNo.length() < 5) {
-                etVehicleNumber.setError("Vehicle Number must contain at least 5 chars.");
+            } else if (selectedType[0].equalsIgnoreCase(AppConst.amount)
+                    && amount.isEmpty()) {
+                etAmount.setError("Enter Amount");
+                etAmount.requestFocus();
+                return;
+            } else if (selectedType[0].equalsIgnoreCase(AppConst.amount) && (dAmount < Const.AMOUNT_MIN || dAmount > Const.AMOUNT_MAX)) {
+                etAmount.setError("Amount must be between 1 and 5,00,0000");
+                etAmount.requestFocus();
+                return;
+            } else if (selectedType[0].equalsIgnoreCase(AppConst.amount)
+                    && (dQunatity > Const.LITRE_MAX || dQunatity < Const.LITRE_MIN) ) {
+                etAmount.setError("Quantity must be between 0.01 and 5000");
+                MLog.showToast(mContext, "Quantity must be between 0.01 and 5000");
+                etAmount.requestFocus();
+                return;
+            } else if (selectedType[0].equalsIgnoreCase("quantity")
+                    && quantity.isEmpty()) {
+                etQuantity.setError("Enter Quantity.");
+                etQuantity.requestFocus();
+                return;
+            } else if (selectedType[0].equalsIgnoreCase("quantity") && (dQunatity < Const.LITRE_MIN || dQunatity > Const.LITRE_MAX)) {
+                etQuantity.setError("Quantity must be between 0.01 and 5000");
+                etQuantity.requestFocus();
+                return;
+            } else if (selectedType[0].equalsIgnoreCase("quantity") &&
+                    (dAmount < Const.AMOUNT_MIN || dAmount > Const.AMOUNT_MAX)) {
+                MLog.showToast(mContext, "Amount must be between 1 and 5,00,0000");
+                etQuantity.setError("Amount must be between 1 and 5,00,0000");
+                etQuantity.requestFocus();
+                return;
+            } else if (!vehicleNo.isEmpty() && vehicleNo.length() < 3) {
+                etVehicleNumber.setError("Vehicle/Machine Number must contain at least 3 chars");
                 etVehicleNumber.requestFocus();
                 return;
             } else if (etMobile.getText().toString().length() != 10) {
-                etMobile.setError("Enter valid Mobile Number");
+                etMobile.setError("Enter valid customer mobile number");
                 etMobile.requestFocus();
                 return;
             }
@@ -307,20 +316,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                                 JSONObject errorObject = jsonObject.getJSONObject("errors");
 
                                 if (errorObject.has("vehicle_number")) {
-                                    String error = errorObject.getJSONArray("vehicle_number").get(0).toString();
+                                    String error = errorObject.getJSONArray("vehicle_number").getString(0);
                                     etVehicleNumber.setError(error);
-                                }
-                                if (errorObject.has("mobile")) {
-                                    String error = errorObject.getJSONArray("mobile").get(0).toString();
+                                } else if (errorObject.has("mobile")) {
+                                    String error = errorObject.getJSONArray("mobile").getString(0);
                                     etMobile.setError(error);
-                                }
-                                if (errorObject.has("email")) {
-                                    String error = errorObject.getJSONArray("email").get(0).toString();
+                                } else if (errorObject.has("email")) {
+                                    String error = errorObject.getJSONArray("email").getString(0);
                                     etEmail.setError(error);
-                                }
-                                if (errorObject.has("v_meter")) {
-                                    String error = errorObject.getJSONArray("v_meter").get(0).toString();
+                                } else if (errorObject.has("v_meter")) {
+                                    String error = errorObject.getJSONArray("v_meter").getString(0);
                                     etVehicle_kms.setError(error);
+                                } else if (errorObject.has("amount")) {
+                                    String error = errorObject.getJSONArray("amount").getString(0);
+                                    etAmount.setError(error);
                                 }
                             }
                         }
@@ -341,3 +350,4 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         });
     }
 }
+

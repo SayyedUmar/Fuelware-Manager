@@ -16,6 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".MyApplication"
         android:theme="@style/AppTheme">
 
         <activity
@@ -200,6 +201,20 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a2491e0ec203cd96489d8e0171c842195b2c41bc"
+            />
+
+        <activity android:name=".activities.ForgotPasswordActivity"
+            android:theme="@style/MyMaterialTheme"
+            />
+
+        <activity
+            android:name=".activities.OtpVerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
 
     </application>
 

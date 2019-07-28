@@ -34,7 +34,6 @@
                     android:textSize="17sp"
                     android:fontFamily="sans-serif-light"
                     android:maxLines="1"
-                    android:maxLength="14"
                     android:imeOptions="actionDone"
                     android:id="@+id/search_alert_et_toolbar"
                     android:paddingTop="15dp"

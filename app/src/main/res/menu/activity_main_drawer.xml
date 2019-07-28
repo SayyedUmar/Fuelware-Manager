@@ -25,6 +25,10 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/nav_knowledgeCenter"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Knowledge Center" />
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Tech Support" />

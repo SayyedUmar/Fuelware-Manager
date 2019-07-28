@@ -3,17 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.SplashActivity">
+    android:orientation="horizontal"
+    tools:context=".activities.SplashActivity"
+    android:gravity="center"
+    >
 
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bg_splash"
         android:scaleType="fitXY"
         android:id="@+id/splashimgs"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"/>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fuelware"
+
+        android:textColor="@color/colorPrimary"
+        android:textSize="32sp"
+        android:fontFamily="@font/quicksand_medium"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Manager"
+
+        android:textColor="@color/colorAccent"
+        android:textSize="32sp"
+        android:fontFamily="@font/quicksand_medium"
+        />
 
 
 </LinearLayout>

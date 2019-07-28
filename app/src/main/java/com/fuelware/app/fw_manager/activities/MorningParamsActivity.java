@@ -60,6 +60,7 @@ public  class MorningParamsActivity extends SuperActivity {
     private Gson gson;
     private String authkey;
     private MorningParamsAdapter adapter;
+    private boolean isRatePopupShown = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -176,17 +177,34 @@ public  class MorningParamsActivity extends SuperActivity {
     private void validateData() {
         Products p = new Products();
         int count = 0;
+        boolean samePriceCheck = false;
         for (ProductPriceModel m : list) {
             if (m.getPrice() == 0) {
                 MLog.showToast(getApplicationContext(), "All fields are mandatory..");
                 break;
+            } else if (m.last_price == m.getPrice() || m.getPrice() > m.last_price+.20 || m.getPrice() < m.last_price-.20) {
+                samePriceCheck = true;
             }
             p.products.add(m);
             count++;
             if (count == list.size()) {
-                updateMorningParam(p);
+                if (samePriceCheck && isRatePopupShown) {
+                    showSamePricePopup();
+                } else {
+                   // MLog.showToast(getApplicationContext(), "Morning price updated.");
+                    updateMorningParam(p);
+                }
             }
         }
+    }
+
+    private void showSamePricePopup() {
+        isRatePopupShown = false;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Rate entered is either same or beyond the range of +20 / -20 paise from yesterday's rate.")
+                .setNegativeButton("Cancel", null)
+                .setCancelable(false)
+                .show();
     }
 
     private void updateMorningParam(Products p) {

@@ -149,17 +149,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/general_et_background"
-                        android:digits="@string/SCI_SET"
+                        android:digits="@string/SCIWS_SET"
                         android:fontFamily="@font/quicksand_medium"
-                        android:hint="Enter Vehicle/Machine No."
+                        android:hint="Enter Vehicle/Machine No"
                         android:imeOptions="actionNext"
                         android:inputType="textCapCharacters"
-                        android:maxLength="12"
                         android:maxLines="1"
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:textAlignment="center"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:maxLength="16"
+                        />
 
 
 
@@ -187,7 +188,7 @@
                         android:background="@drawable/general_et_background"
                         android:digits="@string/I_SET"
                         android:fontFamily="@font/quicksand_medium"
-                        android:hint="Enter Mobile*"
+                        android:hint="Enter Customer Mobile Number*"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="10"
@@ -243,6 +244,24 @@
                         android:background="@color/gray_light" />
 
                     <TextView
+                        android:id="@+id/btnPrint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center_horizontal"
+                        android:padding="12dp"
+                        android:text="Print"
+                        android:textColor="@color/orange2"
+                        android:textSize="16sp"
+                        />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_light" />
+
+                    <TextView
                         android:id="@+id/btnSave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -250,10 +269,11 @@
                         android:fontFamily="@font/quicksand_medium"
                         android:gravity="center_horizontal"
                         android:padding="12dp"
-                        android:text="Generate"
+                        android:text="Submit"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         />
+
 
                 </LinearLayout>
             </LinearLayout>

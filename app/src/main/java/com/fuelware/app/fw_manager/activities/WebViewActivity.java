@@ -13,7 +13,9 @@ import android.webkit.WebViewClient;
 import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.network.MLog;
+import com.fuelware.app.fw_manager.utils.MyPreferences;
 
 import java.util.regex.Pattern;
 
@@ -54,6 +56,7 @@ public class WebViewActivity extends SuperActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 if (url.equals(frontend_url)) {
+                    MyPreferences.setBoolValue(getApplicationContext(), Const.PLAN_EXPIRED, false);
                     MLog.showLongToast(getApplicationContext(), "Your payment is received successfully.");
                     openHome();
                 }

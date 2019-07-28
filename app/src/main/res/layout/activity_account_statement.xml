@@ -14,10 +14,21 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Business Name"
+            android:layout_marginLeft="15dp"
+            android:textSize="8sp"
+            android:textColor="@color/green3"
+            android:layout_marginTop="4dp"
+            />
+
+        <TextView
             android:id="@+id/tvCreditCustomer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/bg_rect_corner_green"
             android:drawableRight="@drawable/ic_dropdown_circle"
             android:drawablePadding="20dp"

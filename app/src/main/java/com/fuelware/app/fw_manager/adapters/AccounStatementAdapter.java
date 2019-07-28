@@ -39,21 +39,21 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
         notifyDataSetChanged();
     }
 
-    public void filter(TransactionTypeEnum type) {
-        filteredList.clear();
-        if (type == TransactionTypeEnum.All) {
-            filteredList.addAll(records);
-        } else {
-
-            for (AccountModel item : records) {
-                if (item.getType().equalsIgnoreCase(type.toString())) {
-                    filteredList.add(item);
-                }
-            }
-        }
-
-        notifyDataSetChanged();
-    }
+//    public void filter(TransactionTypeEnum type) {
+//        filteredList.clear();
+//        if (type == TransactionTypeEnum.All) {
+//            filteredList.addAll(records);
+//        } else {
+//
+//            for (AccountModel item : records) {
+//                if (item.getType().equalsIgnoreCase(type.toString())) {
+//                    filteredList.add(item);
+//                }
+//            }
+//        }
+//
+//        notifyDataSetChanged();
+//    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -179,6 +179,8 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
                     if (mWords.getIndentNum().toLowerCase().startsWith(filterPattern)) {
                         filteredList.add(mWords);
                     } else if (mWords.getVehicleNum().toLowerCase().startsWith(filterPattern)) {
+                        filteredList.add(mWords);
+                    } else if (mWords.getReceipt_number().toLowerCase().startsWith(filterPattern)) {
                         filteredList.add(mWords);
                     }
                 }

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:text="Select Report Type"
+            android:textColor="@color/text_black"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:fontFamily="@font/quicksand_medium"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/gray_light"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/general_et_background"
+                        android:padding="5dp"
+                        >
+
+                        <RadioGroup
+                            android:id="@+id/radioCallGroup1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Report Type"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/quicksand_medium"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/radioDebit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Debit A/c"
+                                android:padding="5dp"
+                                android:checked="true"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioBillInvoice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Invoice/Bill"
+                                />
+
+                            <RadioButton
+                                android:visibility="gone"
+                                android:id="@+id/radioDebitInvoice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Invoice cum A/c"
+                                />
+
+                            <RadioButton
+                                android:visibility="gone"
+                                android:id="@+id/radioMc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Veh - Mc A/c"
+                                />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linlayReportFormat"
+                        android:background="@drawable/general_et_background"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Report Format"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/quicksand_medium"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioCsv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="CSV"
+                                android:padding="5dp"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioPdf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="PDF"
+                                android:checked="true"
+                                />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/general_et_background"
+                        android:padding="5dp"
+                        >
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Order Type"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/quicksand_medium"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioAsc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Ascending"
+                                android:padding="5dp"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioDsc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Descending"
+                                android:checked="true"
+                                />
+
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:background="@drawable/general_et_background"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <RadioGroup
+                            android:id="@+id/radioCallGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Header Type"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/quicksand_medium"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="With Header"
+                                android:padding="5dp"
+                                android:checked="true"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioWithoutHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Without Header"
+                                />
+
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/tableContainer"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/general_et_background"
+                >
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Invoice/Bill No"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        android:maxLength="50"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/etBillNumber"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Enter Invocie No"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Net Payable"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        />
+
+                    <EditText
+                        android:id="@+id/etNetPayable"
+                        android:focusable="false"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Auto"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+                <TableRow android:layout_width="match_parent">
+
+                    <org.sufficientlysecure.htmltextview.HtmlTextView
+                        android:id="@+id/tvIndentCharge"
+                        android:layout_height="wrap_content"
+                        android:text="Indent Charge"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        />
+
+                    <EditText
+                        android:id="@+id/etIndentCharge"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Enter Indent Charge"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Late Pay Charge"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLateCharge"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Enter Late Pay"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Surplus Charge"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        />
+
+                    <EditText
+                        android:id="@+id/etSurplusCharge"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Enter Other Surplus"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+                <TableRow android:layout_width="match_parent">
+
+                    <EditText
+                        android:id="@+id/etSurplusRemark"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Surplus Charges Remark"
+                        android:textSize="14sp"
+                        />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+            <!-- <TextView
+                 android:id="@+id/tvTransCount"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:textSize="12sp"
+                 android:textColor="@color/blue4"
+                 android:text="Result: 450 transactions"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_marginTop="10dp"
+                 />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:textSize="10sp"
+                 android:textColor="@color/light_black"
+                 android:text="(Max 400 transactions can be printed at a time)"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_marginBottom="10dp"
+                 />
+     -->
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/gray_light"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp"
+                    android:text="Cancel"
+                    android:textColor="@color/error_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_light" />
+
+                <TextView
+                    android:id="@+id/tvDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp"
+                    android:text="Download"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

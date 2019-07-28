@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +35,9 @@ import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
 import com.fuelware.app.fw_manager.models.User;
+import com.fuelware.app.fw_manager.models.VersionCheckModel;
 import com.fuelware.app.fw_manager.network.APIClient;
+import com.fuelware.app.fw_manager.network.FuelwareAPI;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.receiver.AlarmReceiver;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
@@ -55,6 +60,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends SuperActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -109,10 +116,15 @@ public class MainActivity extends SuperActivity
         fetchMorningPrice();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         fetchCashiers();
+//        checkForNewVersion();
+        if (MyPreferences.getBoolValue(getApplicationContext(), Const.PLAN_EXPIRED)) {
+            showPlanExpirePopup();
+        }
     }
 
     private void fetchMorningPrice() {
@@ -312,6 +324,11 @@ public class MainActivity extends SuperActivity
                         JSONObject data = jsonObject.getJSONObject("data");
                         MyPreferences.setStringValue(MainActivity.this, AppConst.USER_PROFILE_DATA, data.toString());
                         user = gson.fromJson(data.toString(), User.class);
+                        boolean payment_status = data.getBoolean("payment_status");
+                        if (!payment_status) {
+                            MyPreferences.setBoolValue(getApplicationContext(), Const.PLAN_EXPIRED, true);
+                            showPlanExpirePopup();
+                        }
                         if (data.has("last_shift")) {
                             JSONObject last_shift = data.getJSONObject("last_shift");
                             tvShiftID.setText(last_shift.getString("shift_number"));
@@ -334,6 +351,26 @@ public class MainActivity extends SuperActivity
                 MLog.showLongToast(getApplicationContext(), t.getMessage());
             }
         });
+    }
+
+    private void showPlanExpirePopup() {
+
+        DialogInterface.OnClickListener listener = (d, w) -> {
+            if (w == -1) { // purchase
+                startActivity(new Intent(this, PlansActivity.class));
+            } else { // logout
+                logoutUser();
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Plan Expired")
+                .setMessage("You don't have a plan, Please purchase new plan to continue.")
+                .setPositiveButton("Purchase Plan", listener)
+                .setNegativeButton("Logout", listener)
+                .setCancelable(false);
+
+        builder.show();
     }
 
     private void findViewById() {
@@ -374,6 +411,8 @@ public class MainActivity extends SuperActivity
             startActivity(new Intent(this, TechSupportActivity.class));
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
+        } else if (id == R.id.nav_knowledgeCenter) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Const.KNOWLEDGE_CENTER_URL)));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -484,6 +523,93 @@ public class MainActivity extends SuperActivity
                 MLog.showLongToast(getApplicationContext(), t.getMessage());
             }
         });
+    }
+
+    private void checkForNewVersion() {
+        if (!MyUtils.hasInternetConnection(MainActivity.this)) {
+            return;
+        }
+
+        Retrofit adapter = new Retrofit.Builder()
+                .baseUrl(AppConst.ROOT_URL+"common/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        FuelwareAPI fuelwareAPI = adapter.create(FuelwareAPI.class);
+        Call<ResponseBody> callable;
+
+        callable = fuelwareAPI.checkForNewVersion (authkey, new VersionCheckModel());
+        callable.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject res = new JSONObject(response.body().string());
+                        boolean success = res.getBoolean("success");
+
+                        if (success) {
+                            JSONObject dataObject = res.getJSONObject("data");
+                            boolean is_new_version_available = dataObject.getBoolean("is_new_version_available");
+                            if (is_new_version_available) {
+                                JSONObject versionObject = dataObject.getJSONObject("version");
+                                String version_name = versionObject.getString("version_name");
+                                String store_url = versionObject.getString("store_url");
+                                boolean isForceUpdateRequired = versionObject.getBoolean("force_update_required");
+
+                                showUpdatePopup(isForceUpdateRequired, version_name, store_url);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    try {
+                        JSONObject errorObj = new JSONObject(response.errorBody().string());
+                        if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
+                            Toast.makeText(MainActivity.this, errorObj.getString("message"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("MainActivity", "onFailure");
+            }
+        });
+    }
+
+    private void showUpdatePopup(final boolean isForceUpdateRequired, String version_name, String store_url) {
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        final String appPackageName = getPackageName();
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (Exception anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("A new version "+ version_name + " of Cashier app is availble on Google play. Kindly update.")
+                .setPositiveButton("Update", dialogClickListener);
+        if (!isForceUpdateRequired) {
+            builder.setNegativeButton("Cancel", dialogClickListener);
+        }
+        builder.setCancelable(!isForceUpdateRequired);
+        builder.show();
     }
 
 

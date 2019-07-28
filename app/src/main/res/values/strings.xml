@@ -38,5 +38,8 @@
 
     <string name="close_batch_confirm">Please close your batch before logout</string>
     <string name="search_tranzaction_page_hint">Enter IndentNo, Vehicle/Machine</string>
+    <string name="back"><![CDATA[<< BACK]]></string>
+
+    <string name="otp_message_text"><![CDATA[Sit back & Relax! while we verify your mobile number]]></string>
 
 </resources>

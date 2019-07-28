@@ -2,10 +2,13 @@ package com.fuelware.app.fw_manager.network;
 
 import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
+import com.fuelware.app.fw_manager.activities.ForgotPasswordActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.activities.PlansActivity;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
+import com.fuelware.app.fw_manager.models.ForgotPasswordModel;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
+import com.fuelware.app.fw_manager.models.VersionCheckModel;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -31,6 +34,7 @@ import retrofit2.http.Query;
  */
 
 public interface FuelwareAPI {
+
     @FormUrlEncoded
     @POST("common/login")
     Call<ResponseBody> post_login(@Field("username") String email,
@@ -265,4 +269,21 @@ public interface FuelwareAPI {
     Call<ResponseBody> getBatchReport(@Header("Authorization") String authkey,
                                       @Query("page") long page
                                       );
+
+    @POST("android-version")
+    Call<ResponseBody> checkForNewVersion(@Header("Authorization") String value,
+                                          @Body VersionCheckModel item);
+
+    @POST("common/generate-otp")
+    Call<ResponseBody> resetPassword(@Header("Content-Type") String type,
+                                     @Body ForgotPasswordModel item);
+
+    @POST("common/verify-otp")
+    Call<ResponseBody> verifyOtp(@Header("Content-Type") String type,
+                                 @Body ForgotPasswordModel item);
+
+    @POST("common/reset-password")
+    Call<ResponseBody> setNewPassword(@Header("Content-Type") String type,
+                                      @Body ForgotPasswordModel item);
+
 }

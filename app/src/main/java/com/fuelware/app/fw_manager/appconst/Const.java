@@ -17,4 +17,16 @@ public class Const {
 
     public static final int ALARM_REQUEST_CODE = 2390;
     public static final String NOTIFICATION_TOKEN = "NOTIFICATION_TOKEN";
+    public static final String PLAN_EXPIRED = "PLAN_EXPIRED"; // boolean
+
+    public static final int AMOUNT_MIN = 1;
+    public static final int AMOUNT_MAX = 500000;
+    public static final float LITRE_MIN = 0.01f;
+    public static final int LITRE_MAX = 5000;
+
+    public static final String AMOUNT = "amount";
+    public static final String LITRE = "litre";
+    public static final String FULL_TANK_K = "full_tank";
+    public static final String FULL_TANK_V = "Full Tank";
+    public static final String KNOWLEDGE_CENTER_URL = "http://fuelware.in/knowledge-center.html";
 }

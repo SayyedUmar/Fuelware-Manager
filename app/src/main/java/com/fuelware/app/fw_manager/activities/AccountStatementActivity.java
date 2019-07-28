@@ -13,12 +13,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.BuildConfig;
@@ -122,6 +126,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
+//        setTitle("Business Name");
 
         initialise();
         setupRecyclerView();
@@ -135,7 +140,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private void setupFloatButton() {
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("PDF Download")
+                .setLabel("Download PDF")
                 .setResId(R.drawable.ic_download_arrow)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
@@ -592,6 +597,70 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 //        }
     }
 
+
+
+    private void showReportTypeDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_report_type);
+//        final TextView tvTransCount = dialog.findViewById(R.id.tvTransCount);
+//        final RadioButton radioDsc = dialog.findViewById(R.id.radioDsc);
+//        final RadioButton radioPdf = dialog.findViewById(R.id.radioPdf);
+
+
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        final LinearLayout linlayReportFormat = dialog.findViewById(R.id.linlayReportFormat);
+        final TableLayout tableContainer = dialog.findViewById(R.id.tableContainer);
+
+
+        final RadioButton radioDebit = dialog.findViewById(R.id.radioDebit);
+        final RadioButton radioBillInvoice = dialog.findViewById(R.id.radioBillInvoice);
+        final RadioButton radioCsv = dialog.findViewById(R.id.radioCsv);
+        final RadioButton radioPdf = dialog.findViewById(R.id.radioPdf);
+        final RadioButton radioHeader = dialog.findViewById(R.id.radioHeader);
+        final RadioButton radioWithoutHeader = dialog.findViewById(R.id.radioWithoutHeader);
+        final RadioButton radioAsc = dialog.findViewById(R.id.radioAsc);
+        final RadioButton radioDsc = dialog.findViewById(R.id.radioDsc);
+
+        final EditText etBillNumber = dialog.findViewById(R.id.etBillNumber);
+        final EditText etNetPayable = dialog.findViewById(R.id.etNetPayable);
+        final EditText etIndentCharge = dialog.findViewById(R.id.etIndentCharge);
+        final EditText etLateCharge = dialog.findViewById(R.id.etLateCharge);
+        final EditText etSurplusCharge = dialog.findViewById(R.id.etSurplusCharge);
+        final EditText etSurplusRemark = dialog.findViewById(R.id.etSurplusRemark);
+
+        final TextView tvDownload = dialog.findViewById(R.id.tvDownload);
+        final TextView tvCancel = dialog.findViewById(R.id.tvCancel);
+
+        tvCancel.setOnClickListener(v -> dialog.dismiss());
+
+        tvDownload.setOnClickListener(v -> {
+//            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false);
+            dialog.dismiss();
+        });
+
+        if (radioDebit.isChecked()) {
+            tableContainer.setVisibility(View.GONE);
+            linlayReportFormat.setVisibility(View.VISIBLE);
+        } else {
+            linlayReportFormat.setVisibility(View.GONE);
+            tableContainer.setVisibility(View.VISIBLE);
+        }
+
+        radioDebit.setOnCheckedChangeListener((compoundButton, checked) -> {
+            if (checked) {
+                tableContainer.setVisibility(View.GONE);
+                linlayReportFormat.setVisibility(View.VISIBLE);
+            } else {
+                linlayReportFormat.setVisibility(View.GONE);
+                tableContainer.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
     private void showDownloadPDFDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_download_pdf);
@@ -666,8 +735,10 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        if (position == 1) {
+        if (position == 2) {
             openDateFilterDialog();
+        } else if (position == 1) { //
+            showReportTypeDialog();
         } else {
             showDownloadPDFDialog();
         }
