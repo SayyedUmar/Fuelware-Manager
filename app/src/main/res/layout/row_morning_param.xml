@@ -55,7 +55,6 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"
-
                     />
 
                 <EditText

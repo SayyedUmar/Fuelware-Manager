@@ -331,7 +331,8 @@ public class EditMIndentActivity extends SuperActivity {
                 return;
             }
 
-            requestOTP(null);
+//            requestOTP(null);
+            updateMIndent("");
 
         } catch (Exception e){
             e.printStackTrace();

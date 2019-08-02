@@ -113,7 +113,8 @@ public class MindentListAdapter extends RecyclerView.Adapter<MindentListAdapter.
             btnNo.setOnClickListener(w -> dialog.dismiss());
             btnYes.setOnClickListener(w -> {
                 dialog.dismiss();
-                ((MindentListActivity)mContext).requestOTP(null, indentModel, holder.getAdapterPosition());
+                //((MindentListActivity)mContext).requestOTP(null, indentModel, holder.getAdapterPosition());
+                ((MindentListActivity)mContext).deleteMIndent(indentModel, holder.getAdapterPosition(), "");
             });
             dialog.show();
         });

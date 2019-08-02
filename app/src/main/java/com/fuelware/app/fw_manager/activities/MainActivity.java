@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -28,6 +29,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
@@ -114,6 +116,10 @@ public class MainActivity extends SuperActivity
         fetchProducts();
 //        fetchCashiers();
         fetchMorningPrice();
+
+        if(BuildConfig.DEBUG) {
+            navigationView.getMenu().getItem(R.id.nav_logout).setVisible(true);
+        }
     }
 
 

@@ -23,6 +23,7 @@
         android:clipToPadding="false"
 
         android:layout_above="@+id/btnSubmit"
+        tools:listitem="@layout/row_morning_param"
         />
 
     <Button

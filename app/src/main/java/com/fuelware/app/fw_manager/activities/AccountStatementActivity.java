@@ -116,6 +116,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     private RapidFloatingActionHelper rfabHelper;
     private List<RFACLabelItem> items = new ArrayList<>();
     private Menu menu;
+    private double debit_amount;
 
 
     @Override
@@ -282,6 +283,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         JSONObject page = res.getJSONObject("meta").getJSONObject("pagination");
                         pagination = gson.fromJson(page.toString(), Pagination.class);
                         JSONObject dataObj = res.getJSONObject("data");
+                        debit_amount = dataObj.getDouble("debit_amount");
                         JSONArray jsonArray = dataObj.getJSONArray("credit_customer");
                         Type type = new TypeToken<List<AccountModel>>() {}.getType();
                         if (pageNumber == 1)
