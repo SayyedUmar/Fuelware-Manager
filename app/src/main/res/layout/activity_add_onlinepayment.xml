@@ -182,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:digits="@string/SCI_SET"
                     android:background="@drawable/general_et_background"
                     android:hint="RTGS/NEFT Number *"
                     android:maxLength="16"

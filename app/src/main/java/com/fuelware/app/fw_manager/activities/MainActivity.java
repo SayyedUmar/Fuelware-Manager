@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -25,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +83,10 @@ public class MainActivity extends SuperActivity
     ImageView imgMorningParams;
     @BindView(R.id.imgReports)
     ImageView imgReports;
+    @BindView(R.id.linlayCounterBilling)
+    LinearLayout linlayCounterBilling;
+    @BindView(R.id.linlayReceipts)
+    LinearLayout linlayReceipts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +122,11 @@ public class MainActivity extends SuperActivity
         fetchMorningPrice();
 
         if(BuildConfig.DEBUG) {
-            navigationView.getMenu().getItem(R.id.nav_logout).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
         }
+
+        linlayReceipts.setVisibility(View.GONE);
+        linlayCounterBilling.setVisibility(View.GONE);
     }
 
 
@@ -127,7 +134,7 @@ public class MainActivity extends SuperActivity
     protected void onResume() {
         super.onResume();
         fetchCashiers();
-//        checkForNewVersion();
+        checkForNewVersion();
         if (MyPreferences.getBoolValue(getApplicationContext(), Const.PLAN_EXPIRED)) {
             showPlanExpirePopup();
         }
@@ -151,11 +158,11 @@ public class MainActivity extends SuperActivity
                         Type token = new TypeToken<List<ProductPriceModel>>(){}.getType();
                         List<ProductPriceModel> tempList = gson.fromJson(dataArray.toString(), token);
                         if (tempList.get(0).getPrice() == 0) {
-                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,false);
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED,false);
                             showMorningPriceUpdatePopup();
                             setMorningParamAlarm();
                         } else {
-                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED,true);
                         }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -238,7 +245,7 @@ public class MainActivity extends SuperActivity
 
         imgCounterBilling.setOnClickListener(v -> {
             if (MyPreferences.getBoolValue(this, AppConst.LOGIN_STATUS)) {
-//                if (MyPreferences.getBoolValue(MainActivity.this, AppConst.MORNING_PARAMETERS_STATUS)) {
+//                if (MyPreferences.getBoolValue(MainActivity.this, AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
                 startActivity(new Intent(MainActivity.this, CounterBillActivity.class));
 //                } else {
                 //showMorningParamsUdpateDialog(null);
@@ -331,6 +338,19 @@ public class MainActivity extends SuperActivity
                         MyPreferences.setStringValue(MainActivity.this, AppConst.USER_PROFILE_DATA, data.toString());
                         user = gson.fromJson(data.toString(), User.class);
                         boolean payment_status = data.getBoolean("payment_status");
+                        String notification_token = data.getString("notification_token");
+                        MyPreferences.setStringValue(MainActivity.this, Const.NOTIFICATION_TOKEN, notification_token);
+
+                        try {
+                            JSONArray array = data.getJSONObject("outlet").getJSONArray("data");
+                            if (array.length() > 0) {
+                                String subscription_type = array.getJSONObject(0).getString("subscription_type");
+                                if (subscription_type.equals("free")) {
+                                    linlayCounterBilling.setVisibility(View.GONE);
+                                }
+                            }
+                        } catch (Exception e) {e.printStackTrace();}
+
                         if (!payment_status) {
                             MyPreferences.setBoolValue(getApplicationContext(), Const.PLAN_EXPIRED, true);
                             showPlanExpirePopup();
@@ -417,6 +437,8 @@ public class MainActivity extends SuperActivity
             startActivity(new Intent(this, TechSupportActivity.class));
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
+        } else if (id == R.id.nav_Shift_close) {
+            callShiftCloseAPI();
         } else if (id == R.id.nav_knowledgeCenter) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Const.KNOWLEDGE_CENTER_URL)));
         }

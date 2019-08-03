@@ -32,6 +32,12 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Tech Support" />
+
+            <item
+                android:id="@+id/nav_Shift_close"
+                android:icon="@drawable/ic_power"
+                android:title="Shift Close" />
+
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_power"

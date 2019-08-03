@@ -182,6 +182,10 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
                         filteredList.add(mWords);
                     } else if (mWords.getReceipt_number().toLowerCase().startsWith(filterPattern)) {
                         filteredList.add(mWords);
+                    } else if (mWords.getBusiness().toLowerCase().startsWith(filterPattern)) {
+                        filteredList.add(mWords);
+                    } else if (mWords.batch_number.toLowerCase().startsWith(filterPattern)) {
+                        filteredList.add(mWords);
                     }
                 }
             }

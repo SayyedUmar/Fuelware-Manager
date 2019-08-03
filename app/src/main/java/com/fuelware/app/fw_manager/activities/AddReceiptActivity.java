@@ -353,13 +353,14 @@ public class AddReceiptActivity extends SuperActivity {
         }
 
 
-            progress.show();
+        progress.show();
 
 
         APIClient.getApiService().addCashReceipt(authkey, model, mode).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    btnAdd.setEnabled(true);
                     if (response.isSuccessful()) {
                         JSONObject result = new JSONObject(response.body().string());
                         JSONObject data = result.getJSONObject("data");
@@ -378,8 +379,9 @@ public class AddReceiptActivity extends SuperActivity {
                     } else {
                         try {
                             JSONObject errorObj = new JSONObject(response.errorBody().string());
-                            if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
+                            if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success")) {
                                 MLog.showToast(getApplicationContext(),  errorObj.getString("message"));
+                            }
 
                             if (errorObj.has("errors")) {
                                 JSONObject errorObject = errorObj.getJSONObject("errors");
@@ -401,7 +403,6 @@ public class AddReceiptActivity extends SuperActivity {
                                     etReceiptNumber.requestFocus();
                                 }
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

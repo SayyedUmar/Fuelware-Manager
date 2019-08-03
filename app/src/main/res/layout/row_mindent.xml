@@ -135,7 +135,7 @@
             android:id="@+id/tvVN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vehicle Number"
+            android:text="Veh/Mc Number"
             android:fontFamily="@font/quicksand_medium"
             android:textSize="10sp"
             app:layout_constraintTop_toTopOf="@+id/tvIN"

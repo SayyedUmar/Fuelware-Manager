@@ -60,7 +60,6 @@ public  class MorningParamsActivity extends SuperActivity {
     private Gson gson;
     private String authkey;
     private MorningParamsAdapter adapter;
-    private boolean isRatePopupShown = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,9 +120,13 @@ public  class MorningParamsActivity extends SuperActivity {
                         btnSubmit.setVisibility(requiresUpdate ? View.VISIBLE : View.GONE);
                         adapter.refresh();
                         if (requiresUpdate) {
-                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,false);
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED,false);
                         } else {
-                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
+                            MyPreferences.setBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED,true);
+                        }
+                        String msg = jsonObject.getString("message");
+                        if (requiresUpdate && !msg.isEmpty()) {
+                            showReloginPopup();
                         }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -143,6 +146,19 @@ public  class MorningParamsActivity extends SuperActivity {
                 MLog.showLongToast(getApplicationContext(), t.getMessage());
             }
         });
+    }
+
+    private void showReloginPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Alert")
+                .setMessage("Close your shift and login again to update Morning Parameters.")
+                .setPositiveButton("Ok", (d, w) -> {
+                    finish();
+                })
+                .setCancelable(false);
+
+        builder.show();
     }
 
     private void setEventListeners() {
@@ -178,18 +194,20 @@ public  class MorningParamsActivity extends SuperActivity {
         Products p = new Products();
         int count = 0;
         boolean samePriceCheck = false;
+        List<ProductPriceModel> wrongList = new ArrayList<>();
         for (ProductPriceModel m : list) {
             if (m.getPrice() == 0) {
                 MLog.showToast(getApplicationContext(), "All fields are mandatory..");
                 break;
-            } else if (m.last_price == m.getPrice() || m.getPrice() > m.last_price+.20 || m.getPrice() < m.last_price-.20) {
+            } else if (m.last_price == m.getPrice() || m.getPrice() > m.last_price+.30 || m.getPrice() < m.last_price-.30) {
+                wrongList.add(m);
                 samePriceCheck = true;
             }
             p.products.add(m);
             count++;
             if (count == list.size()) {
-                if (samePriceCheck && isRatePopupShown) {
-                    showSamePricePopup();
+                if (samePriceCheck) {
+                    showSamePricePopup(wrongList, p);
                 } else {
                    // MLog.showToast(getApplicationContext(), "Morning price updated.");
                     updateMorningParam(p);
@@ -198,10 +216,18 @@ public  class MorningParamsActivity extends SuperActivity {
         }
     }
 
-    private void showSamePricePopup() {
-        isRatePopupShown = false;
+    private void showSamePricePopup(List<ProductPriceModel> wrongList, Products p) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Rate entered is either same or beyond the range of +20 / -20 paise from yesterday's rate.")
+        String msg = "Below product Rate entered is either same or beyond the range of yesterday's rate.\nKindly Confirm.\n\nYou have entered:";
+        int count = 1;
+        for (ProductPriceModel m : wrongList) {
+            msg += "\n    " +count++ + ". INR "+m.getPrice()+" for "+m.getProduct();
+        }
+        builder.setMessage(msg)
+                .setPositiveButton("Confirm", (d, w) -> {
+//                    MLog.showToast(getApplicationContext(), "Confirm clicked");
+                    updateMorningParam(p);
+                })
                 .setNegativeButton("Cancel", null)
                 .setCancelable(false)
                 .show();
@@ -220,14 +246,21 @@ public  class MorningParamsActivity extends SuperActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-                        MLog.showToast(getApplicationContext(), "Morning Price has been updates successfully.");
-                        MyPreferences.setBoolValue(getApplicationContext(),AppConst.MORNING_PARAMETERS_STATUS,true);
-                        finish();
+                        MLog.showToast(getApplicationContext(), "Morning Price updated successfully.");
+                        MyPreferences.setBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED,true);
+                        MorningParamsActivity.this.finish();
                     } else {
                         try {
                             JSONObject errorObj = new JSONObject(response.errorBody().string());
-                            if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
-                                MLog.showToast(getApplicationContext(),  errorObj.getString("message"));
+                            if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success")) {
+                                new AlertDialog.Builder(MorningParamsActivity.this)
+                                        .setTitle("An Error Occurred")
+                                        .setMessage(errorObj.getString("message"))
+                                        .setNegativeButton("Ok", null)
+                                        .setCancelable(false)
+                                        .show();
+                                //MLog.showToast(getApplicationContext(),  errorObj.getString("message"));
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

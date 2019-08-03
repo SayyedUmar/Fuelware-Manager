@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:background="@color/white"
             android:text="Select Report Type"
             android:textColor="@color/text_black"
@@ -283,14 +283,13 @@
                                 android:id="@+id/radioHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="5dp"
+                                android:text="With Header"
                                 android:textColor="@color/text_black"
                                 android:textSize="14sp"
-                                android:textStyle="normal"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="With Header"
-                                android:padding="5dp"
-                                android:checked="true"
-                                />
+                                android:textStyle="normal" />
 
 
                             <RadioButton
@@ -339,8 +338,9 @@
                         android:layout_marginLeft="4dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:hint="Enter Invocie No"
+                        android:hint="Enter Invocie No *"
                         android:textSize="14sp"
+                        android:maxLines="1"
                         />
 
                 </TableRow>
@@ -362,20 +362,40 @@
                         android:layout_weight="1"
                         android:hint="Auto"
                         android:textSize="14sp"
+                        android:maxLines="1"
                         />
 
                 </TableRow>
 
-                <TableRow android:layout_width="match_parent">
+                <TableRow
 
-                    <org.sufficientlysecure.htmltextview.HtmlTextView
-                        android:id="@+id/tvIndentCharge"
-                        android:layout_height="wrap_content"
-                        android:text="Indent Charge"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:textColor="@color/light_black"
-                        />
+                    android:layout_width="match_parent">
+
+                   <LinearLayout
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       >
+                       <org.sufficientlysecure.htmltextview.HtmlTextView
+
+                           android:layout_height="wrap_content"
+                           android:layout_width="match_parent"
+                           android:text="Indent Charge"
+                           android:textSize="14sp"
+                           android:fontFamily="@font/quicksand_medium"
+                           android:textColor="@color/light_black"
+                           />
+
+                       <TextView
+                           android:id="@+id/tvIndentConsumed"
+                           android:layout_height="wrap_content"
+                           android:layout_width="match_parent"
+                           android:text="Consumed (0)"
+                           android:textSize="12sp"
+                           android:fontFamily="@font/quicksand_medium"
+                           android:textColor="@color/gray_dark"
+                           />
+
+                   </LinearLayout>
 
                     <EditText
                         android:id="@+id/etIndentCharge"
@@ -385,6 +405,7 @@
                         android:hint="Enter Indent Charge"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
+                        android:maxLines="1"
                         />
 
                 </TableRow>
@@ -406,6 +427,7 @@
                         android:hint="Enter Late Pay"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
+                        android:maxLines="1"
                         />
 
                 </TableRow>
@@ -424,9 +446,10 @@
                         android:layout_marginLeft="4dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:hint="Enter Other Surplus"
+                        android:hint="Enter Other Surplussadfasdjk"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
+                        android:maxLines="1"
                         />
 
                 </TableRow>
@@ -439,6 +462,8 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:hint="Surplus Charges Remark"
+                        android:maxLength="100"
+                        android:digits="@string/SCIWS_SET"
                         android:textSize="14sp"
                         />
 

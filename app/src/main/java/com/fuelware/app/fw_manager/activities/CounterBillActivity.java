@@ -65,6 +65,20 @@ public class CounterBillActivity extends SuperActivity {
 
         fuelwareInterface = APIClient.getApiService();
         prepareListData();
+        if (!MyPreferences.getBoolValue(getApplicationContext(),AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
+            showMorningParamsPopup();
+        }
+    }
+
+    private void showMorningParamsPopup() {
+        new AlertDialog.Builder(this)
+                .setTitle("Morning Parameters not updated")
+                .setMessage("Please update Morning Parametes to continue use of app.")
+                .setPositiveButton("OK", (d, w) -> {
+                    finish();
+                })
+                .setCancelable(false)
+                .show();
     }
 
     private void prepareListData() {

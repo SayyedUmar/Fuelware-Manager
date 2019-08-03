@@ -48,7 +48,7 @@
                             android:paddingLeft="0dp"
                             android:text="Indent number : "
                             android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/quicksand"/>
 
 
@@ -115,7 +115,7 @@
                         android:layout_weight="1"
                         android:text="Business Name"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/etBusinessName"
@@ -124,7 +124,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -140,7 +140,7 @@
                         android:layout_weight="1"
                         android:text="Customer ID"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvCustomerID"
@@ -149,7 +149,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -165,7 +165,7 @@
                         android:layout_weight="1"
                         android:text="Customer Name"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvCustomerName"
@@ -174,7 +174,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,7 +190,7 @@
                         android:layout_weight="1"
                         android:text="Mobile Number"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvMobileNumber"
@@ -199,7 +199,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -213,9 +213,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Vehicle Number"
+                        android:text="Veh/Mc Number"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvVehicleNo"
@@ -224,7 +224,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -238,9 +238,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Driver Name"
+                        android:text="Driver/Reps Name"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvDriverName"
@@ -249,7 +249,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -263,9 +263,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Driver Mobile"
+                        android:text="Mobile Number"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvDriverMobile"
@@ -274,7 +274,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -290,7 +290,7 @@
                         android:layout_weight="1"
                         android:text="Fill Type"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvFillType"
@@ -299,7 +299,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -315,7 +315,7 @@
                         android:layout_weight="1"
                         android:text="Product"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvProduct"
@@ -324,7 +324,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -338,9 +338,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Price per Liter"
+                        android:text="Rate"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvPrice"
@@ -349,7 +349,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -363,9 +363,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Liters"
+                        android:text="Liter/Kg"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvLitres"
@@ -374,7 +374,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -390,7 +390,7 @@
                         android:layout_weight="1"
                         android:text="Amount"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvAmount"
@@ -399,7 +399,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:fontFamily="@font/quicksand_medium"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -413,9 +413,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Vehicle KMs"
+                        android:text="Km or Hr"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvVehicleKms"
@@ -424,7 +424,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/quicksand_medium"
                         android:text=""
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -441,7 +441,7 @@
                         android:layout_weight="1"
                         android:text="Invoice Number"
                         android:fontFamily="@font/quicksand"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/etInvoiceNo"
@@ -450,7 +450,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/quicksand_medium"
                         android:text=""
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <View
@@ -482,7 +482,7 @@
                 android:padding="10dp"
                 android:text="Close"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/quicksand_medium"
                 android:textStyle="normal|bold" />
 

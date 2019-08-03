@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.fuelware.app.fw_manager.R;
@@ -32,6 +33,9 @@ public class ReportsActivity extends SuperActivity {
 
         initialise();
         setEventListeners();
+
+        //hide the account statement
+        linlayAccount.setVisibility(View.GONE);
     }
 
     private void initialise() {

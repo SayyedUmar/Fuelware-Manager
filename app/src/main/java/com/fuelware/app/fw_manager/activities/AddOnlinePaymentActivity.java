@@ -292,6 +292,7 @@ public class AddOnlinePaymentActivity extends SuperActivity {
         APIClient.getApiService().addCashReceipt(authkey, model, "online-payment").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                btnAdd.setEnabled(true);
                 try {
                     if (response.isSuccessful()) {
                         JSONObject result = new JSONObject(response.body().string());

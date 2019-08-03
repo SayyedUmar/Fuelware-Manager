@@ -13,7 +13,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.text.Html;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,7 +116,9 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     private RapidFloatingActionHelper rfabHelper;
     private List<RFACLabelItem> items = new ArrayList<>();
     private Menu menu;
-    private double debit_amount;
+    private String debit_amount;
+    private RFACLabelItem<Integer> reportTypeItem;
+    private RapidFloatingActionContentLabelList rfaContent;
 
 
     @Override
@@ -151,7 +153,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 .setWrapper(0)
         );
 
-        items.add(new RFACLabelItem<Integer>()
+        reportTypeItem = new RFACLabelItem<Integer>()
                 .setLabel("Report Type")
                 .setResId(R.drawable.ic_calendar)
                 .setIconNormalColor(0xff4e342e)
@@ -159,8 +161,9 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 .setLabelColor(Color.WHITE)
                 .setLabelSizeSp(12)
                 .setLabelBackgroundDrawable(RFABShape.generateCornerShapeDrawable(0xaa000000, RFABTextUtil.dip2px(this, 4)))
-                .setWrapper(1)
-        );
+                .setWrapper(1);
+
+        //items.add(reportTypeItem);
 
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("Apply Date Filter")
@@ -173,7 +176,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 .setWrapper(1)
         );
 
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(this);
+        rfaContent = new RapidFloatingActionContentLabelList(this);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
 
         rfaContent.setItems(items)
@@ -249,14 +252,28 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         boolean debit = true;
         switch (typeEnum) {
             case All:
+                if (items.indexOf(reportTypeItem) != -1) {
+                    items.remove(reportTypeItem);
+                    rfabHelper.build();
+                }
                 break;
             case Credit:
                 credit = true;
                 debit = false;
+                if (items.indexOf(reportTypeItem) != -1) {
+                    items.remove(reportTypeItem);
+                    rfabHelper.build();
+                }
                 break;
             case Debit:
                 debit = true;
                 credit = false;
+                if (!firstDateString.isEmpty() && !secondDateString.isEmpty() && selectedCustomer != null) {
+                    if (items.indexOf(reportTypeItem) == -1) {
+                        items.add(reportTypeItem);
+                        rfabHelper.build();
+                    }
+                }
                 break;
         }
 
@@ -283,7 +300,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         JSONObject page = res.getJSONObject("meta").getJSONObject("pagination");
                         pagination = gson.fromJson(page.toString(), Pagination.class);
                         JSONObject dataObj = res.getJSONObject("data");
-                        debit_amount = dataObj.getDouble("debit_amount");
+                        debit_amount = dataObj.getString("debit_amount");
                         JSONArray jsonArray = dataObj.getJSONArray("credit_customer");
                         Type type = new TypeToken<List<AccountModel>>() {}.getType();
                         if (pageNumber == 1)
@@ -629,6 +646,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         final EditText etBillNumber = dialog.findViewById(R.id.etBillNumber);
         final EditText etNetPayable = dialog.findViewById(R.id.etNetPayable);
         final EditText etIndentCharge = dialog.findViewById(R.id.etIndentCharge);
+        final TextView tvIndentConsumed = dialog.findViewById(R.id.tvIndentConsumed);
         final EditText etLateCharge = dialog.findViewById(R.id.etLateCharge);
         final EditText etSurplusCharge = dialog.findViewById(R.id.etSurplusCharge);
         final EditText etSurplusRemark = dialog.findViewById(R.id.etSurplusRemark);
@@ -636,11 +654,29 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         final TextView tvDownload = dialog.findViewById(R.id.tvDownload);
         final TextView tvCancel = dialog.findViewById(R.id.tvCancel);
 
+        etNetPayable.setText(debit_amount);
+        tvIndentConsumed.setText("Consumed ("+pagination.total+")");
+
+        etIndentCharge.setFilters(new InputFilter[]{ new MyUtils.InputFilterMinMax(0, 1000000)});
+        etLateCharge.setFilters(new InputFilter[]{ new MyUtils.InputFilterMinMax(0, 1000000)});
+        etSurplusCharge.setFilters(new InputFilter[]{ new MyUtils.InputFilterMinMax(0, 1000000)});
+
         tvCancel.setOnClickListener(v -> dialog.dismiss());
 
         tvDownload.setOnClickListener(v -> {
-//            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false);
-            dialog.dismiss();
+            if (radioDebit.isChecked()) {
+                typeEnum = TransactionTypeEnum.Debit;
+                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), radioHeader.isChecked());
+                dialog.dismiss();
+            } else {
+                String billNumber = etBillNumber.getText().toString().trim();
+                String indentCharges = etIndentCharge.getText().toString().trim();
+                String lateCharges = etLateCharge.getText().toString().trim();
+                String surplusCharges = etSurplusCharge.getText().toString().trim();
+                String surplusRemarks = etSurplusRemark.getText().toString().trim();
+                DebitReportData data = new DebitReportData(billNumber, indentCharges, lateCharges, surplusCharges, surplusRemarks);
+                fetchTransactionsPosts(data, dialog);
+            }
         });
 
         if (radioDebit.isChecked()) {
@@ -727,24 +763,28 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        if (position == 1) {
-            openDateFilterDialog();
-        } else {
-            showDownloadPDFDialog();
-        }
+        selectFilterOptions(item);
         rfabHelper.toggleContent();
     }
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        if (position == 2) {
-            openDateFilterDialog();
-        } else if (position == 1) { //
-            showReportTypeDialog();
-        } else {
-            showDownloadPDFDialog();
-        }
+        selectFilterOptions(item);
         rfabHelper.toggleContent();
+    }
+
+    private void selectFilterOptions(RFACLabelItem item) {
+        if (item.getLabel().equalsIgnoreCase("apply date filter")) { // date filter
+            openDateFilterDialog();
+        } else if (item.getLabel().equalsIgnoreCase("report type")) { // report type
+            showReportTypeDialog();
+        } else if (item.getLabel().equalsIgnoreCase("download pdf")) { // pdf download
+            if (selectedCustomer == null) {
+                MLog.showLongToast(getApplicationContext(), "Select Business Name first");
+            } else {
+                showDownloadPDFDialog();
+            }
+        }
     }
 
     @Override
@@ -757,5 +797,94 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         searchText = newText;
         adapter.getFilter().filter(newText);
         return true;
+    }
+
+
+
+    private void fetchTransactionsPosts(DebitReportData item, Dialog dialog) {
+        if (!MyUtils.hasInternetConnection(this)) {
+            MLog.showToast(this, AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
+
+        boolean credit = true;
+        boolean debit = true;
+        switch (typeEnum) {
+            case All:
+                break;
+            case Credit:
+                credit = true;
+                debit = false;
+                break;
+            case Debit:
+                debit = true;
+                credit = false;
+                break;
+        }
+
+        String sortOder = "desc";
+        if (sort_order_desc) {
+            sortOder = "desc";
+        } else {
+            sortOder = "asc";
+        }
+
+        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        long pageNumber = pagination != null ? pagination.currentPage+1 : 0;
+
+        Call<ResponseBody> responce_outlets = APIClient.getApiService().fetchTransactionsPosts(
+                authkey, customerID,
+                firstDateString, secondDateString,
+                credit, debit, sortOder, pageNumber, per_page_count, "", "pdf",item);
+        responce_outlets.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject res = new JSONObject(response.body().string());
+                        MLog.showToast(getApplicationContext(), "response received");
+                        dialog.dismiss();
+                        downloadPDF(res.getJSONObject("data").getString("content"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        JSONObject errorObj = new JSONObject(response.errorBody().string());
+                        if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
+                            MLog.showToast(getApplicationContext(), errorObj.getString("message"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                refresh_layout.setRefreshing(false);
+                progress.hide();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                MLog.showToast(getApplicationContext(), AppConst.ERROR_MSG);
+                refresh_layout.setRefreshing(false);
+                progress.hide();
+            }
+        });
+    }
+
+
+    public static class DebitReportData {
+        public String invoice_number;
+        public String indent_charge;
+        public String late_pay_charge;
+        public String surplus_charge;
+        public String surplus_remark;
+
+        public DebitReportData(String invoice_number, String indent_charge, String late_pay_charge, String surplus_charge, String surplus_remark) {
+            this.invoice_number = invoice_number;
+            this.indent_charge = indent_charge;
+            this.late_pay_charge = late_pay_charge;
+            this.surplus_charge = surplus_charge;
+            this.surplus_remark = surplus_remark;
+        }
     }
 }

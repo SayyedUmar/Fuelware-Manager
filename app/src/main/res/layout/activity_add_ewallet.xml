@@ -169,7 +169,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transaction ID *"
+                    android:text="Transaction ID"
                     android:fontFamily="@font/quicksand_medium"
                     android:textSize="10sp"
                     android:layout_marginTop="10dp"
@@ -183,7 +183,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/general_et_background"
-                    android:hint="Transaction ID *"
+                    android:hint="Transaction ID"
                     android:maxLength="30"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"

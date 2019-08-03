@@ -1,8 +1,8 @@
 package com.fuelware.app.fw_manager.network;
 
+import com.fuelware.app.fw_manager.activities.AccountStatementActivity;
 import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
 import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
-import com.fuelware.app.fw_manager.activities.ForgotPasswordActivity;
 import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
 import com.fuelware.app.fw_manager.activities.PlansActivity;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
@@ -164,6 +164,24 @@ public interface FuelwareAPI {
                                               @Query("per_page") int count_per_page,
                                               @Query("search") String searchText
     );
+
+
+    @POST("outlet/manager/report/credit-customer?paginate=true")
+    Call<ResponseBody> fetchTransactionsPosts(@Header("Authorization") String value,
+                                              @Query("customer_id") String customer_id,
+                                              @Query("date_from") String date_from,
+                                              @Query("date_to") String date_to,
+                                              @Query("credit") boolean credit,
+                                              @Query("debit") boolean debit,
+                                              @Query("sort_order") String sortOder,
+                                              @Query("page") long page,
+                                              @Query("per_page") int count_per_page,
+                                              @Query("search") String searchText,
+                                              @Query("file") String fileType,
+                                              @Body AccountStatementActivity.DebitReportData param
+    );
+
+
 
     @GET("outlet/manager/report/credit-customer")
     Call<ResponseBody> fetchTransactions(@Header("Authorization") String value,

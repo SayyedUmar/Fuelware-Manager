@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
@@ -142,12 +143,16 @@ public class MiDetailsActivity extends SuperActivity {
             tvDriverMobile.setText(indentModel.getDriver_mobile());
         }
         tvFillType.setText(MyUtils.toTitleCase(indentModel.getFill_type()));
+        if (indentModel.getFill_type().toLowerCase().equalsIgnoreCase(Const.LITRE)) {
+            tvFillType.setText("Litre/Kg");
+        }
+
         ei_fill_type = indentModel.getFill_type();
         tvProduct.setText(indentModel.getProduct());
         try {
             tvPrice.setText(MyUtils.formatCurrency(indentModel.getPrice()));
             double prod_liter = MyUtils.parseDouble(indentModel.getLitre());
-            tvLitres.setText(String.format("%.2f", prod_liter) + " L");
+            tvLitres.setText(String.format("%.2f", prod_liter) + " L/Kg");
             tvAmount.setText(MyUtils.formatCurrency(indentModel.getAmount()));
         } catch (Exception e) { e.printStackTrace(); }
         ei_rate = indentModel.getPrice();

@@ -2,7 +2,7 @@
 
     <string-array name="Select_fillingtype">
         <item>Amount</item>
-        <item>Litres</item>
+        <item>Litre/Kg</item>
         <item>Full Tank</item>
 
     </string-array>

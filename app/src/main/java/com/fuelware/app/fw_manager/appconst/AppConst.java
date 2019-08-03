@@ -29,7 +29,7 @@ public class AppConst {
     public static final String USER_ACCOUNT_BLACKLIST = "USER_ACCOUNT_BLACKLIST";
     public static final String KNOWLEDGE_CENTER_URL = "http://fuelware.in/knowledge-center.html";
     public static final String USER_PROFILE_DATA = "USER_PROFILE_DATA";
-    public static final String MORNING_PARAMETERS_STATUS = "MORNING_PARAMETERS_STATUS";
+    public static final String IS_MORNING_PARAMETERS_UPDATED = "IS_MORNING_PARAMETERS_UPDATED";
     public static final String content_type = "application/json";
 
 

@@ -1,6 +1,7 @@
 package com.fuelware.app.fw_manager.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
@@ -96,7 +98,7 @@ public class PlansActivity extends SuperActivity {
     private List<Coupon> coupons = new ArrayList<>();
     private GridAdapter plansAdapter;
     private SpinnerAdapterNew couponAdapter;
-    Boolean isSmsSubscribed;
+    boolean isSmsSubscribed;
     private PlanModel selectedPlan;
     private String selectedCouponCode = "";
     private PlanHistoryAdapter historyAdapter;
@@ -104,6 +106,7 @@ public class PlansActivity extends SuperActivity {
     private List<PlanHistory> historyList = new ArrayList<>();
     private List<PlanType> planTypes = new ArrayList<>();
     private List<PurchasedPlan> purchasedPlans = new ArrayList<>();
+    private String selectedDuration = "Half Yearly";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,7 +120,7 @@ public class PlansActivity extends SuperActivity {
         initialize();
         setEventListener();
         setupRecycler();
-        fetchAllPlansAndCoupons("Half Yearly");
+        fetchAllPlansAndCoupons(selectedDuration);
         //fetchPlanTerms();
         linlayContainer.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
@@ -150,6 +153,7 @@ public class PlansActivity extends SuperActivity {
         }
 
         progress.show();
+        selectedDuration = duration;
         duration = duration.toLowerCase();
         duration = duration.replace(" ", "_");
 
@@ -158,11 +162,7 @@ public class PlansActivity extends SuperActivity {
 
         Call<ResponseBody> call;
 
-        if (isSmsSubscribed != null) {
-            call = APIClient.getApiService().getPlans(authkey, duration,isSmsSubscribed);
-        } else {
-            call = APIClient.getApiService().getPlans(authkey, duration);
-        }
+        call = APIClient.getApiService().getPlans(authkey, duration,isSmsSubscribed);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -203,6 +203,7 @@ public class PlansActivity extends SuperActivity {
 
     private void setEventListener() {
         btnClearCoupon.setOnClickListener(v -> {
+            selectedCouponCode = "";
             btnAddCoupon.setText("apply coupon");
             btnClearCoupon.setVisibility(View.GONE);
             showPlanData(selectedPlan, "");
@@ -234,7 +235,7 @@ public class PlansActivity extends SuperActivity {
         });
 
 
-        plansAdapter = new GridAdapter(planList);
+        plansAdapter = new GridAdapter(planList, this);
         couponAdapter = new SpinnerAdapterNew<Coupon>(coupons) {
             @Override
             public View onCreateView(int pos, View view, ViewGroup parent) {
@@ -251,10 +252,11 @@ public class PlansActivity extends SuperActivity {
                 holder.tvCouponName.setText(model.getCode());
                 double percent = model.getPercent();
                 holder.tvText3.setText(MyUtils.parseToString(percent)+"% Off");
-                holder.tvApply.setOnClickListener(v3 -> {
-                    selectedCouponCode = model.getCode();
-                    applyCoupon(selectedCouponCode);
-                });
+//                holder.tvApply.setOnClickListener(v3 -> {
+//                    selectedCouponCode = model.getCode();
+//                    applyCoupon(selectedCouponCode);
+//
+//                });
             }
         };
 
@@ -266,11 +268,11 @@ public class PlansActivity extends SuperActivity {
                     .setFooter(R.layout.dialog_footer)
                     .setCancelable(true)
                     .setAdapter(plansAdapter)
-                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                    .setContentHeight(MyUtils.dpToPx(200))
+                    .setExpanded(false, MyUtils.dpToPx(400))  // This will enable the expand feature, (similar to android L share dialog)
                     .setOnItemClickListener((dialog1, item, view, position) -> {
                         dialog1.dismiss();
                         selectedPlan = (PlanModel) item;
+                        plansAdapter.selectedPlan = selectedPlan;
                         btnAddCoupon.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                         showPlanData(selectedPlan, "");
                         if (!selectedCouponCode.trim().isEmpty()) {
@@ -280,7 +282,7 @@ public class PlansActivity extends SuperActivity {
             holder.addHeader(getPlanHeaderView());
             dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> {
                 dialog.dismiss();
-                isSmsSubscribed = null;
+                isSmsSubscribed = false;
             });
             dialog.show();
 
@@ -298,8 +300,7 @@ public class PlansActivity extends SuperActivity {
                     .setFooter(R.layout.dialog_footer)
                     .setCancelable(true)
                     .setAdapter(couponAdapter)
-                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                    .setContentHeight(MyUtils.dpToPx(200))
+                    .setExpanded(false, MyUtils.dpToPx(400))
                     .setOnItemClickListener((dialog1, item, view, position) -> {
                         Coupon selectedCoupon = (Coupon) item;
                         selectedCouponCode = selectedCoupon.getCode();
@@ -501,6 +502,7 @@ public class PlansActivity extends SuperActivity {
         View v = LayoutInflater.from(this).inflate(R.layout.dialog_plan_grid_header, null, false);
         AutoCompleteTextView tvAutoDuration = v.findViewById(R.id.tvAutoDuration);
         CheckBox chkSms = v.findViewById(R.id.chkSms);
+        tvAutoDuration.setText(selectedDuration);
         chkSms.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isSmsSubscribed = isChecked;
             fetchAllPlansAndCoupons(tvAutoDuration.getHint().toString());
@@ -517,6 +519,7 @@ public class PlansActivity extends SuperActivity {
             tvAutoDuration.setHint(parent.getItemAtPosition(position).toString());
             fetchAllPlansAndCoupons(tvAutoDuration.getHint().toString());
         });
+//        tvAutoDuration.setText(selectedDuration);
         return v;
     }
 
@@ -532,8 +535,12 @@ public class PlansActivity extends SuperActivity {
 
     static class GridAdapter extends SpinnerAdapterNew {
 
-        public GridAdapter(List list) {
+        private Context context;
+        public PlanModel selectedPlan;
+
+        public GridAdapter(List list, Context context) {
             super(list);
+            this.context = context;
         }
 
         @Override
@@ -552,6 +559,11 @@ public class PlansActivity extends SuperActivity {
             holder.tvText2.setText(model.getIndents()+" Indents in "+MyUtils.formatCurrency(model.getPrice()));
             holder.tvText3.setText(model.getDuration_description());
             holder.tvAmount.setText(MyUtils.formatCurrency(model.getFinal_price()));
+            if (selectedPlan != null && selectedPlan.getId().equals(model.getId())) {
+                holder.rellayContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.red_lightest));
+            } else {
+                holder.rellayContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.green_lightest));
+            }
         }
 
     }
@@ -565,6 +577,8 @@ public class PlansActivity extends SuperActivity {
         TextView tvText3;
         @BindView(R.id.tvAmount)
         TextView tvAmount;
+        @BindView(R.id.rellayContainer)
+        RelativeLayout rellayContainer;
 
         PlanHolder(View v) {
             ButterKnife.bind(this, v);
@@ -578,6 +592,7 @@ public class PlansActivity extends SuperActivity {
         TextView tvText3;
         @BindView(R.id.tvApply)
         TextView tvApply;
+
 
         CouponHolder(View v) {
             ButterKnife.bind(this, v);

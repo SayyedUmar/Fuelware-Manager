@@ -344,6 +344,7 @@ public class AddEwalletActivity extends SuperActivity {
         APIClient.getApiService().addCashReceipt(authkey, model, "e-wallet").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                btnAdd.setEnabled(true);
                 try {
                     if (response.isSuccessful()) {
                         JSONObject result = new JSONObject(response.body().string());
@@ -440,11 +441,11 @@ public class AddEwalletActivity extends SuperActivity {
             etWalletName.requestFocus();
             return false;
 
-        } else if (transID.isEmpty()) {
+        } /*else if (transID.isEmpty()) {
             etTransID.setError("Please enter transaction ID.");
             etTransID.requestFocus();
             return false;
-        } else if (transID.length() < 5) {
+        } */else if (!transID.isEmpty() && transID.length() < 5) {
             etTransID.setError("Transaction ID must be atleast 5 character.");
             etTransID.requestFocus();
             return false;

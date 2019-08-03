@@ -100,7 +100,7 @@ public class EditReceiptActivity  extends SuperActivity {
         etCustomerEmail.setText(model.getEmail());
 
         etRemarks.setText(model.getRemark());
-        etAmount.setText(MyUtils.parseDouble(model.getAmount())+"");
+        etAmount.setText(String.format("%.2f", MyUtils.parseDouble(model.getAmount())));
     }
 
 
@@ -112,7 +112,6 @@ public class EditReceiptActivity  extends SuperActivity {
     }
 
     private void setEventListeners() {
-
         chkReceiptManual.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 linlayReceiptNumber.setVisibility(View.VISIBLE);

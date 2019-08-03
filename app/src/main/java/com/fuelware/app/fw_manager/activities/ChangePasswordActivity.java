@@ -86,7 +86,7 @@ public class ChangePasswordActivity extends SuperActivity {
                 }
             }
         });
-
+//
         etNewPasssword1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -96,7 +96,7 @@ public class ChangePasswordActivity extends SuperActivity {
             public void afterTextChanged(Editable editable) {
                 String string = editable.toString().trim();
                 String newPass = etNewPasssword.getText().toString().trim();
-                if (newPass.equalsIgnoreCase(string)) {
+                if (newPass.equals(string)) {
                     etNewPasssword1.setError(null);
                     btnSubmit.setEnabled(true);
                     btnSubmit.setBackgroundColor(ContextCompat.getColor(ChangePasswordActivity.this, R.color.colorPrimary));

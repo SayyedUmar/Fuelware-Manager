@@ -25,6 +25,7 @@ import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.HintSpinnerAdapter;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
@@ -90,7 +91,7 @@ public class EditMIndentActivity extends SuperActivity {
         findViewById();
 
         etIndentNo.setFilters(new InputFilter[] {new InputFilter.AllCaps(), new InputFilter.LengthFilter(12)});
-        etVehicleNo.setFilters(new InputFilter[] {new InputFilter.AllCaps(), new InputFilter.LengthFilter(12)});
+        etVehicleNo.setFilters(new InputFilter[] {new InputFilter.AllCaps(), new InputFilter.LengthFilter(16)});
         etVehicleKilometers.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(1, 999999)});
 
         initData();
@@ -128,20 +129,23 @@ public class EditMIndentActivity extends SuperActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(adapterView.getSelectedItem() != null) {
-                    if (adapterView.getSelectedItem().equals("Amount")) {
+                    String filltype = adapterView.getSelectedItem().toString();
+                    if (filltype.equalsIgnoreCase(Const.AMOUNT)) {
                         etAmount.setEnabled(true);
                         etAmount.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.general_et_background));
                         etLiters.setEnabled(false);
                         etLiters.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
-                        etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(1, 500000)});
+                        etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(Const.AMOUNT_MIN, Const.AMOUNT_MAX)});
                         etLiters.setFilters(new InputFilter[] {});
-                    } else  if (adapterView.getSelectedItem().toString().equalsIgnoreCase("Litres") ||
-                            adapterView.getSelectedItem().toString().equals("Full Tank")) {
+                    } else  if (filltype.equalsIgnoreCase(Const.LITRE) ||
+                            filltype.equalsIgnoreCase("litre/kg") ||
+                            filltype.equalsIgnoreCase(Const.FULL_TANK_V)) {
+
                         etLiters.setEnabled(true);
                         etLiters.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.general_et_background));
                         etAmount.setEnabled(false);
                         etAmount.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
-                        etLiters.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(0.01, 5000)});
+                        etLiters.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(Const.LITRE_MIN, Const.LITRE_MAX)});
                         etAmount.setFilters(new InputFilter[] {});
                     }
                 }
@@ -156,11 +160,14 @@ public class EditMIndentActivity extends SuperActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0) {
-                    if ( selectedProduct != null && spnFillType.getSelectedItem().toString().equals("Amount")) {
+                    String filltype = spnFillType.getSelectedItem().toString();
+                    if ( selectedProduct != null && filltype.equalsIgnoreCase(Const.AMOUNT)) {
                         try {
                             Double newAmount = MyUtils.parseDouble(charSequence.toString().trim());
                             Double newLitres = newAmount / selectedProduct.getPrice() ;
-                            etLiters.setText(String.valueOf(newLitres));
+                            etLiters.setText(String.format("%.2f",newLitres));
+                            etAmount.setError(null);
+                            etLiters.setError(null);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -180,12 +187,16 @@ public class EditMIndentActivity extends SuperActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0) {
-                    if ( selectedProduct != null && (spnFillType.getSelectedItem().toString().equals("Litres")
-                            || spnFillType.getSelectedItem().toString().equals("Full Tank"))) {
+                    String filltype = spnFillType.getSelectedItem().toString();
+                    if (selectedProduct != null && (filltype.equalsIgnoreCase(Const.LITRE) ||
+                            filltype.equalsIgnoreCase("litre/kg")
+                            || spnFillType.getSelectedItem().toString().equalsIgnoreCase(Const.FULL_TANK_V))) {
                         try {
                             Double newLitres = MyUtils.parseDouble(charSequence.toString().trim());
                             Double newAmount = newLitres * selectedProduct.getPrice() ;
-                            etAmount.setText(String.valueOf(newAmount));
+                            etAmount.setText(String.format("%.2f", newAmount));
+                            etAmount.setError(null);
+                            etLiters.setError(null);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -246,6 +257,7 @@ public class EditMIndentActivity extends SuperActivity {
 
         try {
 
+
             fill_date = etIndentDate.getText().toString().trim();
 
             if (fill_date.isEmpty()) {
@@ -265,18 +277,18 @@ public class EditMIndentActivity extends SuperActivity {
 
             vehicle_number = etVehicleNo.getText().toString().trim();
             if (vehicle_number.isEmpty()) {
-                etVehicleNo.setError("Enter Vehicle Number");
+                etVehicleNo.setError("Enter Vehicle/Machine Number");
                 etVehicleNo.requestFocus();
                 return;
-            } else if (vehicle_number.length() < 5) {
-                etVehicleNo.setError("Vehicle Number must contain at least 5 chars.");
+            } else if (vehicle_number.length() < 3) {
+                etVehicleNo.setError("Vehicle/Machine Number must contain at least 3 chars.");
                 etVehicleNo.requestFocus();
                 return;
             }
 
             meter_reading =  Long.parseLong(etVehicleKilometers.getText().toString());
             if (meter_reading <= 0) {
-                etVehicleKilometers.setError("Enter Vehicle Kms");
+                etVehicleKilometers.setError("Enter [Km or Hr]");
                 etVehicleKilometers.requestFocus();
                 return;
             }
@@ -305,6 +317,15 @@ public class EditMIndentActivity extends SuperActivity {
                 if (spnFillType.getSelectedItem().toString().equals("Full Tank")) {
                     fill_type = AppConst.full_tank;
                 }
+
+                if (spnFillType.getSelectedItem().toString().equalsIgnoreCase(Const.AMOUNT)) {
+                    fill_type = Const.AMOUNT;
+                } else  if (spnFillType.getSelectedItem().toString().equalsIgnoreCase(Const.FULL_TANK_V)) {
+                    fill_type = Const.FULL_TANK_K;
+                } else {
+//                if (spnFillType.getSelectedItem().toString().equals("Litres")) {
+                    fill_type = Const.LITRE;
+                }
             }
 
             if (etInvoiceNo.getText().toString().trim().isEmpty()) {
@@ -318,7 +339,7 @@ public class EditMIndentActivity extends SuperActivity {
             String litreString = etLiters.getText().toString().trim();
             litre = MyUtils.parseDouble(litreString);
             if (etLiters.isEnabled() && (litreString.isEmpty() || litre <= 0)) {
-                etLiters.setError("Enter Liters");
+                etLiters.setError("Enter Liter/Kg");
                 etLiters.requestFocus();
                 return;
             }

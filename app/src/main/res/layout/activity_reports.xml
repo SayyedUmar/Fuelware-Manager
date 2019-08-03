@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".activities.ReceiptsActivity"
+    tools:context=".activities.ReportsActivity"
     >
 
     <ScrollView
@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:layout_margin="5dp"
-                            android:text="E-Indent\nBatch Output"
+                            android:text="Indent\nBatch Output"
                             android:fontFamily="@font/quicksand_medium"
                             android:textColor="@color/light_black2"
                             android:gravity="center"
