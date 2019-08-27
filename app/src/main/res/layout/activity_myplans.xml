@@ -99,7 +99,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/etVersion"
+                    android:id="@+id/tvVersion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/general_et_background"
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Plant Type"
+                    android:text="Plan Type"
                     android:textSize="12sp"
                     android:textColor="@color/text_black"
                     android:fontFamily="@font/quicksand"

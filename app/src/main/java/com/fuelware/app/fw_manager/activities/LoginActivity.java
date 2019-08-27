@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
@@ -24,10 +25,16 @@ import android.widget.Toast;
 import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.appconst.Const;
+import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.FuelwareAPI;
+import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.ConnectionDetector;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
+import com.fuelware.app.fw_manager.utils.MyUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONObject;
 
@@ -46,14 +53,15 @@ public class LoginActivity extends AppCompatActivity {
     TextView forgotpassword,themetext;
     ConnectionDetector connectionDetector;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     private ImageView ivHideShowPwd;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        handler = new Handler();
         findViewById();
 
         initialiseViews();
@@ -69,13 +77,12 @@ public class LoginActivity extends AppCompatActivity {
     private void initialiseViews() {
         connectionDetector = new ConnectionDetector(this);
         sharedPreferences = getSharedPreferences("userdetails",0);
-        editor = sharedPreferences.edit();
         //changing statusbar color
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(this.getResources().getColor(R.color.statusbarlogin));
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
 
         //custom font adding starts here
@@ -111,7 +118,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setActionListeners() {
-        signinbutton.setOnClickListener( v -> performLogin() );
+        signinbutton.setOnClickListener( v -> {
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.READ_SMS, Permission.RECEIVE_SMS)
+                    .onGranted(permissions -> {
+                        performLogin();
+                    })
+                    .onDenied(permissions -> {
+                        MLog.showToast(getApplicationContext(), "Please provide read message access permission to login the app.");
+                    })
+                    .start();
+        });
         forgotpassword.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
 
         etPassword.setOnEditorActionListener((v, actionId, keyEvent) -> {
@@ -158,7 +176,16 @@ public class LoginActivity extends AppCompatActivity {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
-            sendLoginRequest();
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.Group.STORAGE)
+                    .onGranted(permissions -> {
+                        sendLoginRequest();
+                    })
+                    .onDenied(permissions -> {
+                        MLog.showToast(this, "Read/Write External Storage permission denied!");
+                    })
+                    .start();
         } else {
             Toast.makeText(this,"no internet connection", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
@@ -184,12 +211,12 @@ public class LoginActivity extends AppCompatActivity {
                         String access_token=jsonObject.getString("access_token");
                         String token_type=jsonObject.getString("token_type");
                         String data=token_type+" "+access_token;
-                        editor.putString("authkey",data);
+                        MyPreferences.setStringValue(getApplicationContext(), Const.AUTHKEY, data);
                         MyPreferences.setBoolValue(LoginActivity.this, AppConst.LOGIN_STATUS, true);
-                        editor.commit();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        handler.postDelayed(() -> {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }, 1000);
                     } else {
                         JSONObject errorObj = new JSONObject(response.errorBody().string());
                         if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))

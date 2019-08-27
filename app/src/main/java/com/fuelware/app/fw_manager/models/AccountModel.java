@@ -170,7 +170,11 @@ public class AccountModel implements Parcelable {
     }
 
     public String getFormattedFillDate () {
-        return MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, fillingDate);
+        if (fillingDate != null) {
+            return MyUtils.dateToString(AppConst.SERVER_DATE_TIME_FORMAT, AppConst.APP_DATE_TIME_FORMAT, fillingDate);
+        } else {
+            return "";
+        }
     }
 
     public AccountModel() {

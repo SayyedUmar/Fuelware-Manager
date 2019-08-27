@@ -28,5 +28,9 @@ public class Const {
     public static final String LITRE = "litre";
     public static final String FULL_TANK_K = "full_tank";
     public static final String FULL_TANK_V = "Full Tank";
-    public static final String KNOWLEDGE_CENTER_URL = "http://fuelware.in/knowledge-center.html";
+    public static final String KNOWLEDGE_CENTER_URL_STAGING = "http://staging.fuelware.in/knowledge-centre";
+    public static final String KNOWLEDGE_CENTER_URL_PROD = "http://app.fuelware.in/knowledge-center?user=manager";
+    public static final String SUBSCRIPTION_TYPE = "SUBSCRIPTION_TYPE";
+    public static final String B_INDENT = "B_INDENT";
+    public static final String AUTHKEY = "authkey";
 }

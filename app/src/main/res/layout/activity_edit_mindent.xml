@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.EditMIndentActivity">
+    tools:context=".activities.indents.EditMIndentActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -52,6 +52,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Customer ID"
@@ -62,6 +63,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etCustomerID"
                     android:digits="@string/SCWS_SET"
                     android:layout_width="match_parent"
@@ -80,6 +82,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Customer Name"
@@ -90,6 +93,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etCustomerName"
                     android:digits="@string/SCWS_SET"
                     android:layout_width="match_parent"
@@ -110,6 +114,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Customer Mobile number"
@@ -120,6 +125,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etCustomerMobile"
                     android:digits="@string/SCWS_SET"
                     android:layout_width="match_parent"
@@ -139,6 +145,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date of Indent*"
@@ -149,6 +156,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etIndentDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,7 +228,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Km or Hr*"
+                    android:text="[Km or Hr]*"
                     android:fontFamily="@font/quicksand_medium"
                     android:textSize="10sp"
                     android:layout_marginTop="10dp"
@@ -234,13 +242,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:hint="Km or Hr*"
+                    android:hint="[Km or Hr]*"
                     android:inputType="number"
                     android:maxLength="10"
                     android:background="@drawable/general_et_background"
                     android:singleLine="true"
                     android:fontFamily="@font/quicksand_medium"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:textSize="14sp"
                     />
 
@@ -277,7 +285,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="6dp"
                         android:src="@drawable/ic_dropdown_circle" />
 
                 </RelativeLayout>
@@ -315,12 +323,13 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="6dp"
                         android:src="@drawable/ic_dropdown_circle" />
 
                 </RelativeLayout>
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rate"
@@ -331,6 +340,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etProductRate"
                     android:digits="@string/D_SET"
                     android:layout_width="match_parent"
@@ -348,60 +358,75 @@
                     android:textSize="14sp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Liter/Kg*"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="10sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    />
-
-                <EditText
-                    android:id="@+id/etLiters"
-                    android:digits="@string/D_SET"
+                <LinearLayout
+                    android:id="@+id/linlayLitre"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="Liter/Kg*"
-                    android:maxLength="10"
-                    android:inputType="numberDecimal"
-                    android:background="@drawable/general_et_background"
-                    android:singleLine="true"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="14sp"
-                    />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Amount*"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="10sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Liter/Kg*"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
 
-                <EditText
-                    android:id="@+id/etAmount"
-                    android:digits="@string/D_SET"
+                    <EditText
+                        android:id="@+id/etLiters"
+                        android:digits="@string/D_SET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Liter/Kg*"
+                        android:maxLength="10"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/general_et_background"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayAmount"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="Amount*"
-                    android:inputType="numberDecimal"
-                    android:maxLength="15"
-                    android:background="@drawable/general_et_background"
-                    android:singleLine="true"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="14sp"
-                    />
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amount*"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/etAmount"
+                        android:digits="@string/D_SET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Amount*"
+                        android:inputType="numberDecimal"
+                        android:maxLength="15"
+                        android:background="@drawable/general_et_background"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -430,6 +455,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Driver/Reps Name"
@@ -440,6 +466,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etDriverName"
                     android:digits="@string/SCWS_SET"
                     android:layout_width="match_parent"
@@ -456,6 +483,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mobile Number"
@@ -466,6 +494,7 @@
                     />
 
                 <EditText
+                    android:visibility="gone"
                     android:id="@+id/etDriverMobile"
                     android:digits="@string/I_SET"
                     android:layout_width="match_parent"

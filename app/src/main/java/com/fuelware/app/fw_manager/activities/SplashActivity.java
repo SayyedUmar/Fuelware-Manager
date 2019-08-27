@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
 
 public class SplashActivity extends AppCompatActivity {
@@ -133,7 +134,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void forNext() {
-        if (!MyPreferences.getStringValue(getApplicationContext(), "authkey").isEmpty()) {
+        if (!MyPreferences.getStringValue(getApplicationContext(), Const.AUTHKEY).isEmpty()) {
             Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(mainIntent);
             finish();

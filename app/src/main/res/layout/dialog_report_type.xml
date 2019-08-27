@@ -132,7 +132,69 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linlayReportFormat"
+                        android:background="@drawable/general_et_background"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <RadioGroup
+                            android:id="@+id/radioCallGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Header Type"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/quicksand_medium"
+                                />
+
+
+                            <RadioButton
+                                android:id="@+id/radioHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="5dp"
+                                android:text="With Header"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+
+                            <RadioButton
+                                android:id="@+id/radioWithoutHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:padding="5dp"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Without Header"
+                                />
+
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayReportFormat"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
                         android:background="@drawable/general_et_background"
                         android:padding="5dp"
                         android:layout_margin="5dp"
@@ -185,18 +247,6 @@
                         </RadioGroup>
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-
-
-
-
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -254,61 +304,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:background="@drawable/general_et_background"
-                        android:padding="5dp"
-                        android:layout_margin="5dp"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
-
-                        <RadioGroup
-                            android:id="@+id/radioCallGroup"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="10dp"
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Header Type"
-                                android:textSize="10sp"
-                                android:fontFamily="@font/quicksand_medium"
-                                />
-
-
-                            <RadioButton
-                                android:id="@+id/radioHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:padding="5dp"
-                                android:text="With Header"
-                                android:textColor="@color/text_black"
-                                android:textSize="14sp"
-                                android:textStyle="normal" />
-
-
-                            <RadioButton
-                                android:id="@+id/radioWithoutHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/text_black"
-                                android:textSize="14sp"
-                                android:textStyle="normal"
-                                android:padding="5dp"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="Without Header"
-                                />
-
-
-                        </RadioGroup>
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -338,9 +333,10 @@
                         android:layout_marginLeft="4dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:hint="Enter Invocie No *"
+                        android:hint="Enter Invocie/Bill No *"
                         android:textSize="14sp"
                         android:maxLines="1"
+                        android:maxLength="20"
                         />
 
                 </TableRow>
@@ -446,7 +442,7 @@
                         android:layout_marginLeft="4dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:hint="Enter Other Surplussadfasdjk"
+                        android:hint="Enter Other Surplus charge"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
                         android:maxLines="1"
@@ -463,7 +459,6 @@
                         android:layout_weight="1"
                         android:hint="Surplus Charges Remark"
                         android:maxLength="100"
-                        android:digits="@string/SCIWS_SET"
                         android:textSize="14sp"
                         />
 

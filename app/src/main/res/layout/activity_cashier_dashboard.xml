@@ -233,6 +233,8 @@
 
             </LinearLayout>
 
+
+
             <ImageView
                 android:visibility="gone"
                 android:id="@+id/imgCrown"

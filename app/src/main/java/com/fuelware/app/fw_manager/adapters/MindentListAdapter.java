@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
-import com.fuelware.app.fw_manager.activities.MiDetailsActivity;
-import com.fuelware.app.fw_manager.activities.MindentListActivity;
+import com.fuelware.app.fw_manager.activities.indents.EditMIndentActivity;
+import com.fuelware.app.fw_manager.activities.indents.MiDetailsActivity;
+import com.fuelware.app.fw_manager.activities.indents.MindentListActivity;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.network.RxBus;
 import com.fuelware.app.fw_manager.utils.MyUtils;

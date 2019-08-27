@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fuelware.app.fw_manager.BuildConfig;
+import com.fuelware.app.fw_manager.activities.indents.EditBIndentActivity;
+import com.fuelware.app.fw_manager.activities.morning_params.MorningParamsActivity;
+import com.fuelware.app.fw_manager.activities.plans.PlansActivity;
+import com.fuelware.app.fw_manager.activities.receipts.ReceiptsActivity;
+import com.fuelware.app.fw_manager.activities.reports.ReportsActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
@@ -79,6 +85,9 @@ public class MainActivity extends SuperActivity
     private List<Cashier> cashierList = new ArrayList<>();
     private ImageView imgReceipts, imgCounterBilling;
 
+    TextView tvUsername, tvAccountVersion, tvAppVersion;
+
+
     @BindView(R.id.imgMorningParams)
     ImageView imgMorningParams;
     @BindView(R.id.imgReports)
@@ -87,6 +96,9 @@ public class MainActivity extends SuperActivity
     LinearLayout linlayCounterBilling;
     @BindView(R.id.linlayReceipts)
     LinearLayout linlayReceipts;
+
+    @BindView(R.id.imgBindent)
+    ImageView imgBindent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +125,13 @@ public class MainActivity extends SuperActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        tvUsername = navigationView.getHeaderView(0).findViewById(R.id.tvUsername);
+        tvAccountVersion = navigationView.getHeaderView(0).findViewById(R.id.tvAccountVersion);
+        tvAppVersion = navigationView.getHeaderView(0).findViewById(R.id.tvAppVersion);
+
         init();
 
+        displayVersionInfo();
         setEventListeners();
         getuserProfile();
         fetchProducts();
@@ -124,15 +141,29 @@ public class MainActivity extends SuperActivity
         if(BuildConfig.DEBUG) {
             navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
         }
+        navigationView.getMenu().findItem(R.id.nav_tech_support).setVisible(false);
 
-        linlayReceipts.setVisibility(View.GONE);
-        linlayCounterBilling.setVisibility(View.GONE);
+        if (!BuildConfig.DEBUG) {
+            linlayReceipts.setVisibility(View.GONE);
+            linlayCounterBilling.setVisibility(View.GONE);
+        }
+//        tvActiveBatches.setVisibility(View.GONE);
+    }
+
+
+    private void displayVersionInfo() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            tvAppVersion.setText("Version   v" + version + " - " + pInfo.versionCode);
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
+//        getuserProfile();
         fetchCashiers();
         checkForNewVersion();
         if (MyPreferences.getBoolValue(getApplicationContext(), Const.PLAN_EXPIRED)) {
@@ -205,6 +236,10 @@ public class MainActivity extends SuperActivity
     }
 
     private void setEventListeners() {
+
+        imgBindent.setOnClickListener(v -> {
+            startActivity(new Intent(this, EditBIndentActivity.BIndentListActivity.class).putExtra(Const.B_INDENT, true));
+        });
 
         imgMorningParams.setOnClickListener(v -> {
             startActivity(new Intent(this, MorningParamsActivity.class));
@@ -283,7 +318,7 @@ public class MainActivity extends SuperActivity
                         logoutUser();
                     } else {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getApplicationContext(),jObjError.getString("message"),Toast.LENGTH_LONG).show();
+                        MLog.showToast(getApplicationContext(),jObjError.getString("message"));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -300,8 +335,8 @@ public class MainActivity extends SuperActivity
 
 
     private void logoutUser() {
-        MyPreferences.setStringValue(getApplicationContext(), "authkey", "");
-        startActivity(new Intent(MainActivity.this,LoginActivity.class)
+        MyPreferences.setStringValue(getApplicationContext(), Const.AUTHKEY, "");
+        startActivity(new Intent(MainActivity.this, LoginActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         );
         finish();
@@ -309,13 +344,14 @@ public class MainActivity extends SuperActivity
 
 
     private void init() {
+        authkey = MyPreferences.getStringValue(this, Const.AUTHKEY);
         //String userString = MyPreferences.getStringValue(this, AppConst.USER_PROFILE_DATA);
         gson = new Gson();
         /*if (userString.length() > 50) {
             user = gson.fromJson(userString, User.class);
         }*/
         progressDialog = new SpotsDialog(MainActivity.this, R.style.Custom);
-        authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
+
     }
 
     private void getuserProfile() {
@@ -325,6 +361,8 @@ public class MainActivity extends SuperActivity
         }
 
         progressDialog.show();
+
+//        MLog.e("authkey", authkey);
 
         Call<ResponseBody> responce = APIClient.getApiService().getUserDetails(authkey);
         responce.enqueue(new Callback<ResponseBody>() {
@@ -339,16 +377,28 @@ public class MainActivity extends SuperActivity
                         user = gson.fromJson(data.toString(), User.class);
                         boolean payment_status = data.getBoolean("payment_status");
                         String notification_token = data.getString("notification_token");
+                        try {
+                            String outletName = data.getJSONObject("outlet").getJSONArray("data").getJSONObject(0).getString("name");
+                            setTitle(outletName.toUpperCase());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         MyPreferences.setStringValue(MainActivity.this, Const.NOTIFICATION_TOKEN, notification_token);
 
                         try {
+                            tvUsername.setText(data.getString("first_name")+" - "+data.getString("formatted_role"));
                             JSONArray array = data.getJSONObject("outlet").getJSONArray("data");
                             if (array.length() > 0) {
                                 String subscription_type = array.getJSONObject(0).getString("subscription_type");
+                                MyPreferences.setStringValue(getApplicationContext(), Const.SUBSCRIPTION_TYPE, subscription_type);
                                 if (subscription_type.equals("free")) {
                                     linlayCounterBilling.setVisibility(View.GONE);
+                                    tvAccountVersion.setText("CCM");
+                                } else if (subscription_type.toLowerCase().contains("premium")) {
+                                    tvAccountVersion.setText("CCM Premium");
                                 }
                             }
+
                         } catch (Exception e) {e.printStackTrace();}
 
                         if (!payment_status) {
@@ -433,14 +483,14 @@ public class MainActivity extends SuperActivity
             startActivity(new Intent(this, ProfileActivity.class));
         } else if (id == R.id.nav_tools) {
             startActivity(new Intent(this, PlansActivity.class));
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_tech_support) {
             startActivity(new Intent(this, TechSupportActivity.class));
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
         } else if (id == R.id.nav_Shift_close) {
             callShiftCloseAPI();
         } else if (id == R.id.nav_knowledgeCenter) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Const.KNOWLEDGE_CENTER_URL)));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Const.KNOWLEDGE_CENTER_URL_PROD)));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -514,6 +564,8 @@ public class MainActivity extends SuperActivity
 
         progressDialog.show();
 
+//        MLog.e("authkey", authkey);
+
         Call<ResponseBody> call_getProducts;
         call_getProducts = APIClient.getApiService().getCashiers(authkey);
         call_getProducts.enqueue(new Callback<ResponseBody>() {
@@ -535,8 +587,13 @@ public class MainActivity extends SuperActivity
                         //recyclerView.getAdapter().notifyDataSetChanged();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                        if (jsonObject.has("message"))
-                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                        if (jsonObject.has("message")) {
+                            String msg = jsonObject.getString("message");
+                            MLog.showLongToast(getApplicationContext(), msg);
+                            if (msg.toLowerCase().contains("unauthenticated") || msg.toLowerCase().contains("manager shift closed")) {
+                                logoutUser();
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

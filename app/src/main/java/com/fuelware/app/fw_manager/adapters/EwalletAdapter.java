@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.EwalletDetailActivity;
-import com.fuelware.app.fw_manager.activities.EwalletListActivity;
+import com.fuelware.app.fw_manager.activities.receipts.EwalletDetailActivity;
+import com.fuelware.app.fw_manager.activities.receipts.EwalletListActivity;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.MyUtils;

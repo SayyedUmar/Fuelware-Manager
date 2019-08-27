@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -62,101 +65,116 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".activities.MindentListActivity"
+            android:name=".activities.indents.MindentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.EindentListActivity"
+            android:name=".activities.indents.EditBIndentActivity$BIndentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.MiDetailsActivity"
+            android:name=".activities.indents.EindentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.EditMIndentActivity"
+            android:name=".activities.indents.MiDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.ReceiptsActivity"
+            android:name=".activities.indents.EditMIndentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.ReceiptListActivity"
+            android:name=".activities.indents.EditBIndentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.AddReceiptActivity"
+            android:name=".activities.indents.AddBIndentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.ReceiptDetailActivity"
+            android:name=".activities.receipts.ReceiptsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.ChequeReceiptListActivity"
+            android:name=".activities.receipts.ReceiptListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.EwalletListActivity"
+            android:name=".activities.receipts.AddReceiptActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.EwalletDetailActivity"
+            android:name=".activities.receipts.ReceiptDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.AddEwalletActivity"
+            android:name=".activities.receipts.ChequeReceiptListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.OnlinePaymentListActivity"
+            android:name=".activities.receipts.EwalletListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.OnlinePaymentDetailActivity"
+            android:name=".activities.receipts.EwalletDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.AddOnlinePaymentActivity"
+            android:name=".activities.receipts.AddEwalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.EditReceiptActivity"
+            android:name=".activities.receipts.OnlinePaymentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.MorningParamsActivity"
+            android:name=".activities.receipts.OnlinePaymentDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.ReportsActivity"
+            android:name=".activities.receipts.AddOnlinePaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.AccountStatementActivity"
+            android:name=".activities.receipts.EditReceiptActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.morning_params.MorningParamsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.reports.ReportsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+
+        <activity
+            android:name=".activities.reports.AccountStatementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
         <activity
-            android:name=".activities.AccountDetailActivity"
+            android:name=".activities.reports.AccountDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
         <activity
@@ -168,7 +186,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
         <activity
-            android:name=".activities.PlansActivity"
+            android:name=".activities.plans.PlansActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
@@ -179,17 +197,17 @@
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.WebViewActivity"
+            android:name=".activities.plans.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.BatchOutputReportActivity"
+            android:name=".activities.reports.BatchOutputReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.SearchTransactionsActivity"
+            android:name=".activities.reports.SearchTransactionsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme" />
 
@@ -215,6 +233,15 @@
             android:name=".activities.OtpVerificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
+
+
+        <receiver android:name=".receivers.SmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

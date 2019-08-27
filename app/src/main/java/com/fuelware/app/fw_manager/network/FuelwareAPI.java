@@ -1,14 +1,17 @@
 package com.fuelware.app.fw_manager.network;
 
-import com.fuelware.app.fw_manager.activities.AccountStatementActivity;
+import com.fuelware.app.fw_manager.activities.reports.AccountStatementActivity;
 import com.fuelware.app.fw_manager.activities.ChangePasswordActivity;
-import com.fuelware.app.fw_manager.activities.EditMIndentActivity;
-import com.fuelware.app.fw_manager.activities.MorningParamsActivity;
-import com.fuelware.app.fw_manager.activities.PlansActivity;
+import com.fuelware.app.fw_manager.activities.indents.EditBIndentActivity;
+import com.fuelware.app.fw_manager.activities.indents.EditMIndentActivity;
+import com.fuelware.app.fw_manager.activities.morning_params.MorningParamsActivity;
+import com.fuelware.app.fw_manager.activities.plans.PlansActivity;
 import com.fuelware.app.fw_manager.models.CounterBillPojo;
 import com.fuelware.app.fw_manager.models.ForgotPasswordModel;
+import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.models.ReceiptModel;
 import com.fuelware.app.fw_manager.models.VersionCheckModel;
+import com.fuelware.app.fw_manager.receivers.SmsReceiver;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -59,6 +62,9 @@ public interface FuelwareAPI {
     Call<ResponseBody> getMindentList(@Header("Authorization") String value,
                                       @Path("cashierID") String cashierID);
 
+    @GET("outlet/manager/back-dated-indents")
+    Call<ResponseBody> getBindentList(@Header("Authorization") String value);
+
     @GET("outlet/manager/cashier/{cashierID}/e-indent")
     Call<ResponseBody> getEindentList(@Header("Authorization") String value,
                                       @Path("cashierID") String cashierID);
@@ -95,12 +101,25 @@ public interface FuelwareAPI {
                                      @Query("otp") String otp
     );
 
+
+    @DELETE("outlet/manager/back-dated-indents/{indentID}?")
+    Call<ResponseBody> deleteBIndent(@Header("Authorization") String value,
+                                     @Path("indentID") String indentID
+    );
+
+
     @PUT("outlet/manager/cashier/{cashierID}/m-indent/{indentID}")
     Call<ResponseBody> updateMIndent(@Header("Authorization") String value,
                                      @Path("cashierID") String cashierID,
                                      @Path("indentID") String indentID,
                                      @Body EditMIndentActivity.IndentNew model
                                      );
+
+    @PUT("outlet/manager/back-dated-indents/{indentID}")
+    Call<ResponseBody> updateBIndent(@Header("Authorization") String value,
+                                     @Path("indentID") String indentID,
+                                     @Body EditBIndentActivity.IndentNew model
+    );
 
 
     @POST("common/otp?")
@@ -178,6 +197,7 @@ public interface FuelwareAPI {
                                               @Query("per_page") int count_per_page,
                                               @Query("search") String searchText,
                                               @Query("file") String fileType,
+                                              @Query("file-header") boolean header,
                                               @Body AccountStatementActivity.DebitReportData param
     );
 
@@ -303,5 +323,29 @@ public interface FuelwareAPI {
     @POST("common/reset-password")
     Call<ResponseBody> setNewPassword(@Header("Content-Type") String type,
                                       @Body ForgotPasswordModel item);
+
+
+    @POST("outlet/cashier/indent?type=android")
+    Call<ResponseBody> createMindent(@Header("Authorization") String value,
+                                     @Header("Content-Type") String type,
+                                     @Body IndentModel createMindentPojo
+    );
+
+    @POST("common/add-price")
+    Call<ResponseBody> morningPriceUpdateReadingMsg(@Header("Authorization") String value,
+                                                    @Body SmsReceiver.SMSModel model
+    );
+
+
+
+    @POST("outlet/manager/back-dated-indents")
+    Call<ResponseBody> createBindent(@Header("Authorization") String value,
+                                     @Header("Content-Type") String type,
+                                     @Body IndentModel createMindentPojo
+    );
+
+
+    @GET("outlet/manager/search?indent_type=back_dated_indent")
+    Observable<Response<ResponseBody>> creditCustomerListApi(@Header("Authorization") String value);
 
 }

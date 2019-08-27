@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="0dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Name*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCCBusinessName"
+                    android:digits="@string/SCWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/general_et_background"
+                    android:hint="Select Business*"
+                    android:padding="8dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer ID"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etCustomerID"
+                    android:digits="@string/SCWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_rect_border_disabled"
+                    android:focusable="false"
+                    android:hint="Customer ID"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_dark"
+
+                    />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Name"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etCustomerName"
+                    android:digits="@string/SCWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_rect_border_disabled"
+                    android:hint="Customer Name"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:textColor="@color/gray_dark"
+                    android:singleLine="true" />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Mobile number"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etCustomerMobile"
+                    android:digits="@string/SCWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_rect_border_disabled"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:hint="Customer Mobile number"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/gray_dark"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Indent*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etIndentDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/general_et_background"
+                    android:hint="Date of Indent*"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:focusable="false"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Indent Number*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etIndentNo"
+                    android:digits="@string/SCI_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Indent Number*"
+                    android:maxLength="12"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:padding="8dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vehicle/Machine Number*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etVehicleNo"
+                    android:digits="@string/SCIWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Vehicle/Machine Number*"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="12"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fueling Date*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etFuelingDate"
+                    android:digits="@string/SCIWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Select Fueling Date*"
+                    android:background="@drawable/general_et_background"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:imeOptions="actionNext"
+                    android:focusable="false"
+                    android:singleLine="true"
+                    />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/spnProducts"
+                        android:background="@drawable/general_et_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:spinnerMode="dialog"
+                        android:autofillHints="Select Product Type*"
+                        android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:src="@drawable/ic_dropdown_circle" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fill Type*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/spnFillType"
+                        android:background="@drawable/general_et_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:spinnerMode="dialog"
+                        android:autofillHints="Select Fill Type*"
+                        android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:src="@drawable/ic_dropdown_circle" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etProductRate"
+                    android:digits="@string/D_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Rate"
+                    android:maxLength="15"
+                    android:focusable="false"
+                    android:background="@drawable/bg_rect_border_disabled"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/linlayLitre"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Liter/Kg*"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/etLiters"
+                        android:digits="@string/D_SET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Liter/Kg*"
+                        android:maxLength="10"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/general_et_background"
+                        android:singleLine="true"
+                        android:padding="8dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayAmount"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amount*"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/etAmount"
+                        android:digits="@string/D_SET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Amount*"
+                        android:inputType="numberDecimal"
+                        android:maxLength="15"
+                        android:background="@drawable/general_et_background"
+                        android:singleLine="true"
+                        android:padding="8dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayVehicleKms"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="[Km or Hr]*"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/etVehicleKilometers"
+                        android:digits="@string/I_SET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="[Km or Hr]*"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:background="@drawable/general_et_background"
+                        android:singleLine="true"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Invoice No.*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etInvoiceNo"
+                    android:digits="@string/SCI_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Customer Invoice No.*"
+                    android:maxLength="12"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:padding="8dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Driver/Rep Name"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etDriverName"
+                    android:digits="@string/SCWS_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Driver/Rep Name"
+                    android:maxLength="30"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Number"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/etDriverMobile"
+                    android:digits="@string/I_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:inputType="number"
+                    android:hint="Mobile Number"
+                    android:maxLength="10"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/colorPrimary"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center|bottom"
+                    android:text="Add M-Indent"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/quicksand_medium"
+                    />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.PlansActivity;
+import com.fuelware.app.fw_manager.activities.plans.PlansActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
-import com.fuelware.app.fw_manager.models.PlanHistory;
 import com.fuelware.app.fw_manager.models.PurchasedPlan;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 

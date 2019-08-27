@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.EindentListActivity;
+import com.fuelware.app.fw_manager.activities.indents.EindentListActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.utils.MyUtils;

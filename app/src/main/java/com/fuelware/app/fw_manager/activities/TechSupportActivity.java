@@ -87,7 +87,7 @@ public class TechSupportActivity extends SuperActivity {
 
     private void initialise() {
         progressDialog = new SpotsDialog(this, R.style.Custom);
-        authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
+        authkey = MyPreferences.getStringValue(getApplicationContext(), Const.AUTHKEY);
         executor = Executors.newSingleThreadExecutor();
         issueList.add("Billing Issue");
         issueList.add("Technical Issue");

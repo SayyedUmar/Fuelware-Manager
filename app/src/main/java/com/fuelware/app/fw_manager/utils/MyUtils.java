@@ -19,7 +19,6 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.TechSupportActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

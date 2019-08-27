@@ -18,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.Multipart;
 
 public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.MyViewHolder> {
 
@@ -100,13 +99,13 @@ public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.
         if (newText.isEmpty()) {
             records.addAll(origialRecords);
         } else {
-            /*for (ReceiptModel item : origialRecords) {
-                if (item.getVehicle_number().toLowerCase().startsWith(newText)) {
+            for (BatchReport item : origialRecords) {
+                if (item.user.data.first_name.toLowerCase().startsWith(newText)) {
                     records.add(item);
-                } else if (item.getIndent_number().toLowerCase().startsWith(newText)) {
+                } else if (item.user.data.last_name.toLowerCase().startsWith(newText)) {
                     records.add(item);
                 }
-            }*/
+            }
         }
         notifyDataSetChanged();
     }

@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import com.fuelware.app.fw_manager.R;
 
 /**
  * @author Chintan.rathod
@@ -69,7 +72,9 @@ public class HintSpinnerAdapter implements SpinnerAdapter, ListAdapter {
         if (position == 0) {
             return getHintView(parent);
         }
-        return adapter.getView(position - PIVOT, null, parent); // Could re-use
+        TextView v = (TextView) adapter.getView(position - PIVOT, null, parent);
+        v.setTextSize(14);
+        return v; // Could re-use
                                                  // the convertView if possible.
     }
     public View inflateLayout(ViewGroup root, boolean attachToRoot) {

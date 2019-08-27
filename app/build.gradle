@@ -27,13 +27,16 @@ android {
         applicationId "com.fuelware.app.fw_manager"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 1
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
 
         debug {
+//            buildConfigField ("String", "BASE_URL", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/api/v1/"')
+//            buildConfigField ("String", "BASE_URL_2", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/"')
+
             buildConfigField ("String", "BASE_URL", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/api/v1/"')
             buildConfigField ("String", "BASE_URL_2", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/"')
             buildConfigField ("Boolean", "IS_LOG_ENABLED", "true")

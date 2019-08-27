@@ -12,6 +12,7 @@ import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.ProductListAdapter;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.ProductsPojo;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.FuelwareAPI;
@@ -52,7 +53,7 @@ public class CounterBillActivity extends SuperActivity {
         setContentView(R.layout.activity_counter_bill);
 
         progressDialog = new SpotsDialog(CounterBillActivity.this, R.style.Custom);
-        authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
+        authkey = MyPreferences.getStringValue(getApplicationContext(), Const.AUTHKEY);
 
         recyclerView = findViewById(R.id.recycler_view_products);
         recyclerView.setHasFixedSize(true);

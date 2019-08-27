@@ -11,9 +11,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.activities.indents.EindentListActivity;
+import com.fuelware.app.fw_manager.activities.indents.MindentListActivity;
+import com.fuelware.app.fw_manager.appconst.AppConst;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
 import com.fuelware.app.fw_manager.network.APIClient;
@@ -59,6 +62,7 @@ public class CashierDashboardActivity extends SuperActivity {
     @BindView(R.id.imgEindent)
     ImageView eIndentImage;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,10 +106,11 @@ public class CashierDashboardActivity extends SuperActivity {
         eIndentImage.setOnClickListener(v -> {
             startActivity(new Intent(this, EindentListActivity.class));
         });
+
     }
 
     private void initialize() {
-        authkey = MyPreferences.getStringValue(this, "authkey");
+        authkey = MyPreferences.getStringValue(this, Const.AUTHKEY);
         gson = new Gson();
         progressDialog = new SpotsDialog(this, R.style.Custom);
     }

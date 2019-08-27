@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.network.APIClient;
 import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
@@ -57,7 +58,7 @@ public class ProfileActivity extends SuperActivity {
     public void getuserProfile() {
         progressDialog.show();
 
-        String authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
+        String authkey = MyPreferences.getStringValue(getApplicationContext(), Const.AUTHKEY);
         Call<ResponseBody> responce = APIClient.getApiService().getUserDetails(authkey);
         responce.enqueue(new Callback<ResponseBody>() {
             @Override
