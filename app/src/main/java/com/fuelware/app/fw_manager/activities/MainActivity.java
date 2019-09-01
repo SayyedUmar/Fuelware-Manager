@@ -31,14 +31,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fuelware.app.fw_manager.BuildConfig;
-import com.fuelware.app.fw_manager.activities.indents.EditBIndentActivity;
+import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.activities.indents.BIndentListActivity;
 import com.fuelware.app.fw_manager.activities.morning_params.MorningParamsActivity;
 import com.fuelware.app.fw_manager.activities.plans.PlansActivity;
 import com.fuelware.app.fw_manager.activities.receipts.ReceiptsActivity;
 import com.fuelware.app.fw_manager.activities.reports.ReportsActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
-import com.fuelware.app.fw_manager.R;
-import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.Cashier;
 import com.fuelware.app.fw_manager.models.ProductPriceModel;
@@ -238,7 +238,7 @@ public class MainActivity extends SuperActivity
     private void setEventListeners() {
 
         imgBindent.setOnClickListener(v -> {
-            startActivity(new Intent(this, EditBIndentActivity.BIndentListActivity.class).putExtra(Const.B_INDENT, true));
+            startActivity(new Intent(this, BIndentListActivity.class).putExtra(Const.B_INDENT, true));
         });
 
         imgMorningParams.setOnClickListener(v -> {

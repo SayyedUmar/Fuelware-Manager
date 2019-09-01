@@ -1,6 +1,7 @@
 package com.fuelware.app.fw_manager.activities.plans;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,12 +21,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.adapters.GeneriBaseAdapter;
 import com.fuelware.app.fw_manager.adapters.MyPlansAdapter;
 import com.fuelware.app.fw_manager.adapters.PlanHistoryAdapter;
 import com.fuelware.app.fw_manager.adapters.SpinnerAdapterNew;
@@ -94,6 +97,10 @@ public class PlansActivity extends SuperActivity {
     Button btnAddCoupon;
     @BindView(R.id.btnClearCoupon)
     ImageButton btnClearCoupon;
+
+    @BindView(R.id.tvPlanType)
+    TextView tvPlanType;
+
     private AlertDialog progress;
     private String authkey;
     private Gson gson;
@@ -110,6 +117,8 @@ public class PlansActivity extends SuperActivity {
     private List<PlanType> planTypes = new ArrayList<>();
     private List<PurchasedPlan> purchasedPlans = new ArrayList<>();
     private String selectedDuration = "Half Yearly";
+    private List<String> planTyesList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,7 +153,6 @@ public class PlansActivity extends SuperActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         historyAdapter = new PlanHistoryAdapter(historyList, this);
         purchasedPlansAdapter = new MyPlansAdapter(purchasedPlans, this);
     }
@@ -153,6 +161,9 @@ public class PlansActivity extends SuperActivity {
         progress = new SpotsDialog(this, R.style.Custom);
         authkey = MyPreferences.getStringValue(getApplicationContext(), "authkey");
         gson = new Gson();
+
+        planTyesList.add("CCM");
+        planTyesList.add("E-CCM");
     }
 
     private void fetchAllPlansAndCoupons(String duration) {
@@ -211,6 +222,12 @@ public class PlansActivity extends SuperActivity {
     }
 
     private void setEventListener() {
+
+
+        tvPlanType.setOnClickListener(v -> {
+            showPlanTypeDialog();
+        });
+
         btnClearCoupon.setOnClickListener(v -> {
             selectedCouponCode = "";
             btnAddCoupon.setText("apply coupon");
@@ -329,6 +346,30 @@ public class PlansActivity extends SuperActivity {
             }
         });
 
+    }
+
+    private void showPlanTypeDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_list);
+        ListView listView = dialog.findViewById(R.id.listView);
+        TextView tvHeading = dialog.findViewById(R.id.tvHeading);
+        tvHeading.setText("Select Plan Type");
+        listView.setAdapter(new GeneriBaseAdapter<String>(planTyesList, R.layout.custom_spinner_adapter, new GeneriBaseAdapter.DailogListener() {
+            @Override
+            public TextView getHolder(View v, int pos) {
+                TextView textView = v.findViewById(R.id.itemName);
+                return textView;
+            }
+            @Override
+            public void setView(View v, int pos) {
+                ((TextView)v.getTag()).setText(planTyesList.get(pos));
+            }
+        }));
+        listView.setOnItemClickListener((parent, view, pos, id) -> {
+            tvPlanType.setText(planTyesList.get(pos));
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     private void purchasePlan() {

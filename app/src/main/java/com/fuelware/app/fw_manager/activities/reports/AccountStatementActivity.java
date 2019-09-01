@@ -3,7 +3,6 @@ package com.fuelware.app.fw_manager.activities.reports;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +46,7 @@ import com.google.gson.reflect.TypeToken;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ListHolder;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
@@ -373,6 +373,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
         tvCreditCustomer.setOnClickListener(v -> {
             DialogPlus dialog = DialogPlus.newDialog(this)
+                    .setContentHolder(new ListHolder())
                     .setAdapter(adapter)
                     .setContentHeight(MyUtils.dpToPx(250))
                     .setOnItemClickListener((dialog1, item, view, position) -> {

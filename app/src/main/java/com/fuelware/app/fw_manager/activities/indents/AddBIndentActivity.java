@@ -48,6 +48,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,7 @@ public class AddBIndentActivity extends SuperActivity {
     private TextWatcher litreTextWatcher;
     private LinearLayout linlayVehicleKms, linlayLitre, linlayAmount;
     private TextView etFuelingDate;
+    private Date fuelingDate;
 
     //    String[] outlet_products = new String[10];
     @Override
@@ -123,11 +125,24 @@ public class AddBIndentActivity extends SuperActivity {
         fetchCreditCustomers();
         fetchProducts();
 
-        setFuelingDateAsToday();
         linlayVehicleKms.setVisibility(View.GONE);
         linlayAmount.setVisibility(View.GONE);
         linlayLitre.setVisibility(View.GONE);
 
+//        setFuelingDateAsToday();
+//        if (!MyPreferences.getBoolValue(this, AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
+//            showMorningParamsPopup();
+//        }
+    }
+
+    private void showMorningParamsPopup() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Morning Parameters not updated")
+                .setMessage("Please update Morning Parametes to continue use of app.")
+                .setPositiveButton("OK", null)
+                .setCancelable(false)
+                .show();
     }
 
     private void findViewById() {
@@ -240,7 +255,7 @@ public class AddBIndentActivity extends SuperActivity {
 
     private void setEventListeners() {
 
-        btnAdd.setOnClickListener(view -> validateMindent());
+        btnAdd.setOnClickListener(view -> isValid());
 //        etIndentDate.setOnClickListener(view -> showDatePicker());
         etFuelingDate.setOnClickListener(view -> showDatePicker());
 
@@ -450,7 +465,7 @@ public class AddBIndentActivity extends SuperActivity {
     String user_id, indent_number,invoice_id,fill_date,vehicle_number;
     String fill_type = "";
 
-    private void validateMindent() {
+    private void isValid() {
 
         if (!MyUtils.hasInternetConnection(getApplicationContext())) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
@@ -475,11 +490,11 @@ public class AddBIndentActivity extends SuperActivity {
             }
 
             fill_date = etIndentDate.getText().toString().trim();
-            if (fill_date.isEmpty()) {
-                etIndentDate.setError("Select Date Of Indent");
-                etIndentDate.requestFocus();
-                return;
-            }
+//            if (fill_date.isEmpty()) {
+//                etIndentDate.setError("Select Date Of Indent");
+//                etIndentDate.requestFocus();
+//                return;
+//            }
 
             indent_number = etIndentNo.getText().toString().trim();
             if (indent_number.isEmpty()) {
@@ -497,6 +512,21 @@ public class AddBIndentActivity extends SuperActivity {
                 etVehicleNo.setError("Vehicle/Machine Number must contain at least 3 chars.");
                 etVehicleNo.requestFocus();
                 return;
+            }
+
+            String fuelingDate = etFuelingDate.getText().toString().trim();
+            boolean isFuelingDateToday = false;
+
+            if (fuelingDate.isEmpty()) {
+                etFuelingDate.setError("Select Fueling Date");
+                etFuelingDate.requestFocus();
+                return;
+            } else if (isTodaysFuelingDate(this.fuelingDate)) {
+                isFuelingDateToday = true;
+                if (!MyPreferences.getBoolValue(getApplicationContext(), AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
+                    showMorningParamsPopup();
+                    return;
+                }
             }
 
             if (spnProducts.getSelectedItem() == null) {
@@ -518,23 +548,16 @@ public class AddBIndentActivity extends SuperActivity {
                     meter_reading = 1;
                 } else if (spnFillType.getSelectedItem().toString().equalsIgnoreCase(Const.FULL_TANK_V)) {
                     fill_type = AppConst.full_tank;
-                    meter_reading =  MyUtils.parseLong(etVehicleKilometers.getText().toString());
-                    if (meter_reading <= 0) {
-                        etVehicleKilometers.setError("Enter [Km or Hr]");
-                        etVehicleKilometers.requestFocus();
-                        return;
-                    }
+//                    meter_reading =  MyUtils.parseLong(etVehicleKilometers.getText().toString());
+//                    if (meter_reading <= 0) {
+//                        etVehicleKilometers.setError("Enter [Km or Hr]");
+//                        etVehicleKilometers.requestFocus();
+//                        return;
+//                    }
                 } else { //litre
                     meter_reading = 1;
                     fill_type = AppConst.litre;
                 }
-            }
-
-            invoice_id = etInvoiceNo.getText().toString().trim();
-            if (invoice_id.isEmpty()) {
-                etInvoiceNo.setError("Enter Invoice Number");
-                etInvoiceNo.requestFocus();
-                return;
             }
 
             String litreString = etLiters.getText().toString().trim();
@@ -547,7 +570,7 @@ public class AddBIndentActivity extends SuperActivity {
                 etLiters.setError("Enter Liter/Kg *");
                 etLiters.requestFocus();
                 return;
-            }  else if (etLiters.isEnabled() && (amount < Const.AMOUNT_MIN || amount > Const.AMOUNT_MAX)) {
+            }  else if (isFuelingDateToday && etLiters.isEnabled() && (amount < Const.AMOUNT_MIN || amount > Const.AMOUNT_MAX)) {
                 etLiters.setError("Amount must be between 1 and 5,00,000");
                 etLiters.requestFocus();
                 return;
@@ -559,9 +582,16 @@ public class AddBIndentActivity extends SuperActivity {
                 etAmount.setError("Enter Amount *");
                 etAmount.requestFocus();
                 return;
-            } else if (etAmount.isEnabled() && (litre < Const.LITRE_MIN || litre > Const.LITRE_MAX)) {
+            } else if (isFuelingDateToday && etAmount.isEnabled() && (litre < Const.LITRE_MIN || litre > Const.LITRE_MAX)) {
                 etAmount.setError("Litre/Kg must be between 0.01 and 5000");
                 etAmount.requestFocus();
+                return;
+            }
+
+            invoice_id = etInvoiceNo.getText().toString().trim();
+            if (invoice_id.isEmpty()) {
+                etInvoiceNo.setError("Enter Invoice Number");
+                etInvoiceNo.requestFocus();
                 return;
             }
 
@@ -830,14 +860,13 @@ public class AddBIndentActivity extends SuperActivity {
         Integer month = calender.get(Calendar.MONTH);
         Integer day = calender.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, ondate, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, fuelingDateListener, year, month, day);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
 
         Calendar oldDate = Calendar.getInstance();
         oldDate.set(Calendar.DAY_OF_YEAR, calender.get(Calendar.DAY_OF_YEAR) - 3);
-        datePickerDialog.getDatePicker().setMinDate(oldDate.getTimeInMillis());
+//        datePickerDialog.getDatePicker().setMinDate(oldDate.getTimeInMillis());
         datePickerDialog.show();
-        date.setCallBack(fuelingDateListener);
     }
 
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
@@ -858,12 +887,16 @@ public class AddBIndentActivity extends SuperActivity {
             etIndentDate.setError(null);
             String dateString = year1 + "-" + month1 + "-" + day1;
             etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
-            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
+//            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
+//            isTodaysFuelingDate(etFuelingDate.getText().toString());
         }
     };
 
 
+
     DatePickerDialog.OnDateSetListener fuelingDateListener = new DatePickerDialog.OnDateSetListener() {
+
+
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
@@ -880,9 +913,30 @@ public class AddBIndentActivity extends SuperActivity {
 
             etFuelingDate.setError(null);
             String dateString = year1 + "-" + month1 + "-" + day1;
-            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
+            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_TIME_FORMAT, dateString));
+            etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.set(year, monthOfYear, dayOfMonth);
+            fuelingDate = selectedDate.getTime();
+            if (isTodaysFuelingDate(fuelingDate) &&
+                    !MyPreferences.getBoolValue(getApplicationContext(), AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
+                showMorningParamsPopup();
+            }
         }
     };
+
+    private boolean isTodaysFuelingDate(Date selectedDate) {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+
+        if (selectedDate.after(today.getTime())) {
+            return true;
+        }
+        return false;
+    }
+
 
 
     @Override

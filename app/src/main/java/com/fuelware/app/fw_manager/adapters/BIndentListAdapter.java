@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.activities.indents.BIndentListActivity;
 import com.fuelware.app.fw_manager.activities.indents.EditBIndentActivity;
 import com.fuelware.app.fw_manager.activities.indents.MiDetailsActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
@@ -98,7 +99,7 @@ public class BIndentListAdapter extends RecyclerView.Adapter<BIndentListAdapter.
             btnYes.setOnClickListener(w -> {
                 dialog.dismiss();
                 //((MindentListActivity)mContext).requestOTP(null, indentModel, holder.getAdapterPosition());
-                ((EditBIndentActivity.BIndentListActivity)mContext).deleteMIndent(indentModel, holder.getAdapterPosition(), "");
+                ((BIndentListActivity)mContext).deleteMIndent(indentModel, holder.getAdapterPosition(), "");
             });
             dialog.show();
         });
@@ -136,6 +137,7 @@ public class BIndentListAdapter extends RecyclerView.Adapter<BIndentListAdapter.
             this.imgEdit = itemView.findViewById(R.id.imgEdit);
             this.imgDelete = itemView.findViewById(R.id.imgClose);
             this.linlayEditDelete = itemView.findViewById(R.id.linlayEditDelete);
+//            imgEdit.setVisibility(View.GONE);
 
         }
     }

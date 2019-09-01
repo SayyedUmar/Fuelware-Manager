@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
@@ -80,6 +81,7 @@ public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.
         TextView tvInTime;
         @BindView(R.id.tvOutTime)
         TextView tvOutTime;
+
         @BindView(R.id.tvEindent)
         TextView tvEindent;
         @BindView(R.id.tvMindent)
@@ -87,9 +89,14 @@ public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.
         @BindView(R.id.tvTotal)
         TextView tvTotal;
 
+        @BindView(R.id.linlayBindent)
+        LinearLayout linlayBindent;
+
+
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            linlayBindent.setVisibility(View.GONE);
         }
     }
 

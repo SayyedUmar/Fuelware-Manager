@@ -70,7 +70,7 @@
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.indents.EditBIndentActivity$BIndentListActivity"
+            android:name=".activities.indents.BIndentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 
@@ -202,7 +202,11 @@
             android:theme="@style/ActionBarCustomTheme" />
 
         <activity
-            android:name=".activities.reports.BatchOutputReportActivity"
+            android:name=".activities.reports.CashierOutputActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarCustomTheme" />
+        <activity
+            android:name=".activities.reports.ManagerOutputActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarCustomTheme" />
 

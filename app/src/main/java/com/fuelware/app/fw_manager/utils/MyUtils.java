@@ -107,6 +107,16 @@ public class MyUtils {
         return "";
     }
 
+    public static Date stringToDate (String dateString, String dateFormat) {
+        SimpleDateFormat parser = new SimpleDateFormat(dateFormat);
+        try {
+            return parser.parse(dateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
     public static String dateToString (Date date, String expectedFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(expectedFormat);
         try {

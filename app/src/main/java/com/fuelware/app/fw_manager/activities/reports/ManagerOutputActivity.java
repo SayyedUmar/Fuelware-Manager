@@ -3,7 +3,6 @@ package com.fuelware.app.fw_manager.activities.reports;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,7 +12,6 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
@@ -45,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BatchOutputReportActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
+public class ManagerOutputActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -72,12 +70,12 @@ public class BatchOutputReportActivity extends SuperActivity implements SearchVi
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
-        setTitle("Batch Report");
+        setTitle("Manager Shift Report");
 
         initialise();
         setupRecycler();
         setEventListeners();
-        fetchAllBatchReports();
+        fetchAllShiftReports();
     }
 
     private void setupRecycler() {
@@ -104,7 +102,7 @@ public class BatchOutputReportActivity extends SuperActivity implements SearchVi
 
             if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
                 if (page != null && page.currentPage < page.totalPages) {
-                    fetchAllBatchReports();
+                    fetchAllShiftReports();
                 } else {
                     refreshLayout.setRefreshing(false);
                     MLog.showToast(getApplicationContext(), "No new data to display.");
@@ -113,7 +111,7 @@ public class BatchOutputReportActivity extends SuperActivity implements SearchVi
         });
     }
 
-    private void fetchAllBatchReports() {
+    private void fetchAllShiftReports() {
         if (!MyUtils.hasInternetConnection(getApplicationContext())) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;

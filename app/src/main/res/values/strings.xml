@@ -7,6 +7,12 @@
 
     </string-array>
 
+    <string-array name="planType_array">
+        <item>CCM</item>
+        <item>E-CCM</item>
+
+    </string-array>
+
     <string name="app_name">FW-Manager</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -10,8 +10,6 @@ import android.widget.LinearLayout;
 import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.activities.reports.AccountStatementActivity;
-import com.fuelware.app.fw_manager.activities.reports.BatchOutputReportActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +19,10 @@ public class ReportsActivity extends SuperActivity {
 
     @BindView(R.id.linlayAccount)
     LinearLayout linlayAccount;
-    @BindView(R.id.linlayBatchOutput)
-    LinearLayout linlayBatchOutput;
+    @BindView(R.id.linlayCashierOutput)
+    LinearLayout linlayCashierOutput;
+    @BindView(R.id.linlayManagerOuput)
+    LinearLayout linlayManagerOuput;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +48,8 @@ public class ReportsActivity extends SuperActivity {
 
     private void setEventListeners() {
         linlayAccount.setOnClickListener(v -> startActivity(new Intent(this, AccountStatementActivity.class)));
-        linlayBatchOutput.setOnClickListener(v -> startActivity(new Intent(this, BatchOutputReportActivity.class)));
+        linlayCashierOutput.setOnClickListener(v -> startActivity(new Intent(this, CashierOutputActivity.class)));
+        linlayManagerOuput.setOnClickListener(v -> startActivity(new Intent(this, ManagerOutputActivity.class)));
     }
 
     @Override
