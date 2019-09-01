@@ -14,6 +14,8 @@ public class PlanModel {
     private String gst;
     private String total; // price after gst
     private String final_price; // price after removing decimal
+    public boolean new_user;
+    public String registration_fees;
 
     public String getTotal() {
         return total;

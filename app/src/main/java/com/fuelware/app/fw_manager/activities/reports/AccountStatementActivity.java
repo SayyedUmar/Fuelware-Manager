@@ -28,6 +28,7 @@ import com.fuelware.app.fw_manager.BuildConfig;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
 import com.fuelware.app.fw_manager.adapters.AccounStatementAdapter;
+import com.fuelware.app.fw_manager.adapters.GeneriBaseAdapter;
 import com.fuelware.app.fw_manager.adapters.SpinnerAdapter;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.appconst.Const;
@@ -371,9 +372,20 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             }
         };
 
+//        GeneriBaseAdapter adapter2 = new GeneriBaseAdapter<CreditCustomer>(creditCustomerList, R.layout.row_credit_customer, new GeneriBaseAdapter.DailogListener() {
+//            @Override
+//            public Object getHolder(View v, int pos) {
+//                return null;
+//            }
+//
+//            @Override
+//            public void setView(View v, int pos) {
+//
+//            }
+//        });
+
         tvCreditCustomer.setOnClickListener(v -> {
             DialogPlus dialog = DialogPlus.newDialog(this)
-                    .setContentHolder(new ListHolder())
                     .setAdapter(adapter)
                     .setContentHeight(MyUtils.dpToPx(250))
                     .setOnItemClickListener((dialog1, item, view, position) -> {

@@ -576,8 +576,6 @@ public class AddBIndentActivity extends SuperActivity {
                 return;
             }
 
-
-
             if (etAmount.isEnabled() && (amountString.isEmpty() || amount < 1)) {
                 etAmount.setError("Enter Amount *");
                 etAmount.requestFocus();
@@ -589,11 +587,11 @@ public class AddBIndentActivity extends SuperActivity {
             }
 
             invoice_id = etInvoiceNo.getText().toString().trim();
-            if (invoice_id.isEmpty()) {
+            /*if (invoice_id.isEmpty()) {
                 etInvoiceNo.setError("Enter Invoice Number");
                 etInvoiceNo.requestFocus();
                 return;
-            }
+            }*/
 
             addIndent();
 

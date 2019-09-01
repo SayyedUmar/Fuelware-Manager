@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/general_et_background"
-                    android:text="Indent Type"
+                    android:text="CCM"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
                     android:focusable="false"
@@ -264,28 +264,36 @@
                     android:singleLine="true"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Registeration Fees"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
-
-                <TextView
-                    android:id="@+id/tvRegisterationFee"
+                <LinearLayout
+                    android:id="@+id/linlayRegistrationFees"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="Registeration Fees"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/text_black"
-                    android:singleLine="true"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Registeration Fees"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_black"
+                        android:fontFamily="@font/quicksand"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvRegisterationFee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/general_et_background"
+                        android:hint="Registeration Fees"
+                        android:padding="10dp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:focusable="false"
+                        android:textColor="@color/text_black"
+                        android:singleLine="true"
+                        />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

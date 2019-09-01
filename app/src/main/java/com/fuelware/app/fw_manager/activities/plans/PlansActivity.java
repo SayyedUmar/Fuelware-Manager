@@ -100,6 +100,10 @@ public class PlansActivity extends SuperActivity {
 
     @BindView(R.id.tvPlanType)
     TextView tvPlanType;
+    @BindView(R.id.tvRegisterationFee)
+    TextView tvRegisterationFee;
+    @BindView(R.id.linlayRegistrationFees)
+    LinearLayout linlayRegistrationFees;
 
     private AlertDialog progress;
     private String authkey;
@@ -116,7 +120,7 @@ public class PlansActivity extends SuperActivity {
     private List<PlanHistory> historyList = new ArrayList<>();
     private List<PlanType> planTypes = new ArrayList<>();
     private List<PurchasedPlan> purchasedPlans = new ArrayList<>();
-    private String selectedDuration = "Half Yearly";
+    private String selectedDuration = "Annually";
     private List<String> planTyesList = new ArrayList<>();
 
 
@@ -137,6 +141,7 @@ public class PlansActivity extends SuperActivity {
         linlayContainer.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         btnClearCoupon.setVisibility(View.GONE);
+        linlayRegistrationFees.setVisibility(View.GONE);
 
         //if ()
         String subscription_type = MyPreferences.getStringValue(getApplicationContext(), Const.SUBSCRIPTION_TYPE);
@@ -182,7 +187,8 @@ public class PlansActivity extends SuperActivity {
 
         Call<ResponseBody> call;
 
-        call = APIClient.getApiService().getPlans(authkey, duration,isSmsSubscribed);
+        String planType = tvPlanType.getText().toString().trim().toLowerCase();
+        call = APIClient.getApiService().getPlans(authkey, duration, planType, isSmsSubscribed);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -305,7 +311,10 @@ public class PlansActivity extends SuperActivity {
                             applyCoupon(selectedCouponCode);
                         }
                     }).create();
-            holder.addHeader(getPlanHeaderView());
+            String planType = tvPlanType.getText().toString().trim().toLowerCase();
+            if (planType.equalsIgnoreCase("e-ccm")) {
+                holder.addHeader(getPlanHeaderView());
+            }
             dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> {
                 dialog.dismiss();
                 isSmsSubscribed = false;
@@ -350,7 +359,7 @@ public class PlansActivity extends SuperActivity {
 
     private void showPlanTypeDialog() {
         Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_list);
+        dialog.setContentView(R.layout.dialog_list_custom);
         ListView listView = dialog.findViewById(R.id.listView);
         TextView tvHeading = dialog.findViewById(R.id.tvHeading);
         tvHeading.setText("Select Plan Type");
@@ -368,6 +377,11 @@ public class PlansActivity extends SuperActivity {
         listView.setOnItemClickListener((parent, view, pos, id) -> {
             tvPlanType.setText(planTyesList.get(pos));
             dialog.dismiss();
+            String planType = tvPlanType.getText().toString().trim().toLowerCase();
+            if (planType.equalsIgnoreCase("ccm")) {
+                selectedDuration = "Annually";
+            }
+            fetchAllPlansAndCoupons(selectedDuration);
         });
         dialog.show();
     }
@@ -496,6 +510,10 @@ public class PlansActivity extends SuperActivity {
                         String gst = data.getString("gst");
                         String total_price = data.getString("total_price");
                         String final_price = data.getString("final_price");
+                        if (selectedPlan.new_user) {
+                            linlayRegistrationFees.setVisibility(View.VISIBLE);
+                            tvRegisterationFee.setText(MyUtils.formatCurrency(selectedPlan.registration_fees));
+                        }
 
                         tvBasePrice.setText(MyUtils.formatCurrency(base_price));
                         tvDiscount.setText(MyUtils.formatCurrency(-discount));

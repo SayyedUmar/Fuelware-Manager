@@ -33,11 +33,11 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        Calendar time12 = get12AMTime();
+        Calendar time10 = get10PMTime();
         Calendar time6 = get6AMTime();
-        Calendar calendar = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
 //        boolean isUpdated = MyPreferences.getBoolValue(context, AppConst.IS_MORNING_PARAMETERS_UPDATED);
-        if (MyPreferences.getStringValue(context, "authkey").isEmpty() || !calendar.before(time6)) {
+        if (MyPreferences.getStringValue(context, "authkey").isEmpty() || now.after(time6) || now.before(time10)) {
             MLog.e(TAG, "Message receive but cant call api");
             return;
         }
@@ -65,10 +65,12 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
-    private Calendar get12AMTime() {
+    private Calendar get10PMTime() {
         Calendar cal = Calendar.getInstance();
-        // set calendar to TODAY 21:00:00.000
-        cal.set(Calendar.HOUR_OF_DAY, 0);
+        Calendar now = Calendar.getInstance();
+        if (now.get(Calendar.HOUR_OF_DAY) < 22)
+            cal.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH)-1);
+        cal.set(Calendar.HOUR_OF_DAY, 22);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);

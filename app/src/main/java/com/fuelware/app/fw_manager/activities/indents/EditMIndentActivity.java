@@ -328,14 +328,6 @@ public class EditMIndentActivity extends SuperActivity {
                 }
             }
 
-            if (etInvoiceNo.getText().toString().trim().isEmpty()) {
-                etInvoiceNo.setError("Enter Invoice Number");
-                etInvoiceNo.requestFocus();
-                return;
-            } else {
-                invoice_id = etInvoiceNo.getText().toString();
-            }
-
             String litreString = etLiters.getText().toString().trim();
             litre = MyUtils.parseDouble(litreString);
             if (etLiters.isEnabled() && (litreString.isEmpty() || litre <= 0)) {
@@ -352,6 +344,12 @@ public class EditMIndentActivity extends SuperActivity {
                 return;
             }
 
+            invoice_id = etInvoiceNo.getText().toString().trim();
+            /*if (invoice_id.isEmpty()) {
+                etInvoiceNo.setError("Enter Invoice Number");
+                etInvoiceNo.requestFocus();
+                return;
+            }*/
 //            requestOTP(null);
             updateMIndent("");
 

@@ -463,7 +463,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Customer Invoice No.*"
+                    android:text="Customer Invoice No."
                     android:fontFamily="@font/quicksand_medium"
                     android:textSize="10sp"
                     android:layout_marginTop="10dp"
@@ -477,7 +477,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:hint="Customer Invoice No.*"
+                    android:hint="Customer Invoice No."
                     android:maxLength="12"
                     android:background="@drawable/general_et_background"
                     android:singleLine="true"

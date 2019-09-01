@@ -252,6 +252,7 @@ public interface FuelwareAPI {
     @GET("outlet/common/payment-plans")
     Call<ResponseBody> getPlans(@Header("Authorization") String value,
                                 @Query("duration") String duration,
+                                @Query("category") String category,
                                 @Query("has_sms") boolean hasSms
 
     );
