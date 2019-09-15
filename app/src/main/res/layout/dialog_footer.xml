@@ -21,4 +21,32 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+   <!-- <Button
+        android:id="@+id/btnDone"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Done"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rec_round_green_button"
+        android:textColor="@color/white"
+        android:fontFamily="@font/quicksand_medium"
+
+        app:layout_constraintRight_toLeftOf="@+id/btnCancel"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btnAll"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="All"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rec_round_green_button"
+        android:textColor="@color/white"
+        android:fontFamily="@font/quicksand_medium"
+
+        app:layout_constraintRight_toLeftOf="@+id/btnDone"
+        app:layout_constraintTop_toTopOf="parent"
+        />-->
+
 </android.support.constraint.ConstraintLayout>

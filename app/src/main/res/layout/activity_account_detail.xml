@@ -202,7 +202,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".8"
-                            android:text="Batch ID"
+                            android:text="Batch ID/Shift ID"
                             android:fontFamily="@font/quicksand"
                             android:textSize="14sp" />
 

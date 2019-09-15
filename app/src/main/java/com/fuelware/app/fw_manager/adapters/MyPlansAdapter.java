@@ -54,7 +54,7 @@ public class MyPlansAdapter extends RecyclerView.Adapter<MyPlansAdapter.MyViewHo
         PurchasedPlan model = records.get(position);
         holder.tvStartDate.setText("Start: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.start_date));
         holder.tvEndDate.setText("End: " + MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, model.end_date));
-        holder.tvPrice.setText(MyUtils.formatCurrency(model.price));
+        holder.tvPrice.setText(MyUtils.formatCurrency(model.subscriptionDetail.plan.price));
 
         String text2 = "Duration: <font color=#64bc88><big>" +model.subscriptionDetail.plan.duration+" Days</big></font>";
         holder.tvDuration.setText(Html.fromHtml(text2), TextView.BufferType.SPANNABLE);

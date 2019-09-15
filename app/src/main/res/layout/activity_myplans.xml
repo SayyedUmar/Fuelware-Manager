@@ -81,6 +81,43 @@
                     style="@style/RadioButton" />
             </info.hoang8f.android.segmented.SegmentedGroup>
 
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/segment_group_plantype"
+                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                segmentedgroup:sc_border_width="2dp"
+                segmentedgroup:sc_corner_radius="20dp"
+                android:layout_marginBottom="10dp"
+                segmentedgroup:sc_checked_text_color="@color/white"
+                segmentedgroup:sc_tint_color="@color/green_light_color1"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioECCM"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="CCM"
+                    style="@style/RadioButton"
+                    android:checked="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioCCM"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="E-CCM"
+                    style="@style/RadioButton"
+                    />
+
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
             <LinearLayout
 
                 android:id="@+id/linlayContainer"
@@ -125,7 +162,7 @@
                 <TextView
                     android:id="@+id/tvPlanType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/general_et_background"
                     android:text="CCM"
                     android:padding="10dp"
@@ -133,6 +170,7 @@
                     android:focusable="false"
                     android:textColor="@color/gray_dark"
                     android:singleLine="true"
+                    android:drawableRight="@drawable/ic_dropdown"
                     />
 
 
@@ -296,6 +334,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -306,6 +345,7 @@
                     />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvGst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

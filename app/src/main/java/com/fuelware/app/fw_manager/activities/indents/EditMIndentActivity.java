@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -68,7 +70,7 @@ public class EditMIndentActivity extends SuperActivity {
     Button btnUpdate;
     String authkey;
     ProductPriceModel selectedProduct;
-    ArrayList<ProductPriceModel> productList =  new ArrayList<>();;
+    ArrayList<ProductPriceModel> productList =  new ArrayList<>();
 
     ArrayAdapter<CharSequence> adapter_filltype;
     AlertDialog progressDialog;
@@ -80,6 +82,8 @@ public class EditMIndentActivity extends SuperActivity {
     private ArrayAdapter producAdapter;
     private Cashier cashier;
     private IndentModel indent;
+    private TextView tvVehicleKilometers;
+    private LinearLayout linlayAmount, linlayLitre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,18 @@ public class EditMIndentActivity extends SuperActivity {
         initData();
         setEventListeners();
         fetchProducts();
+
+        hideKmOrHrs(true);
+    }
+
+    private void hideKmOrHrs(boolean shallHide) {
+        if (shallHide) {
+            tvVehicleKilometers.setVisibility(View.GONE);
+            etVehicleKilometers.setVisibility(View.GONE);
+        } else {
+            tvVehicleKilometers.setVisibility(View.VISIBLE);
+            etVehicleKilometers.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -137,6 +153,10 @@ public class EditMIndentActivity extends SuperActivity {
                         etLiters.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
                         etAmount.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMax(Const.AMOUNT_MIN, Const.AMOUNT_MAX)});
                         etLiters.setFilters(new InputFilter[] {});
+
+                        linlayAmount.setVisibility(View.VISIBLE);
+                        hideKmOrHrs(true);
+                        linlayLitre.setVisibility(View.GONE);
                     } else if (filltype.equalsIgnoreCase(Const.LITRE) ||
                             filltype.equalsIgnoreCase("litre/kg") ||
                             filltype.equalsIgnoreCase(Const.FULL_TANK_V)) {
@@ -147,6 +167,16 @@ public class EditMIndentActivity extends SuperActivity {
                         etAmount.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_rect_border_disabled));
                         etLiters.setFilters(new InputFilter[] {new MyUtils.InputFilterMinMaxForLitre(Const.LITRE_MIN, Const.LITRE_MAX)});
                         etAmount.setFilters(new InputFilter[] {});
+
+                        if (filltype.equalsIgnoreCase(Const.FULL_TANK_V)) {
+                            hideKmOrHrs(false);
+                            linlayAmount.setVisibility(View.GONE);
+                            linlayLitre.setVisibility(View.GONE);
+                        } else {
+                            linlayLitre.setVisibility(View.VISIBLE);
+                            hideKmOrHrs(true);
+                            linlayAmount.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
@@ -231,6 +261,7 @@ public class EditMIndentActivity extends SuperActivity {
         etIndentNo = findViewById(R.id.etIndentNo);
         etVehicleNo = findViewById(R.id.etVehicleNo);
         etVehicleKilometers = findViewById(R.id.etVehicleKilometers);
+        tvVehicleKilometers = findViewById(R.id.tvVehicleKilometers);
         etProductRate = findViewById(R.id.etProductRate);
         etProductRate.setEnabled(false);
         etInvoiceNo = findViewById(R.id.etInvoiceNo);
@@ -242,6 +273,10 @@ public class EditMIndentActivity extends SuperActivity {
         etDriverMobile = findViewById(R.id.etDriverMobile);
         btnUpdate = findViewById(R.id.btnAdd);
         btnUpdate.setText("Update");
+
+        linlayLitre = findViewById(R.id.linlayLitre);
+        linlayAmount = findViewById(R.id.linlayAmount);
+
     }
 
     long meter_reading;
@@ -250,11 +285,6 @@ public class EditMIndentActivity extends SuperActivity {
     String fill_type = "", product_id;
 
     private void validate () {
-        if (!MyUtils.hasInternetConnection(getApplicationContext())) {
-            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
-            return;
-        }
-
         try {
 
 
@@ -286,12 +316,12 @@ public class EditMIndentActivity extends SuperActivity {
                 return;
             }
 
-            meter_reading =  Long.parseLong(etVehicleKilometers.getText().toString());
-            if (meter_reading <= 0) {
-                etVehicleKilometers.setError("Enter [Km or Hr]");
-                etVehicleKilometers.requestFocus();
-                return;
-            }
+            meter_reading =  MyUtils.parseLong(etVehicleKilometers.getText().toString());
+//            if (meter_reading <= 0) {
+//                etVehicleKilometers.setError("Enter [Km or Hr]");
+//                etVehicleKilometers.requestFocus();
+//                return;
+//            }
 
 
             if (spnProducts.getSelectedItem() == null) {
@@ -420,6 +450,11 @@ public class EditMIndentActivity extends SuperActivity {
     }
 
     private void updateMIndent(String otp) {
+        if (!MyUtils.hasInternetConnection(getApplicationContext())) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
         btnUpdate.setEnabled(false);
 
         String driver = etDriverName.getText().toString();
@@ -465,7 +500,7 @@ public class EditMIndentActivity extends SuperActivity {
                                 showWarningDialog(msg, model, otp);
                             } else {
                                 String msg = "M Indent updated successfully.";
-                                MLog.showToast(getApplicationContext(), msg);
+                                MLog.showFancyToast(getApplicationContext(), msg, FancyToast.SUCCESS);
                                 indent = new Gson().fromJson(dataObject.toString(), IndentModel.class);
                                 Map map = new HashMap<Object, Object>();
                                 map.put(RxBus.EDIT_ACTION, indent);
@@ -518,7 +553,7 @@ public class EditMIndentActivity extends SuperActivity {
                                 etDriverMobile.setError(error);
                             }
                         } else if (jsonObject.has("message")) {
-                            MLog.showLongToast(getApplicationContext(), jsonObject.getString("message"));
+                            MLog.showFancyToast(getApplicationContext(), jsonObject.getString("message"), FancyToast.ERROR);
                         }
                     }
                 } catch (Exception e) {

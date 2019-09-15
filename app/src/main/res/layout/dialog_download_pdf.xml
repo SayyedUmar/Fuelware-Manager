@@ -12,7 +12,7 @@
         android:gravity="center"
         android:padding="15dp"
         android:background="@color/white"
-        android:text="Do you want PDF with header?"
+        android:text="Generate PDF/CSV"
         android:textColor="@color/text_black"
         android:textSize="20sp"
         android:textStyle="normal"
@@ -32,6 +32,43 @@
             android:background="@color/gray_light"/>
 
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Business Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                />
+
+            <EditText
+                android:id="@+id/etBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/general_et_background"
+                android:hint="Business Name *"
+                android:padding="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:imeActionId="112"
+                android:imeOptions="actionNext"
+                android:textSize="14sp"
+                />`
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -41,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
+
 
                 <RadioGroup
                     android:id="@+id/radioCallGroup1"
@@ -128,6 +166,17 @@
 
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/chkWithHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="With Header"
+            android:textSize="14sp"
+            android:fontFamily="@font/quicksand_medium"
+            android:checked="true"
+            />
+
         <TextView
             android:id="@+id/tvTransCount"
             android:layout_width="wrap_content"
@@ -170,7 +219,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_horizontal"
                 android:padding="16dp"
-                android:text="No"
+                android:text="Cancel"
                 android:textColor="@color/error_color"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -188,7 +237,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_horizontal"
                 android:padding="16dp"
-                android:text="Yes"
+                android:text="Download"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />

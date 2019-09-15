@@ -99,6 +99,8 @@ public class MainActivity extends SuperActivity
 
     @BindView(R.id.imgBindent)
     ImageView imgBindent;
+    @BindView(R.id.tvBindentCount)
+    TextView tvBindentCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +135,6 @@ public class MainActivity extends SuperActivity
 
         displayVersionInfo();
         setEventListeners();
-        getuserProfile();
         fetchProducts();
 //        fetchCashiers();
         fetchMorningPrice();
@@ -163,7 +164,7 @@ public class MainActivity extends SuperActivity
     @Override
     protected void onResume() {
         super.onResume();
-//        getuserProfile();
+        getuserProfile();
         fetchCashiers();
         checkForNewVersion();
         if (MyPreferences.getBoolValue(getApplicationContext(), Const.PLAN_EXPIRED)) {
@@ -380,6 +381,7 @@ public class MainActivity extends SuperActivity
                         try {
                             String outletName = data.getJSONObject("outlet").getJSONArray("data").getJSONObject(0).getString("name");
                             setTitle(outletName.toUpperCase());
+                            tvBindentCount.setText(data.getString("bindent_count"));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

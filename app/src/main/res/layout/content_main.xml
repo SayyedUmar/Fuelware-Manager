@@ -330,7 +330,7 @@
                         android:tint="@color/colorPrimaryDark"
                         />
 
-                    <!--  <TextView
+                      <TextView
                           android:id="@+id/tvBindentCount"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -345,7 +345,6 @@
                           android:textColor="@color/white"
                           android:background="@drawable/bg_rounded_rect_solid_gray"
                           />
-  -->
                 </RelativeLayout>
 
                 <TextView

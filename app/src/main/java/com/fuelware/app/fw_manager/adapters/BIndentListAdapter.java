@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.indents.BIndentListActivity;
+import com.fuelware.app.fw_manager.activities.indents.BiDetailsActivity;
 import com.fuelware.app.fw_manager.activities.indents.EditBIndentActivity;
 import com.fuelware.app.fw_manager.activities.indents.MiDetailsActivity;
 import com.fuelware.app.fw_manager.appconst.AppConst;
@@ -73,16 +74,17 @@ public class BIndentListAdapter extends RecyclerView.Adapter<BIndentListAdapter.
         }
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), MiDetailsActivity.class);
+            Intent intent = new Intent(view.getContext(), BiDetailsActivity.class);
             intent.putExtra("indent_id",""+indentModel.getId());
             intent.putExtra("indent_model", indentModel);
             intent.putExtra(RxBus.POSITION, holder.getAdapterPosition());
             view.getContext().startActivity(intent);
         });
 
+        holder.tvCustomerNameLabel.setText("Fueling Date");
         holder.tvCustomerName.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, indentModel.getFill_date()));
         holder.tvApprove.setVisibility(View.GONE);
-        holder.linlayEditDelete.setVisibility(View.VISIBLE);
+        holder.imgEdit.setVisibility(View.GONE);
 
 
         holder.imgDelete.setOnClickListener(view -> {
@@ -123,9 +125,11 @@ public class BIndentListAdapter extends RecyclerView.Adapter<BIndentListAdapter.
         RelativeLayout rellayBlackList;
         ImageView imgEdit, imgDelete;
         LinearLayout linlayEditDelete;
+        TextView tvCustomerNameLabel;
         public MyViewHolder(View itemView) {
             super(itemView);
             this.tvBusinessName = itemView.findViewById(R.id.etBusinessName);
+            this.tvCustomerNameLabel = itemView.findViewById(R.id.tvCustomerNameLabel);
             this.tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
             this.tvIndentNumber = itemView.findViewById(R.id.tvReceiptNo);
             this.tvVehicleNumber = itemView.findViewById(R.id.tvVehicleNumber);

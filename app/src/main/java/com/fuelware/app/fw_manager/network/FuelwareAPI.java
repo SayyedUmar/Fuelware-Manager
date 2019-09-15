@@ -198,6 +198,7 @@ public interface FuelwareAPI {
                                               @Query("search") String searchText,
                                               @Query("file") String fileType,
                                               @Query("file-header") boolean header,
+                                              @Query("business") String business,
                                               @Body AccountStatementActivity.DebitReportData param
     );
 
@@ -233,7 +234,8 @@ public interface FuelwareAPI {
                                                    @Query("debit") boolean debit,
                                                    @Query("file-header") boolean header,
                                                    @Query("sort_order") String sortOder,
-                                                   @Query("search") String searchText
+                                                   @Query("search") String searchText,
+                                                   @Query("business") String business
     );
     /*Call<ResponseBody> generateAccountStatementPDF(@Header("Authorization") String value,
                                                    @Query("date_from") String date_from,
@@ -263,7 +265,7 @@ public interface FuelwareAPI {
 
     );
 
-    @GET("outlet/common/active-plan")
+    @GET("outlet/common/active-plan/v2")
     Call<ResponseBody> getPurchasedPlans(@Header("Authorization") String value);
 
     @POST("outlet/common/apply-coupon")
@@ -305,9 +307,14 @@ public interface FuelwareAPI {
 
 
     @GET("outlet/batch-report")
-    Call<ResponseBody> getBatchReport(@Header("Authorization") String authkey,
-                                      @Query("page") long page
+    Call<ResponseBody> getCashierBatchReport(@Header("Authorization") String authkey,
+                                             @Query("page") long page
                                       );
+
+    @GET("outlet/manager/report/bindent-report")
+    Call<ResponseBody> getManagerShiftReport(@Header("Authorization") String authkey,
+                                      @Query("page") long page
+    );
 
     @POST("android-version")
     Call<ResponseBody> checkForNewVersion(@Header("Authorization") String value,

@@ -123,8 +123,14 @@ dependencies {
     implementation project(path: ':dialogplus1')
 //  implementation project(path: ':stickyswitch')
 
+    //fancy toast message
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
+
     // htmltextview
     implementation 'org.sufficientlysecure:html-textview:3.6'
+
+    //android tab slider
+//    implementation 'com.github.addisonelliott:SegmentedButton:3.1.5'
 
     implementation ('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;

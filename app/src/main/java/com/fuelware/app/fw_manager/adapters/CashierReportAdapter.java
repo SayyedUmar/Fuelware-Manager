@@ -20,13 +20,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.MyViewHolder> {
+public class CashierReportAdapter extends RecyclerView.Adapter<CashierReportAdapter.MyViewHolder> {
 
     private List<BatchReport> records = new ArrayList<>();
     private List<BatchReport> origialRecords ;
     private Context mContext;
 
-    public BatchReportAdapter(List<BatchReport> records, Context mContext) {
+    public CashierReportAdapter(List<BatchReport> records, Context mContext) {
         this.origialRecords = records;
         this.mContext = mContext;
         this.records.addAll(records);
@@ -40,17 +40,18 @@ public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.
 
     @NonNull
     @Override
-    public BatchReportAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CashierReportAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_batch_report, parent, false);
+                .inflate(R.layout.row_cashier_report, parent, false);
 
-        return new BatchReportAdapter.MyViewHolder(view);
+        return new CashierReportAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BatchReportAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CashierReportAdapter.MyViewHolder holder, int position) {
 
         position = holder.getAdapterPosition();
+        holder.tvSerailNumber.setText((position+1)+"");
         final BatchReport model = records.get(position);
         holder.tvBatchID.setText(model.batch_number.trim());
         holder.tvCashierName.setText(model.user.data.first_name+" "+model.user.data.last_name);
@@ -72,6 +73,9 @@ public class BatchReportAdapter extends RecyclerView.Adapter<BatchReportAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tvSerailNumber)
+        TextView tvSerailNumber;
 
         @BindView(R.id.tvBatchID)
         TextView tvBatchID;

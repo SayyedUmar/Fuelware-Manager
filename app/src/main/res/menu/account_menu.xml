@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.android.rivchat.MainActivity">
+
     <item
+        android:visible="false"
         android:id="@+id/menu_download_pdf"
         android:orderInCategory="200"
         android:title="Searchalert"
@@ -55,6 +57,7 @@
     </item>
 
     <item
+        android:visible="false"
         android:id="@+id/action_calendar"
         android:orderInCategory="201"
         android:title="filter"

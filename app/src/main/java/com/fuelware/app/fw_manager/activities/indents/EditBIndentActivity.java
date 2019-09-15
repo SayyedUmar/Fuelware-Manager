@@ -257,11 +257,6 @@ public class EditBIndentActivity extends SuperActivity {
     String fill_type = "", product_id;
 
     private void validate () {
-        if (!MyUtils.hasInternetConnection(getApplicationContext())) {
-            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
-            return;
-        }
-
         try {
 
 
@@ -421,6 +416,11 @@ public class EditBIndentActivity extends SuperActivity {
     }*/
 
     private void updateMIndent(String otp) {
+        if (!MyUtils.hasInternetConnection(getApplicationContext())) {
+            MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
+            return;
+        }
+
         btnUpdate.setEnabled(false);
 
         String driver = etDriverName.getText().toString();

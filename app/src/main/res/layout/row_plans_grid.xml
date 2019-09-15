@@ -94,6 +94,7 @@
                 android:background="@drawable/bg_rect_corner_orange"
                 />
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

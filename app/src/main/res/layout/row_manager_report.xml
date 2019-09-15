@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linLayoutvehicleadd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="0dp"
+    android:paddingLeft="0dp"
+    android:paddingBottom="10dp"
+    android:paddingRight="0dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/card_background"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true">
+
+    <include layout="@layout/layout_serial_number" />
+
+    <LinearLayout
+        android:id="@+id/transactions_cardreferance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSerailNumber"
+        android:orientation="horizontal"
+        >
+
+
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="15dp"
+            android:layout_weight="3"
+            android:paddingLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shift ID"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="7sp"
+                />
+
+            <TextView
+                android:id="@+id/tvBatchID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="JUN-A15-ROHIT-0017"
+                android:textSize="12sp"
+                android:textColor="@color/blue_light"
+                />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Umar Sayyed"
+                android:layout_marginBottom="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/violet"
+                />
+
+            <TextView
+                android:id="@+id/tvVehicleNumberLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login Time"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="8sp"
+                />
+
+            <TextView
+                android:id="@+id/tvInTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MH 787878"
+                android:layout_marginBottom="10dp"
+                android:textSize="14sp"
+                android:textColor="@color/violet"
+                />
+
+            <TextView
+                android:id="@+id/tvFuelingDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout Time"
+                android:fontFamily="@font/quicksand_medium"
+                android:textSize="8sp"
+                />
+
+            <TextView
+                android:id="@+id/tvOutTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="19 NOV 2018"
+                android:textSize="14sp"
+                android:textColor="@color/violet"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/linlayEindent"
+                android:paddingTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="E-Indent"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/light_black2"
+                    />
+
+                <TextView
+                    android:id="@+id/tvEindent"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="$ 0.0"
+                    android:textSize="14sp"
+                    android:textColor="@color/light_black2"
+                    android:fontFamily="@font/quicksand_medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:layout_below="@+id/linlayEindent"
+                android:id="@+id/linlayMindent"
+                android:paddingTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="M-Indent"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/light_black2"
+                    />
+
+                <TextView
+                    android:id="@+id/tvMindent"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="$ 0.0"
+                    android:textSize="14sp"
+                    android:textColor="@color/light_black2"
+                    android:fontFamily="@font/quicksand_medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:layout_below="@+id/linlayMindent"
+                android:id="@+id/linlayBindent"
+                android:paddingTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Debit"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/light_black2"
+                    />
+
+                <TextView
+                    android:id="@+id/tvBindent"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="$ 0.0"
+                    android:textSize="14sp"
+                    android:textColor="@color/light_black2"
+                    android:fontFamily="@font/quicksand_medium"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:id="@+id/linlayTotal"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="B-Indent"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textColor="@color/light_black2"
+                    />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="$ 0.0"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_black2"
+                    android:fontFamily="@font/quicksand_medium"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

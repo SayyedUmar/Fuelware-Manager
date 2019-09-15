@@ -1,10 +1,12 @@
 package com.fuelware.app.fw_manager.adapters;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.reports.AccountDetailActivity;
+import com.fuelware.app.fw_manager.activities.reports.AccountStatementActivity;
 import com.fuelware.app.fw_manager.models.AccountModel;
+import com.fuelware.app.fw_manager.models.CreditCustomer;
+import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
 import com.fuelware.app.fw_manager.utils.TouchImageView;
 
 import java.util.ArrayList;
@@ -56,7 +61,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
 
         TextView vehicleno_tx,indentno_tx,date_tx,debit_tx,credit_tx,balance_tx, tvSerailNumber;
         TextView tvVehicleNumberLabel, tvIndentNumberLabel, tvFuelingDateLabel;
-        ImageView imgAttach;
+        ImageView imgAttach, imgRemark;
         public MyViewHolder(View itemView) {
             super(itemView);
             this.vehicleno_tx = itemView.findViewById(R.id.txn_vehicleno);
@@ -71,6 +76,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
             this.tvFuelingDateLabel = itemView.findViewById(R.id.tvFuelingDateLabel);
             this.tvVehicleNumberLabel = itemView.findViewById(R.id.tvVehicleNumberLabel);
             this.imgAttach = itemView.findViewById(R.id.imgAttach);
+            this.imgRemark = itemView.findViewById(R.id.imgRemark);
         }
     }
 
@@ -94,6 +100,7 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
     @Override
     public void onBindViewHolder(final AccounStatementAdapter.MyViewHolder holder, int listPosition) {
         listPosition = holder.getAdapterPosition();
+        int finalListPosition = listPosition;
         AccountModel model = filteredList.get(listPosition);
 
         holder.vehicleno_tx.setText(model.getVehicleNum().toUpperCase());
@@ -108,29 +115,46 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
             holder.tvIndentNumberLabel.setText("Receipt Number");
             holder.indentno_tx.setText(model.getReceipt_number());
             holder.tvFuelingDateLabel.setText("Receipt Date");
+
+            holder.imgAttach.setVisibility(View.GONE);
+            holder.imgRemark.setVisibility(View.VISIBLE);
+            holder.imgRemark.setOnClickListener(v -> {
+                showRemarkPopup(v, model, finalListPosition);
+            });
         } else {
             holder.credit_tx.setText("0.0");
             holder.debit_tx.setText(model.getAmount());
-
+            String firstLetter = model.indent_type.toUpperCase().substring(0, 1);
             holder.tvIndentNumberLabel.setText("Indent Number");
-            holder.indentno_tx.setText(model.getIndentNum());
+            holder.indentno_tx.setText(Html.fromHtml("(<font color=#008577><b>"+firstLetter+"</b></font>) "+model.getIndentNum()));
             holder.tvFuelingDateLabel.setText("Indent Date");
+
+            holder.imgRemark.setVisibility(View.GONE);
+            if (model.snap_bill_url != null && !model.snap_bill_url.isEmpty()) {
+                holder.imgAttach.setVisibility(View.VISIBLE);
+            } else {
+                holder.imgAttach.setVisibility(View.GONE);
+            }
+            holder.imgAttach.setOnClickListener(v -> {
+                showFullPreviewPopup(v, model, finalListPosition);
+            });
         }
 
         String balance = model.getBalance();
-        /*  String final_balance=balance.substring(0,1);*/
-        //--------------math.max returns the max value of two arguments -------------//
-        if (balance.length() > 2 && balance.substring(0,2).equalsIgnoreCase("Dr")){
-            holder.balance_tx.setText(model.getBalance());
-            holder.balance_tx.setTextColor(Color.parseColor("#f5695e"));
+        TransactionTypeEnum typeEnum = ((AccountStatementActivity)mContext).typeEnum;
+        List<CreditCustomer> list = new ArrayList(((AccountStatementActivity)mContext).selectedCustomers.values());
+        if (typeEnum == TransactionTypeEnum.All && list.size() == 1) {
+            if (balance.length() > 2 && balance.substring(0,2).equalsIgnoreCase("Dr")){
+                holder.balance_tx.setText(model.getBalance());
+                holder.balance_tx.setTextColor(Color.parseColor("#f5695e"));
+            } else {
+                holder.balance_tx.setText(model.getBalance());
+                holder.balance_tx.setTextColor(Color.parseColor("#4CAF50"));
+            }
         } else {
-//            holder.tvIndentNumberLabel.setText("");
-//            holder.tvVehicleNumberLabel.setText("");
-//            holder.tvFuelingDateLabel.setText("");
-
-            holder.balance_tx.setText(model.getBalance());
-            holder.balance_tx.setTextColor(Color.parseColor("#4CAF50"));
+            holder.balance_tx.setText("NA");
         }
+
         holder.itemView.setOnClickListener(v -> {
             //Intent intent = new Intent(v.getContext(), TransactionDetailActivity.class);
             Intent intent = new Intent(v.getContext(), AccountDetailActivity.class);
@@ -138,18 +162,15 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
             v.getContext().startActivity(intent);
         });
 
+    }
 
-        if (model.snap_bill_url != null && !model.snap_bill_url.isEmpty()) {
-            holder.imgAttach.setVisibility(View.VISIBLE);
-        } else {
-            holder.imgAttach.setVisibility(View.GONE);
-        }
-
-        int finalListPosition = listPosition;
-        holder.imgAttach.setOnClickListener(v -> {
-            showFullPreviewPopup(v, model, finalListPosition);
-        });
-
+    private void showRemarkPopup(View v, AccountModel model, int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setTitle("Remark")
+                .setMessage(model.remark)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .setCancelable(false)
+                .show();
     }
 
     @Override

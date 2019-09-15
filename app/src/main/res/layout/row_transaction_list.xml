@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linLayoutvehicleadd"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,8 +15,7 @@
     android:layout_marginRight="5dp"
     android:background="@drawable/card_background"
     android:foreground="?attr/selectableItemBackground"
-    android:clickable="true"
-    >
+    android:clickable="true">
 
     <include layout="@layout/layout_serial_number" />
 
@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSerailNumber"
+        app:layout_constraintTop_toBottomOf="@+id/tvSerailNumber"
         android:orientation="horizontal"
         >
 
@@ -128,6 +129,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/txn_balance"
                 android:layout_width="match_parent"
@@ -141,17 +143,38 @@
 
     <ImageView
         android:id="@+id/imgAttach"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_attach"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         android:layout_marginRight="10dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingTop="2dp"
+        android:paddingRight="10dp"
         android:paddingBottom="2dp"
-        android:tint="@color/red_dark"
-        />
+        android:src="@drawable/ic_attach"
+        android:tint="@color/red_dark" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imgRemark"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="2dp"
+        android:src="@drawable/ic_textmsg"
+        android:tint="@color/red_dark" />
+
+</android.support.constraint.ConstraintLayout>

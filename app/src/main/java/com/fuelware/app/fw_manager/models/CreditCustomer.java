@@ -81,4 +81,7 @@ public class CreditCustomer {
     public void setHas_blacklisted(boolean has_blacklisted) {
         this.has_blacklisted = has_blacklisted;
     }
+
+
+    public transient boolean isChecked;
 }

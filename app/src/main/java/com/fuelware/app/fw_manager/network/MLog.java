@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.fuelware.app.fw_manager.BuildConfig;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class MLog {
 
@@ -41,5 +42,9 @@ public class MLog {
             Log.w(key, val);
     }
 
+
+    public static void showFancyToast(Context context, String msg, int type) {
+        FancyToast.makeText(context, msg, FancyToast.LENGTH_LONG, type,false).show();
+    }
 
 }

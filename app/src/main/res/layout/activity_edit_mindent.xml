@@ -228,33 +228,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[Km or Hr]*"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="10sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    />
-
-                <EditText
-                    android:id="@+id/etVehicleKilometers"
-                    android:digits="@string/I_SET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="[Km or Hr]*"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:background="@drawable/general_et_background"
-                    android:singleLine="true"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:padding="8dp"
-                    android:textSize="14sp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Product Type*"
                     android:fontFamily="@font/quicksand_medium"
                     android:textSize="10sp"
@@ -451,6 +424,34 @@
                     android:singleLine="true"
                     android:padding="10dp"
                     android:fontFamily="@font/quicksand_medium"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvVehicleKilometers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[Km or Hr]*"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etVehicleKilometers"
+                    android:digits="@string/I_SET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="[Km or Hr]*"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:background="@drawable/general_et_background"
+                    android:singleLine="true"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:padding="8dp"
                     android:textSize="14sp"
                     />
 

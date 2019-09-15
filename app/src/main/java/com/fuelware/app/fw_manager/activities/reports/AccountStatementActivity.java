@@ -1,5 +1,7 @@
 package com.fuelware.app.fw_manager.activities.reports;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -17,11 +19,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.BuildConfig;
@@ -48,6 +54,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ListHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
@@ -62,9 +69,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,8 +103,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     RapidFloatingActionButton rfaBtn;
     @BindView(R.id.refresh_layout)
     SwipyRefreshLayout refresh_layout;
-    @BindView(R.id.tvClosingBalance)
-    TextView tvClosingBalance;
+    @BindView(R.id.tvClosingBal)
+    TextView tvClosingBal;
 
     private AlertDialog progress;
     private Gson gson;
@@ -104,11 +114,12 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private String firstDateString = "";
     private String secondDateString = "";
-    private TransactionTypeEnum typeEnum = TransactionTypeEnum.All;
+    public TransactionTypeEnum typeEnum = TransactionTypeEnum.All;
     private Calendar firstDate, secondDate;
     private List<AccountModel> records = new ArrayList<>();
     private List<CreditCustomer> creditCustomerList = new ArrayList<>();
-    private CreditCustomer selectedCustomer;
+//    public CreditCustomer selectedCustomer;
+    public Map<String, CreditCustomer> selectedCustomers = new HashMap();
     private String file_type = "pdf";
 
     private Pagination pagination = new Pagination();
@@ -138,15 +149,32 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         setupRecyclerView();
         setEventListeners();
         setupFloatButton();
-        fetchTransactions();
+
         fetchCreditCustomers();
 
-        tvClosingBalance.setVisibility(View.GONE);
+        tvClosingBal.setVisibility(View.GONE);
+        applyOneMonthDefaultDateFilter();
+        fetchTransactions();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(progress != null)
+            progress.dismiss();
+        super.onDestroy();
+    }
+
+    private void applyOneMonthDefaultDateFilter() {
+        secondDate = Calendar.getInstance();
+        firstDate = Calendar.getInstance();
+        firstDate.set(Calendar.MONTH, secondDate.get(Calendar.MONTH)-1);
+        firstDateString = MyUtils.dateToString(firstDate.getTime(), AppConst.SERVER_DATE_FORMAT);
+        secondDateString = MyUtils.dateToString(secondDate.getTime(), AppConst.SERVER_DATE_FORMAT);
     }
 
     private void setupFloatButton() {
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("Download PDF")
+                .setLabel("Download PDF/CSV")
                 .setResId(R.drawable.ic_download_arrow)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
@@ -271,7 +299,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             case Debit:
                 debit = true;
                 credit = false;
-                if (!firstDateString.isEmpty() && !secondDateString.isEmpty() && selectedCustomer != null) {
+                if (!firstDateString.isEmpty() && !secondDateString.isEmpty() && selectedCustomers.size() > 0) {
                     if (items.indexOf(reportTypeItem) == -1) {
                         items.add(reportTypeItem);
                         rfabHelper.build();
@@ -287,11 +315,17 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             sortOder = "asc";
         }
 
-        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+//        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        StringBuilder customerID = new StringBuilder();
+        for (Map.Entry<String, CreditCustomer> entry : selectedCustomers.entrySet()) {
+            customerID.append(entry.getKey()+",");
+        }
+
+
         long pageNumber = pagination != null ? pagination.currentPage+1 : 0;
 
         Call<ResponseBody> responce_outlets = APIClient.getApiService().fetchTransactions(
-                authkey, customerID,
+                authkey, customerID.toString(),
                 firstDateString, secondDateString,
                 credit, debit, sortOder, pageNumber, per_page_count, searchText);
         responce_outlets.enqueue(new Callback<ResponseBody>() {
@@ -311,6 +345,22 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                         records.addAll(gson.fromJson(jsonArray.toString(), type));
                         adapter.refresh();
                         showTitle();
+                        switch (typeEnum) {
+                            case All:
+                                tvClosingBal.setText("Balance: "+ dataObj.getString("formatted_outstanding_balance"));
+                                slideUp(tvClosingBal);
+                                break;
+
+                            case Debit:
+                                tvClosingBal.setText("Net Payable: "+ dataObj.getString("formatted_debit_amount"));
+                                slideUp(tvClosingBal);
+                                break;
+
+                            case Credit:
+                                tvClosingBal.setText("Net Receivable: "+ dataObj.getString("formatted_debit_amount"));
+                                slideUp(tvClosingBal);
+                                break;
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -365,40 +415,65 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private void setEventListeners () {
 
-        SpinnerAdapter adapter = new SpinnerAdapter<CreditCustomer>(creditCustomerList) {
-            @Override
-            public void getView(int pos, SpinnerAdapter.MyHolder holder) {
-                holder.textView.setText(creditCustomerList.get(pos).getId()+" - "+creditCustomerList.get(pos).getBusiness());
-            }
-        };
+//        SpinnerAdapter adapter = new SpinnerAdapter<CreditCustomer>(creditCustomerList) {
+//            @Override
+//            public void getView(int pos, SpinnerAdapter.MyHolder holder) {
+//                holder.textView.setText(creditCustomerList.get(pos).getId()+" - "+creditCustomerList.get(pos).getBusiness());
+//            }
+//        };
 
-//        GeneriBaseAdapter adapter2 = new GeneriBaseAdapter<CreditCustomer>(creditCustomerList, R.layout.row_credit_customer, new GeneriBaseAdapter.DailogListener() {
-//            @Override
-//            public Object getHolder(View v, int pos) {
-//                return null;
-//            }
-//
-//            @Override
-//            public void setView(View v, int pos) {
-//
-//            }
-//        });
+        GeneriBaseAdapter adapter = new GeneriBaseAdapter<CreditCustomer>(creditCustomerList, R.layout.row_credit_customer, new GeneriBaseAdapter.DailogListener() {
+            @Override
+            public Object getHolder(View v, int pos) {
+                CreditCustomerRowHolder holder = new CreditCustomerRowHolder();
+                holder.tvName = v.findViewById(R.id.tvName);
+                holder.chkChecked = v.findViewById(R.id.chkChecked);
+                return holder;
+            }
+
+            @Override
+            public void setView(View v, int pos) {
+                CreditCustomerRowHolder holder = (CreditCustomerRowHolder) v.getTag();
+                CreditCustomer customer = creditCustomerList.get(pos);
+                holder.tvName.setText(customer.getId()+" - "+customer.getBusiness());
+                holder.chkChecked.setChecked(customer.isChecked);
+                holder.chkChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    customer.isChecked = isChecked;
+                    if (isChecked) {
+                        selectedCustomers.put(customer.getId(), customer);
+                    } else {
+                        selectedCustomers.remove(customer.getId());
+                    }
+
+                    if (selectedCustomers.size()  == 1) {
+                        CreditCustomer c = new ArrayList<>(selectedCustomers.values()).get(0);
+                        tvCreditCustomer.setText(c.getId()+" - "+c.getBusiness());
+                    } else if (selectedCustomers.size() == 0) {
+                        tvCreditCustomer.setText("All");
+                    } else {
+                        tvCreditCustomer.setText("Multiple");
+                    }
+                    pagination = new Pagination();
+                    fetchTransactions();
+                });
+            }
+        });
 
         tvCreditCustomer.setOnClickListener(v -> {
             DialogPlus dialog = DialogPlus.newDialog(this)
                     .setAdapter(adapter)
                     .setContentHeight(MyUtils.dpToPx(250))
                     .setOnItemClickListener((dialog1, item, view, position) -> {
-                        dialog1.dismiss();
-                        selectedCustomer = (CreditCustomer) item;
-                        tvCreditCustomer.setText(selectedCustomer.getId()+" - "+selectedCustomer.getBusiness());
-                        pagination = new Pagination();
-                        fetchTransactions();
+//                        dialog1.dismiss();
+//                        selectedCustomer = (CreditCustomer) item;
+//                        tvCreditCustomer.setText(selectedCustomer.getId()+" - "+selectedCustomer.getBusiness());
+//                        pagination = new Pagination();
+//                        fetchTransactions();
                     })
                     .setMargin(0, MyUtils.dpToPx(60), 0, 0)
                     .setCancelable(true)
                     .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                    .setFooter(R.layout.dialog_footer)
+                    .setHeader(R.layout.dialog_footer)
                     .create();
             dialog.show();
             dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialog.dismiss());
@@ -419,7 +494,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         });
     }
 
-    private void getAccountStatementPDFUrl(boolean withHeader, boolean sort_order_desc) {
+    private void getAccountStatementPDFUrl(boolean withHeader, boolean sort_order_desc, String businessName) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(getApplicationContext(), AppConst.NO_INTERNET_MSG);
             return;
@@ -447,15 +522,18 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             sortOder = "asc";
         }
 
-        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        StringBuilder customerID = new StringBuilder();
+        for (Map.Entry<String, CreditCustomer> entry : selectedCustomers.entrySet()) {
+            customerID.append(entry.getKey()+",");
+        }
 
         Call<ResponseBody> responce_outlets;
         if (file_type.equals("pdf")) {
-            responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, customerID,
-                    firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText);
+            responce_outlets = APIClient.getApiService().generateAccountStatementPDF(authkey, customerID.toString(),
+                    firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText, businessName);
         } else {
             String notification_token = MyPreferences.getStringValue(this, Const.NOTIFICATION_TOKEN);
-            String url = getCSVurl(authkey, customerID, firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText, notification_token);
+            String url = getCSVurl(authkey, customerID.toString(), firstDateString, secondDateString, credit, debit, withHeader, sortOder, searchText, notification_token);
             downloadCSV(url);
             return;
         }
@@ -479,7 +557,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                     try {
                         JSONObject errorObj = new JSONObject(response.errorBody().string());
                         if (errorObj.has("success") && errorObj.has("message") && !errorObj.getBoolean("success"))
-                            MLog.showToast(getApplicationContext(), errorObj.getString("message"));
+                            MLog.showFancyToast(getApplicationContext(), errorObj.getString("message"), FancyToast.ERROR);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -490,7 +568,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 progress.dismiss();
-                MLog.showToast(getApplicationContext(), t.getMessage());
+                MLog.showFancyToast(getApplicationContext(), t.getMessage(), FancyToast.ERROR);
             }
         });
     }
@@ -503,7 +581,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "account_transaction.pdf");
             DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             dm.enqueue(request);
-            MLog.showToast(getApplicationContext(), "Account Statement downloaded successfully.");
+            MLog.showFancyToast(getApplicationContext(), "Account Statement PDF downloaded successfully", FancyToast.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -517,7 +595,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "account_transaction.csv");
             DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             dm.enqueue(request);
-            MLog.showToast(getApplicationContext(), "Account Statement downloaded successfully.");
+            MLog.showFancyToast(getApplicationContext(), "Account Statement CSV downloaded successfully", FancyToast.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -580,20 +658,20 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 //startActivity(new Intent(this, SearchTransactionsActivity.class));
                 break;
 
-            case R.id.menu_download_pdf:
+           /* case R.id.menu_download_pdf:
                 if (selectedCustomer == null) {
                     MLog.showLongToast(getApplicationContext(), "Select Business Name first");
                 } else {
                     showDownloadPDFDialog();
                 }
-                break;
+                break;*/
 
             case R.id.action_filter:
                 break;
 
-            case R.id.action_calendar:
+           /* case R.id.action_calendar:
                 openDateFilterDialog();
-                break;
+                break;*/
 
             case R.id.action_all:
                 item.setChecked(true);
@@ -658,10 +736,11 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         final RadioButton radioBillInvoice = dialog.findViewById(R.id.radioBillInvoice);
         final RadioButton radioCsv = dialog.findViewById(R.id.radioCsv);
         final RadioButton radioPdf = dialog.findViewById(R.id.radioPdf);
-        final RadioButton radioHeader = dialog.findViewById(R.id.radioHeader);
-        final RadioButton radioWithoutHeader = dialog.findViewById(R.id.radioWithoutHeader);
+        final CheckBox chkWithHeader = dialog.findViewById(R.id.chkWithHeader);
         final RadioButton radioAsc = dialog.findViewById(R.id.radioAsc);
         final RadioButton radioDsc = dialog.findViewById(R.id.radioDsc);
+        final LinearLayout linlayBusinessName = dialog.findViewById(R.id.linlayBusinessName);
+        final EditText etBusinessNameTop = dialog.findViewById(R.id.etBusinessNameTop);
 
         final EditText etBillNumber = dialog.findViewById(R.id.etBillNumber);
         final EditText etNetPayable = dialog.findViewById(R.id.etNetPayable);
@@ -670,6 +749,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         final EditText etLateCharge = dialog.findViewById(R.id.etLateCharge);
         final EditText etSurplusCharge = dialog.findViewById(R.id.etSurplusCharge);
         final EditText etSurplusRemark = dialog.findViewById(R.id.etSurplusRemark);
+        final EditText etBusinessName = dialog.findViewById(R.id.etBusinessName);
 
         final TextView tvDownload = dialog.findViewById(R.id.tvDownload);
         final TextView tvCancel = dialog.findViewById(R.id.tvCancel);
@@ -690,21 +770,31 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                     .permission(Permission.Group.STORAGE)
                     .onGranted(permissions -> {
                         if (radioDebit.isChecked()) {
+                            String business = etBusinessNameTop.getText().toString().trim();
+                            if (business.isEmpty()) {
+                                MLog.showFancyToast(getApplicationContext(), "Enter Business Name", FancyToast.WARNING);
+                                return;
+                            }
                             typeEnum = TransactionTypeEnum.Debit;
-                            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), radioHeader.isChecked());
+                            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), chkWithHeader.isChecked(), business);
                             dialog.dismiss();
                         } else {
+                            String business = etBusinessName.getText().toString().trim();
+                            if (business.isEmpty()) {
+                                MLog.showFancyToast(getApplicationContext(), "Enter Business Name", FancyToast.WARNING);
+                                return;
+                            }
                             String billNumber = etBillNumber.getText().toString().trim();
                             String indentCharges = etIndentCharge.getText().toString().trim();
                             String lateCharges = etLateCharge.getText().toString().trim();
                             String surplusCharges = etSurplusCharge.getText().toString().trim();
                             String surplusRemarks = etSurplusRemark.getText().toString().trim();
                             DebitReportData data = new DebitReportData(billNumber, indentCharges, lateCharges, surplusCharges, surplusRemarks);
-                            fetchTransactionsPosts(data, dialog, radioHeader.isChecked());
+                            fetchTransactionsPosts(data, dialog, chkWithHeader.isChecked(), business);
                         }
                     })
                     .onDenied(permissions -> {
-                        MLog.showToast(v.getContext(), "Read/Write External Storage permission denied!");
+                        MLog.showFancyToast(v.getContext(), "Read/Write External Storage permission denied!", FancyToast.INFO);
                     })
                     .start();
 
@@ -713,18 +803,22 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         if (radioDebit.isChecked()) {
             tableContainer.setVisibility(View.GONE);
             linlayReportFormat.setVisibility(View.VISIBLE);
+            linlayBusinessName.setVisibility(View.VISIBLE);
         } else {
             linlayReportFormat.setVisibility(View.GONE);
             tableContainer.setVisibility(View.VISIBLE);
+            linlayBusinessName.setVisibility(View.GONE);
         }
 
         radioDebit.setOnCheckedChangeListener((compoundButton, checked) -> {
             if (checked) {
                 tableContainer.setVisibility(View.GONE);
                 linlayReportFormat.setVisibility(View.VISIBLE);
+                linlayBusinessName.setVisibility(View.VISIBLE);
             } else {
                 linlayReportFormat.setVisibility(View.GONE);
                 tableContainer.setVisibility(View.VISIBLE);
+                linlayBusinessName.setVisibility(View.GONE);
             }
         });
 
@@ -738,23 +832,37 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         final TextView tvTransCount = dialog.findViewById(R.id.tvTransCount);
         final RadioButton radioDsc = dialog.findViewById(R.id.radioDsc);
         final RadioButton radioPdf = dialog.findViewById(R.id.radioPdf);
+        final CheckBox chkWithHeader = dialog.findViewById(R.id.chkWithHeader);
+        final EditText etBusinessName = dialog.findViewById(R.id.etBusinessName);
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
         dialog.show();
 
+        if (selectedCustomers.size() == 1) {
+            etBusinessName.setFocusable(false);
+            etBusinessName.setText(selectedCustomers.values().iterator().next().getBusiness());
+        }
+
         tvTransCount.setText("Result: "+pagination.total+" transactions");
 
-        tvNo.setOnClickListener(view -> {
-            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false);
-            dialog.dismiss();
-        });
+        tvNo.setOnClickListener(view -> dialog.dismiss());
         tvYes.setOnClickListener(view -> {
-            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true);
-            dialog.dismiss();
+            String cc_name = etBusinessName.getText().toString().trim();
+            if (cc_name.isEmpty()) {
+                MLog.showFancyToast(this, "Businesss name is required", FancyToast.WARNING);
+                return;
+            }
+            if (chkWithHeader.isChecked()) {
+                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
+                dialog.dismiss();
+            } else {
+                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
+                dialog.dismiss();
+            }
         });
     }
 
-    private void fetchResult(boolean sortOrder, boolean pdfFile,  boolean withHeader) {
+    private void fetchResult(boolean sortOrder, boolean pdfFile,  boolean withHeader, String businessName) {
         if (sort_order_desc != sortOrder) {
             sort_order_desc = sortOrder;
             pagination = new Pagination();
@@ -765,7 +873,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             file_type = "csv";
         }
 
-        getAccountStatementPDFUrl(withHeader, sortOrder);
+        getAccountStatementPDFUrl(withHeader, sortOrder, businessName);
         fetchTransactions();
     }
 
@@ -809,8 +917,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             openDateFilterDialog();
         } else if (item.getLabel().equalsIgnoreCase("report type")) { // report type
             showReportTypeDialog();
-        } else if (item.getLabel().equalsIgnoreCase("download pdf")) { // pdf download
-            if (selectedCustomer == null) {
+        } else if (item.getLabel().equalsIgnoreCase("download pdf/csv")) { // pdf download
+            if (selectedCustomers.size() == 0) {
                 MLog.showLongToast(getApplicationContext(), "Select Business Name first");
             } else {
                 showDownloadPDFDialog();
@@ -832,7 +940,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
 
 
-    private void fetchTransactionsPosts(DebitReportData item, Dialog dialog, boolean withHeader) {
+    private void fetchTransactionsPosts(DebitReportData item, Dialog dialog, boolean withHeader, String business) {
         if (!MyUtils.hasInternetConnection(this)) {
             MLog.showToast(this, AppConst.NO_INTERNET_MSG);
             return;
@@ -860,13 +968,17 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             sortOder = "asc";
         }
 
-        String customerID = selectedCustomer != null ? selectedCustomer.getId() : "";
+        StringBuilder customerID = new StringBuilder();
+        for (Map.Entry<String, CreditCustomer> entry : selectedCustomers.entrySet()) {
+            customerID.append(entry.getKey()+",");
+        }
         long pageNumber = pagination != null ? pagination.currentPage+1 : 0;
 
         Call<ResponseBody> responce_outlets = APIClient.getApiService().fetchTransactionsPosts(
-                authkey, customerID,
+                authkey, customerID.toString(),
                 firstDateString, secondDateString,
-                credit, debit, sortOder, pageNumber, per_page_count, "", "pdf", withHeader, item);
+                credit, debit, sortOder, pageNumber, per_page_count, "",
+                "pdf", withHeader,  business, item);
         responce_outlets.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -916,6 +1028,33 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     }
 
 
+    public void slideUp(View view){
+//        view.setVisibility(View.VISIBLE);
+//        view.animate()
+//                .translationY(view.getHeight())
+//                .setDuration(1000);
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                view.getHeight(),  // fromYDelta
+                0);                // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    public void slideDown(View view){
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
     public static class DebitReportData {
         public String invoice_number;
         public String indent_charge;
@@ -931,4 +1070,11 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
             this.surplus_remark = surplus_remark;
         }
     }
+
+
+    static class CreditCustomerRowHolder {
+        TextView tvName;
+        CheckBox chkChecked;
+    }
+
 }

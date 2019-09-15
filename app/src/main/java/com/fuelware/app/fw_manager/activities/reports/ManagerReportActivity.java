@@ -15,7 +15,8 @@ import android.view.MenuItem;
 
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.adapters.BatchReportAdapter;
+import com.fuelware.app.fw_manager.adapters.CashierReportAdapter;
+import com.fuelware.app.fw_manager.adapters.ManagerReportAdapter;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.models.BatchReport;
 import com.fuelware.app.fw_manager.network.APIClient;
@@ -43,14 +44,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManagerOutputActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
+public class ManagerReportActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipyRefreshLayout refreshLayout;
 
-    BatchReportAdapter adapter;
+    ManagerReportAdapter adapter;
     private List<BatchReport> list = new ArrayList<>();
     private AlertDialog progress;
     private String authkey;
@@ -84,7 +85,7 @@ public class ManagerOutputActivity extends SuperActivity implements SearchView.O
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new BatchReportAdapter(list, this);
+        adapter = new ManagerReportAdapter(list, this);
         recyclerView.setAdapter(adapter);
         //recyclerView.addOnScrollListener(mAutoLoadEventDetector);
     }
@@ -119,7 +120,7 @@ public class ManagerOutputActivity extends SuperActivity implements SearchView.O
 
         progress.show();
         long pageNumber = page != null ? page.currentPage+1 : 0;
-        APIClient.getApiService().getBatchReport(authkey, pageNumber).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().getManagerShiftReport(authkey, pageNumber).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

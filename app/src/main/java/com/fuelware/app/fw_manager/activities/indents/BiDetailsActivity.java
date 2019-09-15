@@ -6,9 +6,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
+import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.appconst.Const;
 import com.fuelware.app.fw_manager.models.IndentModel;
 import com.fuelware.app.fw_manager.utils.MyPreferences;
@@ -17,14 +17,14 @@ import com.google.gson.Gson;
 
 import dmax.dialog.SpotsDialog;
 
-public class MiDetailsActivity extends SuperActivity {
+public class BiDetailsActivity extends SuperActivity {
 
     AlertDialog progressDialog;
     String mindent_id;
     String authkey;
     TextView tvBusinessName, tvCustomerID, tvCustomerName, tvMobileNumber, tvIndentDate, tvIndentNumber;
-    TextView tvVehicleNo, tvDriverName, tvDriverMobile, tvFillType, tvProduct;
-    TextView tvPrice, tvLitres, tvAmount, tvVehicleKms, tvInvoiceNo;
+    TextView tvVehicleNo, /*tvDriverName, tvDriverMobile,*/ tvFillType, tvProduct;
+    TextView tvPrice, tvLitres, tvAmount, /*tvVehicleKms,*/ tvInvoiceNo, tvFuelingDate;
     Button btnClose;
 
     String ei_fill_type,ei_liters,ei_amount,ei_rate;
@@ -34,15 +34,15 @@ public class MiDetailsActivity extends SuperActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mi_details);
+        setContentView(R.layout.activity_bi_details);
         setupBackNavigation(null);
 
-        setTitle("M-Indent Details");
+        setTitle("B-Indent Details");
 
         authkey = MyPreferences.getStringValue(this, "authkey");
         indentModel = (IndentModel) getIntent().getSerializableExtra("indent_model");
 
-        progressDialog = new SpotsDialog(MiDetailsActivity.this, R.style.Custom);
+        progressDialog = new SpotsDialog(BiDetailsActivity.this, R.style.Custom);
         mindent_id = getIntent().getStringExtra("indent_id");
         findViewById();
         setEventListeners();
@@ -59,15 +59,16 @@ public class MiDetailsActivity extends SuperActivity {
         tvIndentDate = findViewById(R.id.etIndentDate);
         tvIndentNumber = findViewById(R.id.tvReceiptNo);
         tvVehicleNo = findViewById(R.id.tvVehicleNo);
-        tvDriverName = findViewById(R.id.tvDriverName);
-        tvDriverMobile = findViewById(R.id.tvDriverMobile);
+//        tvDriverName = findViewById(R.id.tvDriverName);
+//        tvDriverMobile = findViewById(R.id.tvDriverMobile);
         tvFillType = findViewById(R.id.tvFillType);
         tvProduct = findViewById(R.id.tvProduct);
         tvPrice = findViewById(R.id.tvPrice);
         tvLitres = findViewById(R.id.tvLitres);
         tvAmount = findViewById(R.id.tvAmount);
-        tvVehicleKms = findViewById(R.id.tvVehicleKms);
+//        tvVehicleKms = findViewById(R.id.tvVehicleKms);
         tvInvoiceNo = findViewById(R.id.etInvoiceNo);
+        tvFuelingDate = findViewById(R.id.tvFuelingDate);
         btnClose = findViewById(R.id.btnClose);
     }
 
@@ -133,7 +134,9 @@ public class MiDetailsActivity extends SuperActivity {
         tvMobileNumber.setText(indentModel.getMobile());
         tvVehicleNo.setText(indentModel.getVehicle_number());
 
-        if (indentModel.getDriver() == null || indentModel.getDriver().isEmpty()) {
+        tvFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, indentModel.getFill_date()));
+
+        /*if (indentModel.getDriver() == null || indentModel.getDriver().isEmpty()) {
             tvDriverName.setText("-");
         } else {
             tvDriverName.setText(MyUtils.toTitleCase(indentModel.getDriver()));
@@ -142,7 +145,7 @@ public class MiDetailsActivity extends SuperActivity {
             tvDriverMobile.setText("-");
         } else {
             tvDriverMobile.setText(indentModel.getDriver_mobile());
-        }
+        }*/
         tvFillType.setText(MyUtils.toTitleCase(indentModel.getFill_type()));
         if (indentModel.getFill_type().toLowerCase().equalsIgnoreCase(Const.LITRE)) {
             tvFillType.setText("Litre/Kg");
@@ -159,7 +162,7 @@ public class MiDetailsActivity extends SuperActivity {
         ei_rate = indentModel.getPrice();
         ei_liters = indentModel.getLitre();
         ei_amount = indentModel.getAmount();
-        tvVehicleKms.setText(indentModel.getMeter_reading()+"");
+//        tvVehicleKms.setText(indentModel.getMeter_reading()+"");
         tvInvoiceNo.setText(indentModel.getInvoice_id());
     }
 

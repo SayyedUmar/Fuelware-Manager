@@ -48,8 +48,8 @@ public class ReportsActivity extends SuperActivity {
 
     private void setEventListeners() {
         linlayAccount.setOnClickListener(v -> startActivity(new Intent(this, AccountStatementActivity.class)));
-        linlayCashierOutput.setOnClickListener(v -> startActivity(new Intent(this, CashierOutputActivity.class)));
-        linlayManagerOuput.setOnClickListener(v -> startActivity(new Intent(this, ManagerOutputActivity.class)));
+        linlayCashierOutput.setOnClickListener(v -> startActivity(new Intent(this, CashierReportActivity.class)));
+        linlayManagerOuput.setOnClickListener(v -> startActivity(new Intent(this, ManagerReportActivity.class)));
     }
 
     @Override

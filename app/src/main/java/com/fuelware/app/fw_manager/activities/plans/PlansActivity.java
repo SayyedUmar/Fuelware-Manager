@@ -57,6 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dmax.dialog.SpotsDialog;
+import info.hoang8f.android.segmented.SegmentedGroup;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,12 +83,19 @@ public class PlansActivity extends SuperActivity {
     Button btnPay;
     @BindView(R.id.linlayContainer)
     LinearLayout linlayContainer;
+
     @BindView(R.id.radioPlans)
     RadioButton radioPlans;
     @BindView(R.id.radioMyPlans)
     RadioButton radioMyPlans;
     @BindView(R.id.radioHistory)
     RadioButton radioHistory;
+
+    @BindView(R.id.segment_group_plantype)
+    SegmentedGroup segment_group_plantype;
+    @BindView(R.id.radioCCM)
+    RadioButton radioCCM;
+
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
 
@@ -120,8 +128,11 @@ public class PlansActivity extends SuperActivity {
     private List<PlanHistory> historyList = new ArrayList<>();
     private List<PlanType> planTypes = new ArrayList<>();
     private List<PurchasedPlan> purchasedPlans = new ArrayList<>();
+    private List<PurchasedPlan> ecmPlans = new ArrayList<>();
+    private List<PurchasedPlan> ccmPlans = new ArrayList<>();
     private String selectedDuration = "Annually";
     private List<String> planTyesList = new ArrayList<>();
+    private static boolean isPlanType_CCM = true;
 
 
     @Override
@@ -244,6 +255,7 @@ public class PlansActivity extends SuperActivity {
         radioHistory.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 linlayContainer.setVisibility(View.GONE);
+                segment_group_plantype.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 fetchAllHistory();
                 recyclerView.setAdapter(historyAdapter);
@@ -254,8 +266,9 @@ public class PlansActivity extends SuperActivity {
             if (isChecked) {
                 linlayContainer.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                fetchPurchasedPlans();
+                segment_group_plantype.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(purchasedPlansAdapter);
+                fetchPurchasedPlans();
             }
         });
 
@@ -263,9 +276,21 @@ public class PlansActivity extends SuperActivity {
             if (isChecked) {
                 linlayContainer.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                segment_group_plantype.setVisibility(View.GONE);
             }
         });
 
+        radioCCM.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                purchasedPlans.clear();
+                purchasedPlans.addAll(ccmPlans);
+                purchasedPlansAdapter.refresh();
+            } else {
+                purchasedPlans.clear();
+                purchasedPlans.addAll(ecmPlans);
+                purchasedPlansAdapter.refresh();
+            }
+        });
 
         plansAdapter = new GridAdapter(planList, this);
         couponAdapter = new SpinnerAdapterNew<Coupon>(coupons) {
@@ -380,6 +405,10 @@ public class PlansActivity extends SuperActivity {
             String planType = tvPlanType.getText().toString().trim().toLowerCase();
             if (planType.equalsIgnoreCase("ccm")) {
                 selectedDuration = "Annually";
+                isPlanType_CCM = true;
+            } else {
+                isPlanType_CCM = false;
+                selectedDuration = "Half Yearly";
             }
             fetchAllPlansAndCoupons(selectedDuration);
         });
@@ -625,7 +654,11 @@ public class PlansActivity extends SuperActivity {
             PlanModel model = (PlanModel) o;
             PlanHolder holder = (PlanHolder) v.getTag();
             holder.tvPlanName.setText(model.getFormatted_plan_type()+"("+model.getPlan_name()+")");
-            holder.tvText2.setText(model.getIndents()+" Indents in "+MyUtils.formatCurrency(model.getPrice()));
+            if (isPlanType_CCM) {
+                holder.tvText2.setText(MyUtils.formatCurrency(model.getPrice()));
+            } else {
+                holder.tvText2.setText(model.getIndents()+" Indents in "+MyUtils.formatCurrency(model.getPrice()));
+            }
             holder.tvText3.setText(model.getDuration_description());
             holder.tvAmount.setText(MyUtils.formatCurrency(model.getFinal_price()));
             if (selectedPlan != null && selectedPlan.getId().equals(model.getId())) {
@@ -726,14 +759,25 @@ public class PlansActivity extends SuperActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        JSONArray array = jsonObject.getJSONArray("data");
-                        purchasedPlans.clear();
-                        for (int i = 0; i < array.length(); i++) {
-                            PurchasedPlan m = gson.fromJson(array.getJSONObject(i).toString(), PurchasedPlan.class);
+                        JSONObject res = new JSONObject(response.body().string());
+                        JSONObject data = res.getJSONObject("data");
+                        JSONArray ccm = data.getJSONArray("ccm");
+                        JSONArray ecm = data.getJSONArray("e_ccm");
+
+                        ccmPlans.clear();
+                        for (int i = 0; i < ccm.length(); i++) {
+                            PurchasedPlan m = gson.fromJson(ccm.getJSONObject(i).toString(), PurchasedPlan.class);
                             m.subscriptionDetail = gson.fromJson(m.subscription_detail, PurchasedPlan.SubscriptionDetail.class);
-                            purchasedPlans.add(m);
+                            ccmPlans.add(m);
                         }
+                        ecmPlans.clear();
+                        for (int i = 0; i < ecm.length(); i++) {
+                            PurchasedPlan m = gson.fromJson(ecm.getJSONObject(i).toString(), PurchasedPlan.class);
+                            m.subscriptionDetail = gson.fromJson(m.subscription_detail, PurchasedPlan.SubscriptionDetail.class);
+                            ecmPlans.add(m);
+                        }
+                        purchasedPlans.clear();
+                        purchasedPlans.addAll(ccmPlans);
                         purchasedPlansAdapter.refresh();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());

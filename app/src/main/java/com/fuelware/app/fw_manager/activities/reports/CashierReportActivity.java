@@ -3,7 +3,6 @@ package com.fuelware.app.fw_manager.activities.reports;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,11 +12,10 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.fuelware.app.fw_manager.R;
 import com.fuelware.app.fw_manager.activities.base.SuperActivity;
-import com.fuelware.app.fw_manager.adapters.BatchReportAdapter;
+import com.fuelware.app.fw_manager.adapters.CashierReportAdapter;
 import com.fuelware.app.fw_manager.appconst.AppConst;
 import com.fuelware.app.fw_manager.models.BatchReport;
 import com.fuelware.app.fw_manager.network.APIClient;
@@ -45,14 +43,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CashierOutputActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
+public class CashierReportActivity extends SuperActivity implements SearchView.OnQueryTextListener  {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipyRefreshLayout refreshLayout;
 
-    BatchReportAdapter adapter;
+    CashierReportAdapter adapter;
     private List<BatchReport> list = new ArrayList<>();
     private AlertDialog progress;
     private String authkey;
@@ -86,7 +84,7 @@ public class CashierOutputActivity extends SuperActivity implements SearchView.O
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new BatchReportAdapter(list, this);
+        adapter = new CashierReportAdapter(list, this);
         recyclerView.setAdapter(adapter);
         //recyclerView.addOnScrollListener(mAutoLoadEventDetector);
     }
@@ -121,7 +119,7 @@ public class CashierOutputActivity extends SuperActivity implements SearchView.O
 
         progress.show();
         long pageNumber = page != null ? page.currentPage+1 : 0;
-        APIClient.getApiService().getBatchReport(authkey, pageNumber).enqueue(new Callback<ResponseBody>() {
+        APIClient.getApiService().getCashierBatchReport(authkey, pageNumber).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

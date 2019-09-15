@@ -41,6 +41,7 @@ import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -570,21 +571,21 @@ public class AddBIndentActivity extends SuperActivity {
                 etLiters.setError("Enter Liter/Kg *");
                 etLiters.requestFocus();
                 return;
-            }  else if (isFuelingDateToday && etLiters.isEnabled() && (amount < Const.AMOUNT_MIN || amount > Const.AMOUNT_MAX)) {
+            } /*else if (isFuelingDateToday && etLiters.isEnabled() && (amount < Const.AMOUNT_MIN || amount > Const.AMOUNT_MAX)) {
                 etLiters.setError("Amount must be between 1 and 5,00,000");
                 etLiters.requestFocus();
                 return;
-            }
+            }*/
 
             if (etAmount.isEnabled() && (amountString.isEmpty() || amount < 1)) {
                 etAmount.setError("Enter Amount *");
                 etAmount.requestFocus();
                 return;
-            } else if (isFuelingDateToday && etAmount.isEnabled() && (litre < Const.LITRE_MIN || litre > Const.LITRE_MAX)) {
+            } /*else if (isFuelingDateToday && etAmount.isEnabled() && (litre < Const.LITRE_MIN || litre > Const.LITRE_MAX)) {
                 etAmount.setError("Litre/Kg must be between 0.01 and 5000");
                 etAmount.requestFocus();
                 return;
-            }
+            }*/
 
             invoice_id = etInvoiceNo.getText().toString().trim();
             /*if (invoice_id.isEmpty()) {
@@ -642,7 +643,7 @@ public class AddBIndentActivity extends SuperActivity {
                             // do you still want to aknowledge indent?
                             showWarningDialog(msg);
                         } else {
-                            String msg = "M-Indent added successfully.";
+                            String msg = "B-Indent added successfully.";
                             MLog.showToast(getApplicationContext(), msg);
                             IndentModel item = new Gson().fromJson(dataObject.toString(), IndentModel.class);
                             Map map = new HashMap<Object, Object>();
@@ -653,7 +654,7 @@ public class AddBIndentActivity extends SuperActivity {
                     } else {
                         jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))
-                            MLog.showToast(getApplicationContext(), jsonObject.getString("message"));
+                            MLog.showFancyToast(getApplicationContext(), jsonObject.getString("message"), FancyToast.ERROR);
                         if (jsonObject.has("errors")) {
                             JSONObject errorObject = jsonObject.getJSONObject("errors");
                             if (errorObject.has("user_id")) {
@@ -911,7 +912,7 @@ public class AddBIndentActivity extends SuperActivity {
 
             etFuelingDate.setError(null);
             String dateString = year1 + "-" + month1 + "-" + day1;
-            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_TIME_FORMAT, dateString));
+            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
             etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
             Calendar selectedDate = Calendar.getInstance();
             selectedDate.set(year, monthOfYear, dayOfMonth);

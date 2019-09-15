@@ -45,6 +45,40 @@
                 android:layout_height="wrap_content"
                 >
 
+               <LinearLayout
+                   android:id="@+id/linlayBusinessName"
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginRight="10dp"
+                   >
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Busines Name"
+                       android:textSize="14sp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:textColor="@color/light_black"
+                       android:maxLength="50"
+
+                       />
+
+                   <EditText
+                       android:id="@+id/etBusinessNameTop"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+
+                       android:layout_weight="1"
+                       android:hint="Enter Busines Name *"
+                       android:textSize="14sp"
+                       android:maxLines="1"
+                       android:maxLength="20"
+                       />
+
+               </LinearLayout>
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -156,8 +190,8 @@
                                 />
 
 
-                            <RadioButton
-                                android:id="@+id/radioHeader"
+                            <CheckBox
+                                android:id="@+id/chkWithHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
@@ -166,20 +200,10 @@
                                 android:text="With Header"
                                 android:textColor="@color/text_black"
                                 android:textSize="14sp"
-                                android:textStyle="normal" />
-
-
-                            <RadioButton
-                                android:id="@+id/radioWithoutHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/text_black"
-                                android:textSize="14sp"
                                 android:textStyle="normal"
-                                android:padding="5dp"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:text="Without Header"
                                 />
+
+
 
 
                         </RadioGroup>
@@ -316,6 +340,30 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/general_et_background"
                 >
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:text="Busines Name"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textColor="@color/light_black"
+                        android:maxLength="50"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/etBusinessName"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="Enter Busines Name *"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:maxLength="20"
+                        />
+
+                </TableRow>
 
                 <TableRow android:layout_width="match_parent">
 
