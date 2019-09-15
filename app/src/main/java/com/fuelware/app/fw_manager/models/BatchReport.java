@@ -7,11 +7,17 @@ public class BatchReport {
     public String id;
     public String start_time;
     public String end_time;
-    public String batch_number;
+    public String batch_number; // for cashier
     public String actual_batch_total;
     public String earn_total;
     public String deducted_total;
     public String excess_less;
+
+
+    public String shift_number; // for manager
+    public String total; // for manager
+    public String first_name; // for manager
+    public String last_name; // for manager
 
     @SerializedName("user")
     public User user;

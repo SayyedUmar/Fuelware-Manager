@@ -14,7 +14,174 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TableLayout
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="170dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="4dp"
+                    app:cardMaxElevation="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linlayCashierOutput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/general_et_background"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".7"
+                            android:src="@drawable/ic_cash"
+                            android:padding="20dp"
+                            android:background="@color/blue3"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:text="Cashier\nIntent Report"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="@color/light_black2"
+                            android:gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="170dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_column="1"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="4dp"
+                    app:cardMaxElevation="8dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_column="1"
+                        android:id="@+id/linlayAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@drawable/general_et_background"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".7"
+                            android:src="@drawable/ic_cheque"
+                            android:padding="20dp"
+                            android:background="@color/green4"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Account\nStatement"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="@color/light_black2"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                >
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="170dp"
+                    android:layout_column="1"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="4dp"
+                    app:cardMaxElevation="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linlayManagerOuput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/general_et_background"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".7"
+                            android:src="@drawable/ic_cash_receipt"
+                            android:padding="20dp"
+                            android:background="@color/violet_light"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:text="Manager\nIntent Report"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:textColor="@color/light_black2"
+                            android:gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!--<TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchColumns="1,,3"
@@ -197,7 +364,7 @@
 
             </TableRow>
 
-            <!--<TableRow
+            &lt;!&ndash;<TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -284,9 +451,9 @@
 
                 </android.support.v7.widget.CardView>
 
-            </TableRow>-->
+            </TableRow>&ndash;&gt;
 
-        </TableLayout>
+        </TableLayout>-->
 
     </ScrollView>
 

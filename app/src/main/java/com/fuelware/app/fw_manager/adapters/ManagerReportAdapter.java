@@ -52,18 +52,18 @@ public class ManagerReportAdapter extends RecyclerView.Adapter<ManagerReportAdap
 
         position = holder.getAdapterPosition();
         final BatchReport model = records.get(position);
-        holder.tvBatchID.setText(model.batch_number.trim());
-        holder.tvName.setText(model.user.data.first_name+" "+model.user.data.last_name);
+        holder.tvBatchID.setText(model.shift_number.trim());
+        holder.tvName.setText(model.first_name+" "+model.last_name);
 
         holder.tvInTime.setText(MyUtils.dateToString(AppConst.SERVER_DATE_TIME_FORMAT, AppConst.APP_DATE_TIME_FORMAT, model.start_time));
         holder.tvOutTime.setText(MyUtils.dateToString(AppConst.SERVER_DATE_TIME_FORMAT, AppConst.APP_DATE_TIME_FORMAT, model.end_time));
 
-        holder.tvEindent.setText(MyUtils.formatCurrency(model.produce.income.mode.e_indent));
-        holder.tvMindent.setText(MyUtils.formatCurrency(model.produce.income.mode.manual_indent));
+//        holder.tvEindent.setText(MyUtils.formatCurrency(model.produce.income.mode.e_indent));
+//        holder.tvMindent.setText(MyUtils.formatCurrency(model.produce.income.mode.manual_indent));
 
-        double total = MyUtils.parseDouble(model.produce.income.mode.e_indent) +
-                MyUtils.parseDouble(model.produce.income.mode.manual_indent);
-        holder.tvTotal.setText(MyUtils.formatCurrency(total));
+//        double total = MyUtils.parseDouble(model.produce.income.mode.e_indent) +
+//                MyUtils.parseDouble(model.produce.income.mode.manual_indent);
+        holder.tvTotal.setText(MyUtils.formatCurrency(model.total));
     }
 
     @Override
