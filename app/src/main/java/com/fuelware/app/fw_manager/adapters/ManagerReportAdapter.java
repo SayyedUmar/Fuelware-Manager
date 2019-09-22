@@ -107,9 +107,7 @@ public class ManagerReportAdapter extends RecyclerView.Adapter<ManagerReportAdap
             records.addAll(origialRecords);
         } else {
             for (BatchReport item : origialRecords) {
-                if (item.user.data.first_name.toLowerCase().startsWith(newText)) {
-                    records.add(item);
-                } else if (item.user.data.last_name.toLowerCase().startsWith(newText)) {
+                if (item.shift_number.toLowerCase().startsWith(newText)) {
                     records.add(item);
                 }
             }

@@ -185,7 +185,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         );
 
         reportTypeItem = new RFACLabelItem<Integer>()
-                .setLabel("Report Type")
+                .setLabel("Invoice Report")
                 .setResId(R.drawable.ic_calendar)
                 .setIconNormalColor(0xff4e342e)
                 .setIconPressedColor(0xff3e2723)
@@ -636,13 +636,13 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
     private void showAllMenu (boolean toshow) {
         if (toshow) {
-            menu.findItem(R.id.menu_download_pdf).setVisible(true);
+//            menu.findItem(R.id.menu_download_pdf).setVisible(true);
             menu.findItem(R.id.action_filter).setVisible(true);
-            menu.findItem(R.id.action_calendar).setVisible(true);
+//            menu.findItem(R.id.action_calendar).setVisible(true);
         } else {
-            menu.findItem(R.id.menu_download_pdf).setVisible(false);
+//            menu.findItem(R.id.menu_download_pdf).setVisible(false);
             menu.findItem(R.id.action_filter).setVisible(false);
-            menu.findItem(R.id.action_calendar).setVisible(false);
+//            menu.findItem(R.id.action_calendar).setVisible(false);
         }
     }
 
@@ -756,6 +756,12 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
         etNetPayable.setText(debit_amount);
         tvIndentConsumed.setText("Consumed ("+pagination.total+")");
+
+        if (selectedCustomers.size() == 1) {
+            etBusinessName.setFocusable(false);
+            etBusinessName.setText(selectedCustomers.values().iterator().next().getBusiness());
+        }
+
 
         etIndentCharge.setFilters(new InputFilter[]{ new MyUtils.InputFilterMinMax(0, 1000000)});
         etLateCharge.setFilters(new InputFilter[]{ new MyUtils.InputFilterMinMax(0, 1000000)});
@@ -915,7 +921,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
     private void selectFilterOptions(RFACLabelItem item) {
         if (item.getLabel().equalsIgnoreCase("apply date filter")) { // date filter
             openDateFilterDialog();
-        } else if (item.getLabel().equalsIgnoreCase("report type")) { // report type
+        } else if (item.getLabel().equalsIgnoreCase("invoice report")) { // report type
             showReportTypeDialog();
         } else if (item.getLabel().equalsIgnoreCase("download pdf/csv")) { // pdf download
             if (selectedCustomers.size() == 0) {

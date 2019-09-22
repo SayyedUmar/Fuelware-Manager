@@ -20,7 +20,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:background="@color/white"
-            android:text="Select Report Type"
+            android:text="Invoice Report"
             android:textColor="@color/text_black"
             android:textSize="20sp"
             android:textStyle="normal"
@@ -80,6 +80,7 @@
                </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -119,7 +120,7 @@
                                 android:fontFamily="@font/quicksand_medium"
                                 android:text="Debit A/c"
                                 android:padding="5dp"
-                                android:checked="true"
+
                                 />
 
 
@@ -133,6 +134,7 @@
                                 android:padding="5dp"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:text="Invoice/Bill"
+                                android:checked="true"
                                 />
 
                             <RadioButton
@@ -213,6 +215,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/linlayReportFormat"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"

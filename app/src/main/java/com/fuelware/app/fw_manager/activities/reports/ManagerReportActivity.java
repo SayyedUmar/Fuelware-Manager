@@ -164,7 +164,7 @@ public class ManagerReportActivity extends SuperActivity implements SearchView.O
 
         if (searchItem != null) {
             SearchView searchView = (SearchView) searchItem.getActionView();
-            searchView.setQueryHint("Enter vehicle no/indent no..");
+            searchView.setQueryHint("Enter shift id");
             searchView.setOnQueryTextListener(this);
         }
 

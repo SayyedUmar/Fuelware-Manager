@@ -57,6 +57,8 @@ public class AccountDetailActivity extends SuperActivity {
             String type = "(M) ";
             if (model.indent_type.equalsIgnoreCase("e-indent")) {
                 type = "(E) ";
+            } else if (model.indent_type.equalsIgnoreCase("b-indent")) {
+                type = "(B) ";
             }
             tvIndentNumber.setText(type+model.getIndentNum());
 

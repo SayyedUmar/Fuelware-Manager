@@ -130,7 +130,7 @@ public class AddBIndentActivity extends SuperActivity {
         linlayAmount.setVisibility(View.GONE);
         linlayLitre.setVisibility(View.GONE);
 
-//        setFuelingDateAsToday();
+        setFuelingDateAsToday();
 //        if (!MyPreferences.getBoolValue(this, AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
 //            showMorningParamsPopup();
 //        }
@@ -853,7 +853,6 @@ public class AddBIndentActivity extends SuperActivity {
     }
 
     private void showDatePicker() {
-        DatePickerFragment date = new DatePickerFragment();
         calender = Calendar.getInstance();
         Integer year = calender.get(Calendar.YEAR);
         Integer month = calender.get(Calendar.MONTH);
@@ -864,7 +863,7 @@ public class AddBIndentActivity extends SuperActivity {
 
         Calendar oldDate = Calendar.getInstance();
         oldDate.set(Calendar.DAY_OF_YEAR, calender.get(Calendar.DAY_OF_YEAR) - 3);
-//        datePickerDialog.getDatePicker().setMinDate(oldDate.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(oldDate.getTimeInMillis());
         datePickerDialog.show();
     }
 
@@ -885,8 +884,8 @@ public class AddBIndentActivity extends SuperActivity {
 
             etIndentDate.setError(null);
             String dateString = year1 + "-" + month1 + "-" + day1;
-            etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
-//            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
+            etIndentDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT,  AppConst.APP_DATE_FORMAT, dateString));
+            etFuelingDate.setText(MyUtils.dateToString(AppConst.SERVER_DATE_FORMAT, AppConst.APP_DATE_FORMAT, dateString));
 //            isTodaysFuelingDate(etFuelingDate.getText().toString());
         }
     };

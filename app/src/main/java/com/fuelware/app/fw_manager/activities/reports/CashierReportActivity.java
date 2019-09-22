@@ -163,7 +163,7 @@ public class CashierReportActivity extends SuperActivity implements SearchView.O
 
         if (searchItem != null) {
             SearchView searchView = (SearchView) searchItem.getActionView();
-            searchView.setQueryHint("Enter vehicle no/indent no..");
+            searchView.setQueryHint("Enter cashier name");
             searchView.setOnQueryTextListener(this);
         }
 
