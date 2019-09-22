@@ -46,6 +46,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.GridHolder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -822,7 +823,7 @@ public class PlansActivity extends SuperActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-                        MLog.showLongToast(getApplicationContext(), "Plan activated successfully.");
+                        MLog.showFancyToast(getApplicationContext(), "Plan activated successfully", FancyToast.SUCCESS);
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         JSONArray array = jsonObject.getJSONArray("data");
                         purchasedPlans.clear();
@@ -831,8 +832,14 @@ public class PlansActivity extends SuperActivity {
                             m.subscriptionDetail = gson.fromJson(m.subscription_detail, PurchasedPlan.SubscriptionDetail.class);
                             purchasedPlans.add(m);
                         }
+                        if (model.category.equalsIgnoreCase("e-ccm")) {
+                            ecmPlans.clear();
+                            ecmPlans.addAll(purchasedPlans);
+                        } else {
+                            ccmPlans.clear();
+                            ccmPlans.addAll(purchasedPlans);
+                        }
                         purchasedPlansAdapter.refresh();
-                        fetchPurchasedPlans();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))

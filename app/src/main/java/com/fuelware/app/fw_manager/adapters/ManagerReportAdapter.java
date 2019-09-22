@@ -51,6 +51,7 @@ public class ManagerReportAdapter extends RecyclerView.Adapter<ManagerReportAdap
     public void onBindViewHolder(@NonNull ManagerReportAdapter.MyViewHolder holder, int position) {
 
         position = holder.getAdapterPosition();
+        holder.tvSerailNumber.setText((position+1)+"");
         final BatchReport model = records.get(position);
         holder.tvBatchID.setText(model.shift_number.trim());
         holder.tvName.setText(model.first_name+" "+model.last_name);
@@ -72,6 +73,9 @@ public class ManagerReportAdapter extends RecyclerView.Adapter<ManagerReportAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tvSerailNumber)
+        TextView tvSerailNumber;
 
         @BindView(R.id.tvBatchID)
         TextView tvBatchID;

@@ -8,6 +8,7 @@ public class PurchasedPlan {
     public String price;
     public String start_date;
     public String end_date;
+    public String category;
     public int is_plan_activated;
     public float remaining_indents;
 
