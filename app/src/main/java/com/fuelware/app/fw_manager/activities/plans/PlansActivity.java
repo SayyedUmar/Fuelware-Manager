@@ -108,6 +108,8 @@ public class PlansActivity extends SuperActivity {
 
     @BindView(R.id.tvPlanType)
     TextView tvPlanType;
+    @BindView(R.id.tvNoRecordsFound)
+    TextView tvNoRecordsFound;
     @BindView(R.id.tvRegisterationFee)
     TextView tvRegisterationFee;
     @BindView(R.id.linlayRegistrationFees)
@@ -289,6 +291,10 @@ public class PlansActivity extends SuperActivity {
                 purchasedPlans.clear();
                 purchasedPlans.addAll(ecmPlans);
                 purchasedPlansAdapter.refresh();
+            }
+            tvNoRecordsFound.setVisibility(View.GONE);
+            if (purchasedPlans.size() == 0) {
+                tvNoRecordsFound.setVisibility(View.VISIBLE);
             }
         });
 
@@ -779,6 +785,10 @@ public class PlansActivity extends SuperActivity {
                         purchasedPlans.clear();
                         purchasedPlans.addAll(ccmPlans);
                         purchasedPlansAdapter.refresh();
+                        tvNoRecordsFound.setVisibility(View.GONE);
+                        if (purchasedPlans.size() == 0) {
+                            tvNoRecordsFound.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))
@@ -822,6 +832,7 @@ public class PlansActivity extends SuperActivity {
                             purchasedPlans.add(m);
                         }
                         purchasedPlansAdapter.refresh();
+                        fetchPurchasedPlans();
                     } else {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         if (jsonObject.has("message"))

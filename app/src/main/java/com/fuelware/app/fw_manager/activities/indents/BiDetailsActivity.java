@@ -3,7 +3,9 @@ package com.fuelware.app.fw_manager.activities.indents;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
@@ -26,6 +28,7 @@ public class BiDetailsActivity extends SuperActivity {
     TextView tvVehicleNo, /*tvDriverName, tvDriverMobile,*/ tvFillType, tvProduct;
     TextView tvPrice, tvLitres, tvAmount, /*tvVehicleKms,*/ tvInvoiceNo, tvFuelingDate;
     Button btnClose;
+//    private LinearLayout linlayVehicleKms;
 
     String ei_fill_type,ei_liters,ei_amount,ei_rate;
     private IndentModel indentModel;
@@ -70,6 +73,7 @@ public class BiDetailsActivity extends SuperActivity {
         tvInvoiceNo = findViewById(R.id.etInvoiceNo);
         tvFuelingDate = findViewById(R.id.tvFuelingDate);
         btnClose = findViewById(R.id.btnClose);
+//        linlayVehicleKms = findViewById(R.id.linlayVehicleKms);
     }
 
     @Override
@@ -149,7 +153,9 @@ public class BiDetailsActivity extends SuperActivity {
         tvFillType.setText(MyUtils.toTitleCase(indentModel.getFill_type()));
         if (indentModel.getFill_type().toLowerCase().equalsIgnoreCase(Const.LITRE)) {
             tvFillType.setText("Litre/Kg");
-        }
+        } /*else if (indentModel.getFill_type().toLowerCase().equalsIgnoreCase(Const.FULL_TANK_K)) {
+            linlayVehicleKms.setVisibility(View.GONE);
+        }*/
 
         ei_fill_type = indentModel.getFill_type();
         tvProduct.setText(indentModel.getProduct());

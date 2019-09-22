@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_gravity="center"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:fontFamily="@font/quicksand_medium"
-                android:text="xtra premium"
+                tools:text="xtra premium"
                 android:textSize="20sp" />
 
             <TextView
@@ -52,9 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
-                android:text="75.52 Rs"
+                tools:text="75.52 Rs"
                 android:fontFamily="@font/quicksand_medium"
-                android:textSize="20dp" />
+                android:textSize="22sp" />
 
         </LinearLayout>
 

@@ -63,7 +63,9 @@
                 android:imeActionId="112"
                 android:imeOptions="actionNext"
                 android:textSize="14sp"
-                />`
+                android:maxLines="1"
+                android:maxLength="50"
+                />
 
 
         </LinearLayout>
@@ -196,7 +198,7 @@
             android:layout_gravity="center"
             android:textSize="10sp"
             android:textColor="@color/light_black"
-            android:text="(Max 400 transactions can be printed at a time)"
+            android:text="(PDF can not be generated with more than 400 transactions)"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"

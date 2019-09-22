@@ -8,13 +8,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -52,6 +55,7 @@ import com.fuelware.app.fw_manager.utils.MyPreferences;
 import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -144,10 +148,10 @@ public class MainActivity extends SuperActivity
         }
         navigationView.getMenu().findItem(R.id.nav_tech_support).setVisible(false);
 
-        if (!BuildConfig.DEBUG) {
-            linlayReceipts.setVisibility(View.GONE);
-            linlayCounterBilling.setVisibility(View.GONE);
-        }
+//        if (!BuildConfig.DEBUG) {
+//            linlayReceipts.setVisibility(View.GONE);
+//            linlayCounterBilling.setVisibility(View.GONE);
+//        }
 //        tvActiveBatches.setVisibility(View.GONE);
     }
 
@@ -281,11 +285,11 @@ public class MainActivity extends SuperActivity
 
         imgCounterBilling.setOnClickListener(v -> {
             if (MyPreferences.getBoolValue(this, AppConst.LOGIN_STATUS)) {
-//                if (MyPreferences.getBoolValue(MainActivity.this, AppConst.IS_MORNING_PARAMETERS_UPDATED)) {
-                startActivity(new Intent(MainActivity.this, CounterBillActivity.class));
-//                } else {
-                //showMorningParamsUdpateDialog(null);
-//                }
+                if(tvAccountVersion.getText().toString().equalsIgnoreCase("ccm")) {
+                    MLog.showFancyToast(this, "To access this feature, Buy Premium Version", FancyToast.WARNING);
+                } else {
+                    startActivity(new Intent(MainActivity.this, CounterBillActivity.class));
+                }
             } else {
                 MLog.showToast(getApplicationContext(), "Please login to the batch first.");
             }
@@ -394,7 +398,8 @@ public class MainActivity extends SuperActivity
                                 String subscription_type = array.getJSONObject(0).getString("subscription_type");
                                 MyPreferences.setStringValue(getApplicationContext(), Const.SUBSCRIPTION_TYPE, subscription_type);
                                 if (subscription_type.equals("free")) {
-                                    linlayCounterBilling.setVisibility(View.GONE);
+//                                    linlayCounterBilling.setVisibility(View.GONE);
+                                    ImageViewCompat.setImageTintList(imgCounterBilling, ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.darker_gray)));
                                     tvAccountVersion.setText("CCM");
                                 } else if (subscription_type.toLowerCase().contains("premium")) {
                                     tvAccountVersion.setText("CCM Premium");

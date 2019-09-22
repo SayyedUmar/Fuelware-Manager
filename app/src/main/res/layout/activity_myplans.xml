@@ -42,373 +42,393 @@
                 app:ss_animationType="line"
                 />-->
 
-            <info.hoang8f.android.segmented.SegmentedGroup
-                android:id="@+id/segment_group"
-                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                segmentedgroup:sc_border_width="2dp"
-                segmentedgroup:sc_corner_radius="20dp"
-                android:layout_marginBottom="10dp"
-                >
+           <LinearLayout
+               tools:visibility="gone"
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/radioPlans"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Plans"
-                    style="@style/RadioButton"
-                    android:checked="true"
-                    />
+               <info.hoang8f.android.segmented.SegmentedGroup
+                   android:id="@+id/segment_group"
+                   xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   segmentedgroup:sc_border_width="2dp"
+                   segmentedgroup:sc_corner_radius="20dp"
+                   android:layout_marginBottom="10dp"
+                   >
 
-                <RadioButton
-                    android:id="@+id/radioMyPlans"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="My Plans"
-                    style="@style/RadioButton"
-                    />
+                   <RadioButton
+                       android:id="@+id/radioPlans"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:text="Plans"
+                       style="@style/RadioButton"
+                       android:checked="true"
+                       />
 
-                <RadioButton
-                    android:id="@+id/radioHistory"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="History"
-                    style="@style/RadioButton" />
-            </info.hoang8f.android.segmented.SegmentedGroup>
+                   <RadioButton
+                       android:id="@+id/radioMyPlans"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:text="My Plans"
+                       style="@style/RadioButton"
+                       />
 
-            <info.hoang8f.android.segmented.SegmentedGroup
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:id="@+id/segment_group_plantype"
-                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                segmentedgroup:sc_border_width="2dp"
-                segmentedgroup:sc_corner_radius="20dp"
-                android:layout_marginBottom="10dp"
-                segmentedgroup:sc_checked_text_color="@color/white"
-                segmentedgroup:sc_tint_color="@color/green_light_color1"
-                >
+                   <RadioButton
+                       android:id="@+id/radioHistory"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:text="History"
+                       style="@style/RadioButton" />
+               </info.hoang8f.android.segmented.SegmentedGroup>
 
-                <RadioButton
-                    android:id="@+id/radioECCM"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="CCM"
-                    style="@style/RadioButton"
-                    android:checked="true"
-                    />
+               <info.hoang8f.android.segmented.SegmentedGroup
+                   android:visibility="gone"
+                   tools:visibility="visible"
+                   android:id="@+id/segment_group_plantype"
+                   xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                   android:layout_width="240dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:orientation="horizontal"
+                   segmentedgroup:sc_border_width="2dp"
+                   segmentedgroup:sc_corner_radius="20dp"
+                   android:layout_marginBottom="10dp"
+                   segmentedgroup:sc_checked_text_color="@color/white"
+                   segmentedgroup:sc_tint_color="@color/green_light_color1"
+                   >
 
-                <RadioButton
-                    android:id="@+id/radioCCM"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="E-CCM"
-                    style="@style/RadioButton"
-                    />
+                   <RadioButton
+                       android:id="@+id/radioECCM"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:text="CCM"
+                       style="@style/RadioButton"
+                       android:checked="true"
+                       />
 
-            </info.hoang8f.android.segmented.SegmentedGroup>
+                   <RadioButton
+                       android:id="@+id/radioCCM"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:text="E-CCM"
+                       style="@style/RadioButton"
+                       />
 
-            <LinearLayout
+               </info.hoang8f.android.segmented.SegmentedGroup>
 
-                android:id="@+id/linlayContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+               <LinearLayout
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Version"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                   android:id="@+id/linlayContainer"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   >
 
-                <TextView
-                    android:id="@+id/tvVersion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:text="Credit Customer Management"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/gray_dark"
-                    android:singleLine="true"
-                    />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Version"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Plan Type"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
-
-                <TextView
-                    android:id="@+id/tvPlanType"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/general_et_background"
-                    android:text="CCM"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/gray_dark"
-                    android:singleLine="true"
-                    android:drawableRight="@drawable/ic_dropdown"
-                    />
+                   <TextView
+                       android:id="@+id/tvVersion"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:text="Credit Customer Management"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/gray_dark"
+                       android:singleLine="true"
+                       />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Plans"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Plan Type"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-                <Button
-                    android:id="@+id/btnViewPlans"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/green_light_color1"
-                    android:text="View Plans"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:singleLine="true"
-                    android:gravity="center_horizontal"
-                    />
-
-                <LinearLayout
-                    android:layout_marginTop="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/btnAddCoupon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="Apply Coupon"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:background="@color/darker_gray"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btnClearCoupon"
-                        android:layout_gravity="center"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="6dp"
-                        android:src="@drawable/ic_close"
-                        android:background="@color/white"
-                        />
-
-                </LinearLayout>
+                   <TextView
+                       android:id="@+id/tvPlanType"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp"
+                       android:background="@drawable/general_et_background"
+                       android:text="CCM"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/gray_dark"
+                       android:singleLine="true"
+                       android:drawableRight="@drawable/ic_dropdown"
+                       />
 
 
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Plans"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
+
+                   <Button
+                       android:id="@+id/btnViewPlans"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp"
+                       android:background="@color/green_light_color1"
+                       android:text="View Plans"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/white"
+                       android:textStyle="bold"
+                       android:singleLine="true"
+                       android:gravity="center_horizontal"
+                       />
+
+                   <LinearLayout
+                       android:layout_marginTop="15dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                       <Button
+                           android:id="@+id/btnAddCoupon"
+                           android:layout_width="wrap_content"
+                           android:layout_height="40dp"
+
+                           android:paddingLeft="20dp"
+                           android:paddingRight="20dp"
+                           android:text="Apply Coupon"
+                           android:textSize="16sp"
+                           android:textColor="@color/white"
+                           android:fontFamily="@font/quicksand_medium"
+                           android:background="@color/darker_gray"
+                           />
+
+                       <ImageButton
+                           android:id="@+id/btnClearCoupon"
+                           android:layout_gravity="center"
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_marginLeft="6dp"
+                           android:src="@drawable/ic_close"
+                           android:background="@color/white"
+                           />
+
+                   </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Base Price"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
 
-                <TextView
-                    android:id="@+id/tvBasePrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="Base Price"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/text_black"
-                    android:singleLine="true"
-                    />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Coupon Discount"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Base Price"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-                <TextView
-                    android:id="@+id/tvDiscount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="Coupon Discount"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/red_light_color1"
-                    android:singleLine="true"
-                    />
+                   <TextView
+                       android:id="@+id/tvBasePrice"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:hint="Base Price"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/text_black"
+                       android:singleLine="true"
+                       />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Subtotal"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Coupon Discount"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-                <TextView
-                    android:id="@+id/tvSubtotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="Subtotal"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/text_black"
-                    android:singleLine="true"
-                    />
+                   <TextView
+                       android:id="@+id/tvDiscount"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:hint="Coupon Discount"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/red_light_color1"
+                       android:singleLine="true"
+                       />
 
-                <LinearLayout
-                    android:id="@+id/linlayRegistrationFees"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Subtotal"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Registeration Fees"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_black"
-                        android:fontFamily="@font/quicksand"
-                        />
+                   <TextView
+                       android:id="@+id/tvSubtotal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:hint="Subtotal"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/text_black"
+                       android:singleLine="true"
+                       />
 
-                    <TextView
-                        android:id="@+id/tvRegisterationFee"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/general_et_background"
-                        android:hint="Registeration Fees"
-                        android:padding="10dp"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:focusable="false"
-                        android:textColor="@color/text_black"
-                        android:singleLine="true"
-                        />
+                   <LinearLayout
+                       android:id="@+id/linlayRegistrationFees"
+                       android:orientation="vertical"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
 
-                </LinearLayout>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="10dp"
+                           android:text="Registeration Fees"
+                           android:textSize="12sp"
+                           android:textColor="@color/text_black"
+                           android:fontFamily="@font/quicksand"
+                           />
 
-                <TextView
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="GST"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                       <TextView
+                           android:id="@+id/tvRegisterationFee"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/general_et_background"
+                           android:hint="Registeration Fees"
+                           android:padding="10dp"
+                           android:fontFamily="@font/quicksand_medium"
+                           android:focusable="false"
+                           android:textColor="@color/text_black"
+                           android:singleLine="true"
+                           />
 
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tvGst"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="GST"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/text_black"
-                    android:singleLine="true"
-                    />
+                   </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Total"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_black"
-                    android:fontFamily="@font/quicksand"
-                    />
+                   <TextView
+                       android:visibility="gone"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="GST"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-                <TextView
-                    android:id="@+id/tvTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/general_et_background"
-                    android:hint="Total"
-                    android:padding="10dp"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:focusable="false"
-                    android:textColor="@color/text_black"
-                    android:singleLine="true"
-                    />
+                   <TextView
+                       android:visibility="gone"
+                       android:id="@+id/tvGst"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:hint="GST"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/text_black"
+                       android:singleLine="true"
+                       />
 
-                <Button
-                    android:id="@+id/btnPay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="100dp"
-                    android:paddingRight="100dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="PAY"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@color/colorPrimary"
-                    />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="Total"
+                       android:textSize="12sp"
+                       android:textColor="@color/text_black"
+                       android:fontFamily="@font/quicksand"
+                       />
 
-            </LinearLayout>
+                   <TextView
+                       android:id="@+id/tvTotal"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/general_et_background"
+                       android:hint="Total"
+                       android:padding="10dp"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:focusable="false"
+                       android:textColor="@color/text_black"
+                       android:singleLine="true"
+                       />
+
+                   <Button
+                       android:id="@+id/btnPay"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:paddingLeft="100dp"
+                       android:paddingRight="100dp"
+                       android:layout_marginTop="15dp"
+                       android:layout_marginBottom="10dp"
+                       android:text="PAY"
+                       android:fontFamily="@font/quicksand_medium"
+                       android:textSize="18sp"
+                       android:textStyle="bold"
+                       android:textColor="@color/white"
+                       android:layout_gravity="center_horizontal"
+                       android:backgroundTint="@color/colorPrimary"
+                       />
+
+               </LinearLayout>
+
+           </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/row_plan_history"
                 android:layout_weight="1"
                 android:scrollbars="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvNoRecordsFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:layout_gravity="center"
+                android:text="No Records Found"
+                />
+
         </LinearLayout>
 
     </ScrollView>

@@ -363,7 +363,7 @@
                         android:hint="Enter Busines Name *"
                         android:textSize="14sp"
                         android:maxLines="1"
-                        android:maxLength="20"
+                        android:maxLength="50"
                         />
 
                 </TableRow>
@@ -395,7 +395,7 @@
                 <TableRow android:layout_width="match_parent">
 
                     <TextView
-                        android:text="Net Payable"
+                        android:text="Net Debited"
                         android:textSize="14sp"
                         android:fontFamily="@font/quicksand_medium"
                         android:textColor="@color/light_black"

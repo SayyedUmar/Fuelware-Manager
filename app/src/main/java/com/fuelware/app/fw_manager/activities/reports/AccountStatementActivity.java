@@ -352,12 +352,12 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                                 break;
 
                             case Debit:
-                                tvClosingBal.setText("Net Payable: "+ dataObj.getString("formatted_debit_amount"));
+                                tvClosingBal.setText("Amount Debited: "+ dataObj.getString("formatted_debit_amount"));
                                 slideUp(tvClosingBal);
                                 break;
 
                             case Credit:
-                                tvClosingBal.setText("Net Receivable: "+ dataObj.getString("formatted_debit_amount"));
+                                tvClosingBal.setText("Amount Credited: "+ dataObj.getString("formatted_debit_amount"));
                                 slideUp(tvClosingBal);
                                 break;
                         }
