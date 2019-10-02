@@ -71,7 +71,7 @@ public class ManagerReportActivity extends SuperActivity implements SearchView.O
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
-        setTitle("Manager Shift Report");
+        setTitle("Manager Indent Report");
 
         initialise();
         setupRecycler();

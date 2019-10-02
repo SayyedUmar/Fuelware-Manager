@@ -70,7 +70,7 @@ public class CashierReportActivity extends SuperActivity implements SearchView.O
         ButterKnife.bind(this);
 
         setupBackNavigation(null);
-        setTitle("Cashier Batch Report");
+        setTitle("Cashier Indent Report");
 
         initialise();
         setupRecycler();

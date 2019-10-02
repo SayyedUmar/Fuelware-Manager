@@ -862,7 +862,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
                 dialog.dismiss();
             } else {
-                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
+                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false, cc_name);
                 dialog.dismiss();
             }
         });

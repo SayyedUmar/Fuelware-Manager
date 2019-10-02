@@ -24,6 +24,7 @@ import com.fuelware.app.fw_manager.activities.reports.AccountStatementActivity;
 import com.fuelware.app.fw_manager.models.AccountModel;
 import com.fuelware.app.fw_manager.models.CreditCustomer;
 import com.fuelware.app.fw_manager.models.TransactionTypeEnum;
+import com.fuelware.app.fw_manager.network.MLog;
 import com.fuelware.app.fw_manager.utils.TouchImageView;
 
 import java.util.ArrayList;
@@ -124,7 +125,15 @@ public class AccounStatementAdapter extends RecyclerView.Adapter<AccounStatement
         } else {
             holder.credit_tx.setText("0.0");
             holder.debit_tx.setText(model.getAmount());
-            String firstLetter = model.indent_type.toUpperCase().substring(0, 1);
+            String firstLetter = "NA";
+            try {
+                firstLetter = model.indent_type.toUpperCase().substring(0, 1);
+            } catch (Exception e) {
+                e.printStackTrace();
+                MLog.e("AccounStatementAdapter", model.getVehicleNum());
+                MLog.e("AccounStatementAdapter", model.batch_number);
+                MLog.e("AccounStatementAdapter", model.indent_type);
+            }
             holder.tvIndentNumberLabel.setText("Indent Number");
             holder.indentno_tx.setText(Html.fromHtml("(<font color=#008577><b>"+firstLetter+"</b></font>) "+model.getIndentNum()));
             holder.tvFuelingDateLabel.setText("Indent Date");

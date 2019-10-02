@@ -183,6 +183,7 @@ public class AddBIndentActivity extends SuperActivity {
         int year = calender.get(Calendar.YEAR);
         int month = calender.get(Calendar.MONTH);
         int day = calender.get(Calendar.DAY_OF_MONTH);
+        fuelingDate = calender.getTime();
         ondate.onDateSet(null, year, month, day);
     }
 
