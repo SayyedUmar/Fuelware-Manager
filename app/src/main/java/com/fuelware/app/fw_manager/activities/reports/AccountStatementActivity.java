@@ -186,7 +186,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
 
         reportTypeItem = new RFACLabelItem<Integer>()
                 .setLabel("Invoice Report")
-                .setResId(R.drawable.ic_calendar)
+                .setResId(R.drawable.ic_download_arrow)
                 .setIconNormalColor(0xff4e342e)
                 .setIconPressedColor(0xff3e2723)
                 .setLabelColor(Color.WHITE)
@@ -213,8 +213,7 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
         rfaContent.setItems(items)
                 .setIconShadowRadius(RFABTextUtil.dip2px(this, 5))
                 .setIconShadowColor(0xff888888)
-                .setIconShadowDy(RFABTextUtil.dip2px(this, 5))
-        ;
+                .setIconShadowDy(RFABTextUtil.dip2px(this, 5));
         rfabHelper = new RapidFloatingActionHelper(
                 this,
                 rfaLayout,
@@ -437,7 +436,8 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 CreditCustomer customer = creditCustomerList.get(pos);
                 holder.tvName.setText(customer.getId()+" - "+customer.getBusiness());
                 holder.chkChecked.setChecked(customer.isChecked);
-                holder.chkChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                holder.chkChecked.setOnClickListener((chkChecked) -> {
+                    boolean isChecked = ((CheckBox)chkChecked).isChecked();
                     customer.isChecked = isChecked;
                     if (isChecked) {
                         selectedCustomers.put(customer.getId(), customer);
@@ -858,13 +858,23 @@ public class AccountStatementActivity extends SuperActivity implements SlyCalend
                 MLog.showFancyToast(this, "Businesss name is required", FancyToast.WARNING);
                 return;
             }
-            if (chkWithHeader.isChecked()) {
-                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
-                dialog.dismiss();
-            } else {
-                fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false, cc_name);
-                dialog.dismiss();
-            }
+
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.Group.STORAGE)
+                    .onGranted(permissions -> {
+                        if (chkWithHeader.isChecked()) {
+                            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), true, cc_name);
+                            dialog.dismiss();
+                        } else {
+                            fetchResult(radioDsc.isChecked(), radioPdf.isChecked(), false, cc_name);
+                            dialog.dismiss();
+                        }
+                    })
+                    .onDenied(permissions -> {
+                        MLog.showFancyToast(this, "Read/Write External Storage permission denied!", FancyToast.INFO);
+                    })
+                    .start();
         });
     }
 

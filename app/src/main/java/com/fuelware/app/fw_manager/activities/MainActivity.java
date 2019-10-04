@@ -411,6 +411,8 @@ public class MainActivity extends SuperActivity
                         if (!payment_status) {
                             MyPreferences.setBoolValue(getApplicationContext(), Const.PLAN_EXPIRED, true);
                             showPlanExpirePopup();
+                        } else {
+                            MyPreferences.setBoolValue(getApplicationContext(), Const.PLAN_EXPIRED, false);
                         }
                         if (data.has("last_shift")) {
                             JSONObject last_shift = data.getJSONObject("last_shift");

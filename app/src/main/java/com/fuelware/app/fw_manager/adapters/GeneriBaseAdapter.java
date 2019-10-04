@@ -31,7 +31,6 @@ public class GeneriBaseAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         if (convertView == null) {
             convertView = getInflator(parent).inflate(layoutId, parent, false);
             convertView.setTag(listener.getHolder(convertView, position));

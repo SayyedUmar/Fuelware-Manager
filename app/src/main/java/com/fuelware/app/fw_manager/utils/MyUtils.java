@@ -19,6 +19,8 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.fuelware.app.fw_manager.R;
+import com.fuelware.app.fw_manager.network.MLog;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -375,6 +377,7 @@ public class MyUtils {
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "receipts_pdf.pdf");
             DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
             dm.enqueue(request);
+            MLog.showFancyToast(context, "Receipt downloaded successfully", FancyToast.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
