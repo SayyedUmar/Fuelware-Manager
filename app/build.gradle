@@ -132,7 +132,7 @@ dependencies {
     //android tab slider
 //    implementation 'com.github.addisonelliott:SegmentedButton:3.1.5'
 
-    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+    implementation ('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true;
     }
 }
