@@ -119,16 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setActionListeners() {
         signinbutton.setOnClickListener( v -> {
-            AndPermission.with(this)
-                    .runtime()
-                    .permission(Permission.READ_SMS, Permission.RECEIVE_SMS)
-                    .onGranted(permissions -> {
-                        performLogin();
-                    })
-                    .onDenied(permissions -> {
-                        MLog.showToast(getApplicationContext(), "Please provide read message access permission to login the app.");
-                    })
-                    .start();
+            performLogin();
         });
         forgotpassword.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
 

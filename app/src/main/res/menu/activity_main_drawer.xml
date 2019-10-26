@@ -34,6 +34,12 @@
                 android:title="Tech Support" />
 
             <item
+                android:id="@+id/nav_sms_read"
+                android:icon="@drawable/ic_dollar"
+                android:title="Morning Price" />
+
+
+            <item
                 android:id="@+id/nav_Shift_close"
                 android:icon="@drawable/ic_power"
                 android:title="Shift Close" />

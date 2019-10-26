@@ -56,6 +56,8 @@ import com.fuelware.app.fw_manager.utils.MyUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shashank.sony.fancytoastlib.FancyToast;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -105,6 +107,7 @@ public class MainActivity extends SuperActivity
     ImageView imgBindent;
     @BindView(R.id.tvBindentCount)
     TextView tvBindentCount;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +128,7 @@ public class MainActivity extends SuperActivity
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+         navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -147,6 +150,11 @@ public class MainActivity extends SuperActivity
             navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
         }
         navigationView.getMenu().findItem(R.id.nav_tech_support).setVisible(false);
+        if (MyPreferences.getBoolValue(this, AppConst.SMS_READ_PERMISSION_ALLOWED)) {
+            navigationView.getMenu().findItem(R.id.nav_sms_read).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_dollar));
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_sms_read).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_dollar_off));
+        }
 
 //        if (!BuildConfig.DEBUG) {
 //            linlayReceipts.setVisibility(View.GONE);
@@ -500,6 +508,19 @@ public class MainActivity extends SuperActivity
             callShiftCloseAPI();
         } else if (id == R.id.nav_knowledgeCenter) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Const.KNOWLEDGE_CENTER_URL_PROD)));
+        } else if (id == R.id.nav_sms_read) {
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.READ_SMS, Permission.RECEIVE_SMS)
+                    .onGranted(permissions -> {
+                        MyPreferences.setBoolValue(this, AppConst.SMS_READ_PERMISSION_ALLOWED, true);
+                        navigationView.getMenu().findItem(R.id.nav_sms_read).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_dollar));
+                    })
+                    .onDenied(permissions -> {
+                        MLog.showToast(getApplicationContext(), "Please provide this permission to enable Morning Price Auto Update.");
+                    })
+                    .start();
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -676,23 +697,21 @@ public class MainActivity extends SuperActivity
 
     private void showUpdatePopup(final boolean isForceUpdateRequired, String version_name, String store_url) {
 
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        final String appPackageName = getPackageName();
-                        try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                        } catch (Exception anfe) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        }
-                        break;
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    final String appPackageName = getPackageName();
+                    try {
+//                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(store_url)));
+                    } catch (Exception anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(store_url)));
+                    }
+                    break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        dialog.dismiss();
-                        break;
-                }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    dialog.dismiss();
+                    break;
             }
         };
 
