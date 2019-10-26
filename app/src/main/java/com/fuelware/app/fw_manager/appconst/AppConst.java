@@ -43,4 +43,5 @@ public class AppConst {
     public static final String full_tank = "full_tank";
     public static final String litre = "litre";
     public static final String amount = "amount";
+    public static final String SMS_READ_PERMISSION_ALLOWED = "SMS_READ_PERMISSION_ALLOWED";
 }
