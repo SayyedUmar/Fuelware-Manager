@@ -138,6 +138,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_toLeftOf="@+id/center_layout"
                 android:layout_marginRight="-50dp"
                 android:layout_marginTop="150dp"
@@ -170,6 +171,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/linlayReceipts"
                 android:layout_toRightOf="@+id/center_layout"
                 android:layout_marginLeft="-50dp"
@@ -227,6 +229,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/linlayReports"
                 android:layout_below="@+id/center_layout"
                 android:layout_toRightOf="@+id/center_layout"
@@ -272,6 +275,7 @@
                 />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/linlayCounterBilling"
                 android:layout_below="@+id/center_layout"
                 android:layout_toRightOf="@+id/center_layout"
@@ -306,6 +310,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_toRightOf="@+id/center_layout"
                 android:layout_marginLeft="-160dp"
                 android:layout_marginTop="320dp"

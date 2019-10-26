@@ -143,9 +143,9 @@ public class MainActivity extends SuperActivity
 //        fetchCashiers();
         fetchMorningPrice();
 
-        if(BuildConfig.DEBUG) {
+//        if(BuildConfig.DEBUG) {
             navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
-        }
+//        }
         navigationView.getMenu().findItem(R.id.nav_tech_support).setVisible(false);
 
 //        if (!BuildConfig.DEBUG) {
@@ -591,7 +591,7 @@ public class MainActivity extends SuperActivity
                         if (dataArray.length() == 0) {
                             tvActiveBatches.setVisibility(View.GONE);
                         } else{
-                            tvActiveBatches.setVisibility(View.VISIBLE);
+                            tvActiveBatches.setVisibility(View.GONE);
                         }
                         //recyclerView.getAdapter().notifyDataSetChanged();
                     } else {

@@ -17,6 +17,7 @@
             android:icon="@drawable/ic_userprofile"
             android:title="Profile" />
         <item
+            android:visible="false"
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="My Plans" />
@@ -25,10 +26,13 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:visible="false"
+
                 android:id="@+id/nav_knowledgeCenter"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Knowledge Center" />
             <item
+                android:visible="false"
                 android:id="@+id/nav_tech_support"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Tech Support" />

@@ -16,7 +16,7 @@ public class AppConst {
     public static final String NO_INTERNET_MSG = "Please check your internet connection!";
 
     public static final String DEVICE_TYPE = "android";
-    public static final String APP_TYPE = "manager";
+    public static final String APP_TYPE = "manager_P";
 
     public static final String FULL_VERSION_MSG = "This is feature is available only in Full version";
 
