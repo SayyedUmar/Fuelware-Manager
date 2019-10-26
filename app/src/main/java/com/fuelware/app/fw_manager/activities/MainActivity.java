@@ -683,7 +683,7 @@ public class MainActivity extends SuperActivity
                     case DialogInterface.BUTTON_POSITIVE:
                         final String appPackageName = getPackageName();
                         try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(store_url)));
                         } catch (Exception anfe) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                         }
