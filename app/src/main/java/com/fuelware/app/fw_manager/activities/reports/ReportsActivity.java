@@ -38,8 +38,8 @@ public class ReportsActivity extends SuperActivity {
         setEventListeners();
 
         //hide the account statement
-        if (!BuildConfig.DEBUG)
-            linlayAccount.setVisibility(View.GONE);
+//        if (!BuildConfig.DEBUG)
+//            linlayAccount.setVisibility(View.GONE);
     }
 
     private void initialise() {
