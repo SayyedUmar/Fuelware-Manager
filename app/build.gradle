@@ -27,7 +27,7 @@ android {
         applicationId "com.fuelware.app.fw_manager_new"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 4
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
