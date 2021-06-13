@@ -34,6 +34,8 @@
                 android:title="Tech Support" />
 
             <item
+                tools:visible="true"
+                android:visible="false"
                 android:id="@+id/nav_sms_read"
                 android:icon="@drawable/ic_dollar"
                 android:title="Morning Price" />

@@ -21,24 +21,37 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+// Load signing properties from external file.
+// RUN setup.sh IF YOU GET ERRORS!
+def signingProperties = new Properties()
+signingProperties.load(new FileInputStream(rootProject.file("signing.properties")))
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.fuelware.app.fw_manager_new"
         minSdkVersion 17
-        targetSdkVersion 28
-        versionCode 6
-        versionName "2.0"
+        targetSdkVersion 29
+        versionCode 7
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile rootProject.file(signingProperties.keyStore)
+            storePassword signingProperties.keyStorePassword
+            keyAlias signingProperties.keyAlias
+            keyPassword signingProperties.keyPassword
+        }
     }
     buildTypes {
 
         debug {
-//            buildConfigField ("String", "BASE_URL", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/api/v1/"')
-//            buildConfigField ("String", "BASE_URL_2", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/"')
+            buildConfigField ("String", "BASE_URL", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/api/v1/"')
+            buildConfigField ("String", "BASE_URL_2", '"http://Fuelware-env.mkp8vm63pa.ap-south-1.elasticbeanstalk.com/"')
 
-            buildConfigField ("String", "BASE_URL", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/api/v1/"')
-            buildConfigField ("String", "BASE_URL_2", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/"')
+//            buildConfigField ("String", "BASE_URL", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/api/v1/"')
+//            buildConfigField ("String", "BASE_URL_2", '"http://fuelwareStaging-env-1.yvcgzs9hzb.ap-south-1.elasticbeanstalk.com/"')
             buildConfigField ("Boolean", "IS_LOG_ENABLED", "true")
         }
 
@@ -49,6 +62,7 @@ android {
 
             shrinkResources false
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

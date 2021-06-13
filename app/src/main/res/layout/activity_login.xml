@@ -149,7 +149,7 @@
                         android:textSize="18sp"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/bg_rect_round_btn_green"
-                        android:text="Sign in"
+                        android:text="Login"
                         android:textStyle="normal"
                         android:textColor="@color/white"/>
                 </LinearLayout>
